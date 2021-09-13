@@ -36,7 +36,7 @@ R : 'R';
 program: LBRACE decl statement RBRACE;
 
 statement : lexpr EQUAL rexpr
-     | R EQUAL LPARENT rexpr COMMA rexpr RIGHTPARENT SEMI
+     | R EQUAL LPARENT rexpr COMMA rexpr RPARENT SEMI
      | statement statement
      | IF LPARENT bexpr RPARENT LBRACE statement RBRACE
      | IF LPARENT bexpr RPARENT LBRACE statement RBRACE ELSE LBRACE statement RBRACE
