@@ -45,8 +45,7 @@ statement : lexpr EQUAL rexpr
      | WRITE rexpr SEMI
      ;
 
-lexpr: IDENTIFIER
-    | IDENTIFER LBRACKET rexpr RBRACKET
+lexpr: IDENTIFIER (LBRACKET rexpr RBRACKET)*
     | (R)FST
     | (R)SND
     ;
