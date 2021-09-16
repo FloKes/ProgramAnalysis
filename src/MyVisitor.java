@@ -3,6 +3,8 @@ public class MyVisitor extends MicroCBaseVisitor {
     @Override
     public Object visitProgram(MicroCParser.ProgramContext ctx) {
 
+        System.out.println("Inside Program rule");
+
         return visitChildren(ctx);
 
     }

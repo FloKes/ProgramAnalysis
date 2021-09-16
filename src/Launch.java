@@ -1,8 +1,7 @@
 import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.CharStreams.fromFileName;
-
 import java.io.IOException;
 
 
@@ -14,7 +13,7 @@ public class Launch {
     public static void main(String[] arg) {
         try {
             String source = "micro_c.txt";
-            CharStream cs = fromFileName(source);
+            CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
             MicroCParser parser = new MicroCParser(token);
