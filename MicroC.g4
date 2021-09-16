@@ -58,7 +58,7 @@ rexpr: rexpr opa rexpr
     | (R)SND
     ;
 
-array: LBRACKET (INTEGER|IDENTIFIER) RBRACKET;
+array: LBRACKET (INTEGER|IDENTIFIER) RBRACKET ;
 
 bexpr: rexpr opr rexpr
     | bexpr opb bexpr
