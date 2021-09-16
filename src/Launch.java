@@ -1,6 +1,9 @@
-import org.antlr.v4.runtime.CommonToken;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.CharStreams.fromFileName;
+
+import java.io.IOException;
 
 
 //based on tutorial: https://www.youtube.com/watch?v=dPWWcH5uM0g
@@ -11,16 +14,16 @@ public class Launch {
     public static void main(String[] arg) {
         try {
             String source = "micro_c.txt";
-            Char Stream cs = fromFileName(source);
-            gLexer lexer = new gLexer(cs);
+            CharStream cs = fromFileName(source);
+            MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
-            gParser parser = new gParser(token);
+            MicroCParser parser = new MicroCParser(token);
             ParseTree tree = parser.program();
 
             MyVisitor visitor = new MyVisitor();
+            visitor.visit(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
