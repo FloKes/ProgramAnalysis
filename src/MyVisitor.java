@@ -5,7 +5,7 @@ public class MyVisitor extends MicroCBaseVisitor {
     @Override
     public Object visitProgram(MicroCParser.ProgramContext ctx) {
 
-        System.out.println("Inside Program rule");
+        System.out.println("Sponget");
 
         return visitChildren(ctx);
 
