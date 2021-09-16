@@ -1,7 +1,7 @@
 grammar MicroC;
 
-LPARENT : '(';
-RPARENT : ')';
+LPAREN : '(';
+RPAREN: ')';
 LBRACE : '{';
 RBRACE : '}';
 SEMI : ';';
@@ -35,33 +35,35 @@ R : 'R';
 
 program: LBRACE decl statement RBRACE;
 
-statement : lexpr EQUAL rexpr
-     | R EQUAL LPARENT rexpr COMMA rexpr RPARENT SEMI
-     | statement statement
-     | IF LPARENT bexpr RPARENT LBRACE statement RBRACE
-     | IF LPARENT bexpr RPARENT LBRACE statement RBRACE ELSE LBRACE statement RBRACE
-     | WHILE LPARENT bexpr RPARENT LBRACE statement RBRACE
-     | READ lexpr SEMI
-     | WRITE rexpr SEMI
-     ;
+statement
+    : (IF LPAREN bexpr RPAREN LBRACE statement RBRACE (ELSE LBRACE statement RBRACE)?
+    | lexpr EQUAL rexpr SEMI
+    | R EQUAL LPAREN rexpr COMMA rexpr RPAREN SEMI
+    | WHILE LPAREN bexpr RPAREN LBRACE statement RBRACE
+    | READ lexpr SEMI
+    | WRITE rexpr SEMI)+
+    ;
 
-lexpr: IDENTIFIER (LBRACKET rexpr RBRACKET)*
+lexpr: IDENTIFIER (LBRACKET rexpr RBRACKET)?
     | (R)FST
     | (R)SND
     ;
 
-rexpr: INTEGER
+rexpr: rexpr opa rexpr
+    | variables
+    ;
+
+variables
+    : INTEGER
+    | IDENTIFER (LBRACKET rexpr RBRACKET)?
     | IDENTIFIER
-    | IDENTIFER LBRACKET rexpr RBRACKET
     | (R)FST
     | (R)SND
-    | rexpr opa rexpr
-    ;
 
-bexpr: TRUE
-    | FALSE
-    | rexpr opr rexpr
+bexpr: variables opr variables
     | bexpr opb bexpr
+    | TRUE
+    | FALSE
     | NOT bexpr
     ;
 
@@ -99,6 +101,6 @@ LETTER : 'A'..'Z'
        | '_'
        ;
 
-
+COMMENT : '/*' .*? '*/' -> channel(HIDDEN);
 
 WS : (' '|'\r'|'\t'|'\u000C'|'\n') -> skip ;
