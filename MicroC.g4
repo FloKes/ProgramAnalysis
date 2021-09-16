@@ -44,23 +44,23 @@ statement
     | WRITE rexpr SEMI)+
     ;
 
-lexpr: IDENTIFIER (LBRACKET rexpr RBRACKET)?
+lexpr: IDENTIFIER array
+    | IDENTIFIER
     | (R)FST
     | (R)SND
     ;
 
 rexpr: rexpr opa rexpr
-    | variables
-    ;
-
-variables
-    : INTEGER
-    | IDENTIFER (LBRACKET rexpr RBRACKET)?
+    | INTEGER
+    | IDENTIFIER array
     | IDENTIFIER
     | (R)FST
     | (R)SND
+    ;
 
-bexpr: variables opr variables
+array: LBRACKET (INTEGER|IDENTIFIER) RBRACKET;
+
+bexpr: rexpr opr rexpr
     | bexpr opb bexpr
     | TRUE
     | FALSE
