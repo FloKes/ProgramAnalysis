@@ -32,8 +32,11 @@ WRITE : 'write';
 IF : 'if';
 WHILE : 'while';
 R : 'R';
+TRUE : 'true';
+FALSE : 'false';
 
 program: LBRACE decl statement RBRACE;
+
 blockStmnt: LBRACE (decl | statement) RBRACE;
 
 statement
