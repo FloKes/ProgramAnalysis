@@ -1,4 +1,4 @@
-// Generated from C:/Users/musta/OneDrive/Project-folder DTU/7 semester/Program Analysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/mkbm/Desktop/School/programanalysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -16,11 +16,59 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(MicroCParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MicroCParser#blockStmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockStmnt(MicroCParser.BlockStmntContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MicroCParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStatement(MicroCParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#ifElse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElse(MicroCParser.IfElseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#elseStmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStmnt(MicroCParser.ElseStmntContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#lAssign}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLAssign(MicroCParser.LAssignContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#recordAssign}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecordAssign(MicroCParser.RecordAssignContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#whileStmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStmnt(MicroCParser.WhileStmntContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#readStmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReadStmnt(MicroCParser.ReadStmntContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#writeStmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWriteStmnt(MicroCParser.WriteStmntContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MicroCParser#lexpr}.
 	 * @param ctx the parse tree
@@ -51,6 +99,24 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDecl(MicroCParser.DeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#varDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarDecl(MicroCParser.VarDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#arrayDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayDecl(MicroCParser.ArrayDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#recordDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecordDecl(MicroCParser.RecordDeclContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MicroCParser#opa}.
 	 * @param ctx the parse tree

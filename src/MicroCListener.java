@@ -1,4 +1,4 @@
-// Generated from C:/Users/musta/OneDrive/Project-folder DTU/7 semester/Program Analysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/mkbm/Desktop/School/programanalysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -17,6 +17,16 @@ public interface MicroCListener extends ParseTreeListener {
 	 */
 	void exitProgram(MicroCParser.ProgramContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MicroCParser#blockStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockStmnt(MicroCParser.BlockStmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#blockStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockStmnt(MicroCParser.BlockStmntContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MicroCParser#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -26,6 +36,76 @@ public interface MicroCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatement(MicroCParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#ifElse}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElse(MicroCParser.IfElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#ifElse}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElse(MicroCParser.IfElseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#elseStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStmnt(MicroCParser.ElseStmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#elseStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStmnt(MicroCParser.ElseStmntContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#lAssign}.
+	 * @param ctx the parse tree
+	 */
+	void enterLAssign(MicroCParser.LAssignContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#lAssign}.
+	 * @param ctx the parse tree
+	 */
+	void exitLAssign(MicroCParser.LAssignContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#recordAssign}.
+	 * @param ctx the parse tree
+	 */
+	void enterRecordAssign(MicroCParser.RecordAssignContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#recordAssign}.
+	 * @param ctx the parse tree
+	 */
+	void exitRecordAssign(MicroCParser.RecordAssignContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#whileStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStmnt(MicroCParser.WhileStmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#whileStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStmnt(MicroCParser.WhileStmntContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#readStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReadStmnt(MicroCParser.ReadStmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#readStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReadStmnt(MicroCParser.ReadStmntContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#writeStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterWriteStmnt(MicroCParser.WriteStmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#writeStmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitWriteStmnt(MicroCParser.WriteStmntContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroCParser#lexpr}.
 	 * @param ctx the parse tree
@@ -76,6 +156,36 @@ public interface MicroCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDecl(MicroCParser.DeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarDecl(MicroCParser.VarDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarDecl(MicroCParser.VarDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#arrayDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayDecl(MicroCParser.ArrayDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#arrayDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayDecl(MicroCParser.ArrayDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroCParser#recordDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterRecordDecl(MicroCParser.RecordDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroCParser#recordDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitRecordDecl(MicroCParser.RecordDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroCParser#opa}.
 	 * @param ctx the parse tree

@@ -34,16 +34,24 @@ WHILE : 'while';
 R : 'R';
 
 program: LBRACE decl statement RBRACE;
+blockStmnt: LBRACE (decl | statement) RBRACE;
 
 statement
-    : (IF LPAREN bexpr RPAREN LBRACE statement RBRACE (ELSE LBRACE statement RBRACE)?
-    | lexpr EQUAL rexpr SEMI
-    | R EQUAL LPAREN rexpr COMMA rexpr RPAREN SEMI
-    | WHILE LPAREN bexpr RPAREN LBRACE statement RBRACE
-    | READ lexpr SEMI
-    | WRITE rexpr SEMI)+
+    : (ifElse
+    | lAssign
+    | recordAssign
+    | whileStmnt
+    | readStmnt
+    | writeStmnt)*
     ;
 
+ifElse: IF LPAREN bexpr RPAREN blockStmnt (elseStmnt)?;
+elseStmnt: ELSE blockStmnt;
+lAssign: lexpr EQUAL rexpr SEMI;
+recordAssign:  R EQUAL LPAREN rexpr COMMA rexpr RPAREN SEMI;
+whileStmnt: WHILE LPAREN bexpr RPAREN blockStmnt;
+readStmnt:READ lexpr SEMI;
+writeStmnt:WRITE rexpr SEMI;
 lexpr: IDENTIFIER array
     | IDENTIFIER
     | (R)FST
@@ -67,11 +75,15 @@ bexpr: rexpr opr rexpr
     | NOT bexpr
     ;
 
-decl: (INT IDENTIFIER SEMI
-    | INT LBRACKET INTEGER RBRACKET IDENTIFIER SEMI
-    | LBRACE INT IDENTIFIER SEMI INT IDENTIFIER RBRACE R SEMI
+decl: (varDecl
+    | arrayDecl
+    | recordDecl
     )*
     ;
+
+varDecl: INT IDENTIFIER (SEMI)?;
+arrayDecl: INT LBRACKET INTEGER RBRACKET IDENTIFIER SEMI;
+recordDecl: blockStmnt R SEMI;
 
 opa: PLUS
     | MINUS

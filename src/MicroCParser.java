@@ -1,4 +1,4 @@
-// Generated from C:/Users/musta/OneDrive/Project-folder DTU/7 semester/Program Analysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/mkbm/Desktop/School/programanalysis/Program-Analysis-DTU-Fall-21\MicroC.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -22,12 +22,16 @@ public class MicroCParser extends Parser {
 		INT=26, EQUAL=27, READ=28, WRITE=29, IF=30, WHILE=31, R=32, INTEGER=33, 
 		IDENTIFIER=34, COMMENT=35, WS=36, TRUE=37, FALSE=38;
 	public static final int
-		RULE_program = 0, RULE_statement = 1, RULE_lexpr = 2, RULE_rexpr = 3, 
-		RULE_array = 4, RULE_bexpr = 5, RULE_decl = 6, RULE_opa = 7, RULE_opr = 8, 
-		RULE_opb = 9;
+		RULE_program = 0, RULE_blockStmnt = 1, RULE_statement = 2, RULE_ifElse = 3, 
+		RULE_elseStmnt = 4, RULE_lAssign = 5, RULE_recordAssign = 6, RULE_whileStmnt = 7, 
+		RULE_readStmnt = 8, RULE_writeStmnt = 9, RULE_lexpr = 10, RULE_rexpr = 11, 
+		RULE_array = 12, RULE_bexpr = 13, RULE_decl = 14, RULE_varDecl = 15, RULE_arrayDecl = 16, 
+		RULE_recordDecl = 17, RULE_opa = 18, RULE_opr = 19, RULE_opb = 20;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "statement", "lexpr", "rexpr", "array", "bexpr", "decl", "opa", 
+			"program", "blockStmnt", "statement", "ifElse", "elseStmnt", "lAssign", 
+			"recordAssign", "whileStmnt", "readStmnt", "writeStmnt", "lexpr", "rexpr", 
+			"array", "bexpr", "decl", "varDecl", "arrayDecl", "recordDecl", "opa", 
 			"opr", "opb"
 		};
 	}
@@ -136,13 +140,80 @@ public class MicroCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(20);
+			setState(42);
 			match(LBRACE);
-			setState(21);
+			setState(43);
 			decl();
-			setState(22);
+			setState(44);
 			statement();
-			setState(23);
+			setState(45);
+			match(RBRACE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class BlockStmntContext extends ParserRuleContext {
+		public TerminalNode LBRACE() { return getToken(MicroCParser.LBRACE, 0); }
+		public TerminalNode RBRACE() { return getToken(MicroCParser.RBRACE, 0); }
+		public DeclContext decl() {
+			return getRuleContext(DeclContext.class,0);
+		}
+		public StatementContext statement() {
+			return getRuleContext(StatementContext.class,0);
+		}
+		public BlockStmntContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_blockStmnt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterBlockStmnt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitBlockStmnt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitBlockStmnt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BlockStmntContext blockStmnt() throws RecognitionException {
+		BlockStmntContext _localctx = new BlockStmntContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_blockStmnt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(47);
+			match(LBRACE);
+			setState(50);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
+			case 1:
+				{
+				setState(48);
+				decl();
+				}
+				break;
+			case 2:
+				{
+				setState(49);
+				statement();
+				}
+				break;
+			}
+			setState(52);
 			match(RBRACE);
 			}
 		}
@@ -158,81 +229,41 @@ public class MicroCParser extends Parser {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
-		public List<TerminalNode> IF() { return getTokens(MicroCParser.IF); }
-		public TerminalNode IF(int i) {
-			return getToken(MicroCParser.IF, i);
+		public List<IfElseContext> ifElse() {
+			return getRuleContexts(IfElseContext.class);
 		}
-		public List<TerminalNode> LPAREN() { return getTokens(MicroCParser.LPAREN); }
-		public TerminalNode LPAREN(int i) {
-			return getToken(MicroCParser.LPAREN, i);
+		public IfElseContext ifElse(int i) {
+			return getRuleContext(IfElseContext.class,i);
 		}
-		public List<BexprContext> bexpr() {
-			return getRuleContexts(BexprContext.class);
+		public List<LAssignContext> lAssign() {
+			return getRuleContexts(LAssignContext.class);
 		}
-		public BexprContext bexpr(int i) {
-			return getRuleContext(BexprContext.class,i);
+		public LAssignContext lAssign(int i) {
+			return getRuleContext(LAssignContext.class,i);
 		}
-		public List<TerminalNode> RPAREN() { return getTokens(MicroCParser.RPAREN); }
-		public TerminalNode RPAREN(int i) {
-			return getToken(MicroCParser.RPAREN, i);
+		public List<RecordAssignContext> recordAssign() {
+			return getRuleContexts(RecordAssignContext.class);
 		}
-		public List<TerminalNode> LBRACE() { return getTokens(MicroCParser.LBRACE); }
-		public TerminalNode LBRACE(int i) {
-			return getToken(MicroCParser.LBRACE, i);
+		public RecordAssignContext recordAssign(int i) {
+			return getRuleContext(RecordAssignContext.class,i);
 		}
-		public List<StatementContext> statement() {
-			return getRuleContexts(StatementContext.class);
+		public List<WhileStmntContext> whileStmnt() {
+			return getRuleContexts(WhileStmntContext.class);
 		}
-		public StatementContext statement(int i) {
-			return getRuleContext(StatementContext.class,i);
+		public WhileStmntContext whileStmnt(int i) {
+			return getRuleContext(WhileStmntContext.class,i);
 		}
-		public List<TerminalNode> RBRACE() { return getTokens(MicroCParser.RBRACE); }
-		public TerminalNode RBRACE(int i) {
-			return getToken(MicroCParser.RBRACE, i);
+		public List<ReadStmntContext> readStmnt() {
+			return getRuleContexts(ReadStmntContext.class);
 		}
-		public List<LexprContext> lexpr() {
-			return getRuleContexts(LexprContext.class);
+		public ReadStmntContext readStmnt(int i) {
+			return getRuleContext(ReadStmntContext.class,i);
 		}
-		public LexprContext lexpr(int i) {
-			return getRuleContext(LexprContext.class,i);
+		public List<WriteStmntContext> writeStmnt() {
+			return getRuleContexts(WriteStmntContext.class);
 		}
-		public List<TerminalNode> EQUAL() { return getTokens(MicroCParser.EQUAL); }
-		public TerminalNode EQUAL(int i) {
-			return getToken(MicroCParser.EQUAL, i);
-		}
-		public List<RexprContext> rexpr() {
-			return getRuleContexts(RexprContext.class);
-		}
-		public RexprContext rexpr(int i) {
-			return getRuleContext(RexprContext.class,i);
-		}
-		public List<TerminalNode> SEMI() { return getTokens(MicroCParser.SEMI); }
-		public TerminalNode SEMI(int i) {
-			return getToken(MicroCParser.SEMI, i);
-		}
-		public List<TerminalNode> R() { return getTokens(MicroCParser.R); }
-		public TerminalNode R(int i) {
-			return getToken(MicroCParser.R, i);
-		}
-		public List<TerminalNode> COMMA() { return getTokens(MicroCParser.COMMA); }
-		public TerminalNode COMMA(int i) {
-			return getToken(MicroCParser.COMMA, i);
-		}
-		public List<TerminalNode> WHILE() { return getTokens(MicroCParser.WHILE); }
-		public TerminalNode WHILE(int i) {
-			return getToken(MicroCParser.WHILE, i);
-		}
-		public List<TerminalNode> READ() { return getTokens(MicroCParser.READ); }
-		public TerminalNode READ(int i) {
-			return getToken(MicroCParser.READ, i);
-		}
-		public List<TerminalNode> WRITE() { return getTokens(MicroCParser.WRITE); }
-		public TerminalNode WRITE(int i) {
-			return getToken(MicroCParser.WRITE, i);
-		}
-		public List<TerminalNode> ELSE() { return getTokens(MicroCParser.ELSE); }
-		public TerminalNode ELSE(int i) {
-			return getToken(MicroCParser.ELSE, i);
+		public WriteStmntContext writeStmnt(int i) {
+			return getRuleContext(WriteStmntContext.class,i);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -255,129 +286,460 @@ public class MicroCParser extends Parser {
 
 	public final StatementContext statement() throws RecognitionException {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_statement);
+		enterRule(_localctx, 4, RULE_statement);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(69); 
+			setState(62);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			do {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << READ) | (1L << WRITE) | (1L << IF) | (1L << WHILE) | (1L << R) | (1L << IDENTIFIER))) != 0)) {
 				{
-				setState(69);
+				setState(60);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 				case 1:
 					{
-					setState(25);
-					match(IF);
-					setState(26);
-					match(LPAREN);
-					setState(27);
-					bexpr(0);
-					setState(28);
-					match(RPAREN);
-					setState(29);
-					match(LBRACE);
-					setState(30);
-					statement();
-					setState(31);
-					match(RBRACE);
-					setState(37);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-					if (_la==ELSE) {
-						{
-						setState(32);
-						match(ELSE);
-						setState(33);
-						match(LBRACE);
-						setState(34);
-						statement();
-						setState(35);
-						match(RBRACE);
-						}
-					}
-
+					setState(54);
+					ifElse();
 					}
 					break;
 				case 2:
 					{
-					setState(39);
-					lexpr();
-					setState(40);
-					match(EQUAL);
-					setState(41);
-					rexpr(0);
-					setState(42);
-					match(SEMI);
+					setState(55);
+					lAssign();
 					}
 					break;
 				case 3:
 					{
-					setState(44);
-					match(R);
-					setState(45);
-					match(EQUAL);
-					setState(46);
-					match(LPAREN);
-					setState(47);
-					rexpr(0);
-					setState(48);
-					match(COMMA);
-					setState(49);
-					rexpr(0);
-					setState(50);
-					match(RPAREN);
-					setState(51);
-					match(SEMI);
+					setState(56);
+					recordAssign();
 					}
 					break;
 				case 4:
 					{
-					setState(53);
-					match(WHILE);
-					setState(54);
-					match(LPAREN);
-					setState(55);
-					bexpr(0);
-					setState(56);
-					match(RPAREN);
 					setState(57);
-					match(LBRACE);
-					setState(58);
-					statement();
-					setState(59);
-					match(RBRACE);
+					whileStmnt();
 					}
 					break;
 				case 5:
 					{
-					setState(61);
-					match(READ);
-					setState(62);
-					lexpr();
-					setState(63);
-					match(SEMI);
+					setState(58);
+					readStmnt();
 					}
 					break;
 				case 6:
 					{
-					setState(65);
-					match(WRITE);
-					setState(66);
-					rexpr(0);
-					setState(67);
-					match(SEMI);
+					setState(59);
+					writeStmnt();
 					}
 					break;
 				}
 				}
-				setState(71); 
+				setState(64);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << READ) | (1L << WRITE) | (1L << IF) | (1L << WHILE) | (1L << R) | (1L << IDENTIFIER))) != 0) );
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class IfElseContext extends ParserRuleContext {
+		public TerminalNode IF() { return getToken(MicroCParser.IF, 0); }
+		public TerminalNode LPAREN() { return getToken(MicroCParser.LPAREN, 0); }
+		public BexprContext bexpr() {
+			return getRuleContext(BexprContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(MicroCParser.RPAREN, 0); }
+		public BlockStmntContext blockStmnt() {
+			return getRuleContext(BlockStmntContext.class,0);
+		}
+		public ElseStmntContext elseStmnt() {
+			return getRuleContext(ElseStmntContext.class,0);
+		}
+		public IfElseContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ifElse; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterIfElse(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitIfElse(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitIfElse(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final IfElseContext ifElse() throws RecognitionException {
+		IfElseContext _localctx = new IfElseContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_ifElse);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(65);
+			match(IF);
+			setState(66);
+			match(LPAREN);
+			setState(67);
+			bexpr(0);
+			setState(68);
+			match(RPAREN);
+			setState(69);
+			blockStmnt();
+			setState(71);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==ELSE) {
+				{
+				setState(70);
+				elseStmnt();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ElseStmntContext extends ParserRuleContext {
+		public TerminalNode ELSE() { return getToken(MicroCParser.ELSE, 0); }
+		public BlockStmntContext blockStmnt() {
+			return getRuleContext(BlockStmntContext.class,0);
+		}
+		public ElseStmntContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_elseStmnt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterElseStmnt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitElseStmnt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitElseStmnt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ElseStmntContext elseStmnt() throws RecognitionException {
+		ElseStmntContext _localctx = new ElseStmntContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_elseStmnt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(73);
+			match(ELSE);
+			setState(74);
+			blockStmnt();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class LAssignContext extends ParserRuleContext {
+		public LexprContext lexpr() {
+			return getRuleContext(LexprContext.class,0);
+		}
+		public TerminalNode EQUAL() { return getToken(MicroCParser.EQUAL, 0); }
+		public RexprContext rexpr() {
+			return getRuleContext(RexprContext.class,0);
+		}
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public LAssignContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_lAssign; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterLAssign(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitLAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitLAssign(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final LAssignContext lAssign() throws RecognitionException {
+		LAssignContext _localctx = new LAssignContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_lAssign);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(76);
+			lexpr();
+			setState(77);
+			match(EQUAL);
+			setState(78);
+			rexpr(0);
+			setState(79);
+			match(SEMI);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RecordAssignContext extends ParserRuleContext {
+		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode EQUAL() { return getToken(MicroCParser.EQUAL, 0); }
+		public TerminalNode LPAREN() { return getToken(MicroCParser.LPAREN, 0); }
+		public List<RexprContext> rexpr() {
+			return getRuleContexts(RexprContext.class);
+		}
+		public RexprContext rexpr(int i) {
+			return getRuleContext(RexprContext.class,i);
+		}
+		public TerminalNode COMMA() { return getToken(MicroCParser.COMMA, 0); }
+		public TerminalNode RPAREN() { return getToken(MicroCParser.RPAREN, 0); }
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public RecordAssignContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_recordAssign; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterRecordAssign(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitRecordAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitRecordAssign(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final RecordAssignContext recordAssign() throws RecognitionException {
+		RecordAssignContext _localctx = new RecordAssignContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_recordAssign);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(81);
+			match(R);
+			setState(82);
+			match(EQUAL);
+			setState(83);
+			match(LPAREN);
+			setState(84);
+			rexpr(0);
+			setState(85);
+			match(COMMA);
+			setState(86);
+			rexpr(0);
+			setState(87);
+			match(RPAREN);
+			setState(88);
+			match(SEMI);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class WhileStmntContext extends ParserRuleContext {
+		public TerminalNode WHILE() { return getToken(MicroCParser.WHILE, 0); }
+		public TerminalNode LPAREN() { return getToken(MicroCParser.LPAREN, 0); }
+		public BexprContext bexpr() {
+			return getRuleContext(BexprContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(MicroCParser.RPAREN, 0); }
+		public BlockStmntContext blockStmnt() {
+			return getRuleContext(BlockStmntContext.class,0);
+		}
+		public WhileStmntContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_whileStmnt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterWhileStmnt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitWhileStmnt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitWhileStmnt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final WhileStmntContext whileStmnt() throws RecognitionException {
+		WhileStmntContext _localctx = new WhileStmntContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_whileStmnt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(90);
+			match(WHILE);
+			setState(91);
+			match(LPAREN);
+			setState(92);
+			bexpr(0);
+			setState(93);
+			match(RPAREN);
+			setState(94);
+			blockStmnt();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ReadStmntContext extends ParserRuleContext {
+		public TerminalNode READ() { return getToken(MicroCParser.READ, 0); }
+		public LexprContext lexpr() {
+			return getRuleContext(LexprContext.class,0);
+		}
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public ReadStmntContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_readStmnt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterReadStmnt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitReadStmnt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitReadStmnt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ReadStmntContext readStmnt() throws RecognitionException {
+		ReadStmntContext _localctx = new ReadStmntContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_readStmnt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(96);
+			match(READ);
+			setState(97);
+			lexpr();
+			setState(98);
+			match(SEMI);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class WriteStmntContext extends ParserRuleContext {
+		public TerminalNode WRITE() { return getToken(MicroCParser.WRITE, 0); }
+		public RexprContext rexpr() {
+			return getRuleContext(RexprContext.class,0);
+		}
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public WriteStmntContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_writeStmnt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterWriteStmnt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitWriteStmnt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitWriteStmnt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final WriteStmntContext writeStmnt() throws RecognitionException {
+		WriteStmntContext _localctx = new WriteStmntContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_writeStmnt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(100);
+			match(WRITE);
+			setState(101);
+			rexpr(0);
+			setState(102);
+			match(SEMI);
 			}
 		}
 		catch (RecognitionException re) {
@@ -420,24 +782,24 @@ public class MicroCParser extends Parser {
 
 	public final LexprContext lexpr() throws RecognitionException {
 		LexprContext _localctx = new LexprContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_lexpr);
+		enterRule(_localctx, 20, RULE_lexpr);
 		try {
-			setState(80);
+			setState(111);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(73);
+				setState(104);
 				match(IDENTIFIER);
-				setState(74);
+				setState(105);
 				array();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(75);
+				setState(106);
 				match(IDENTIFIER);
 				}
 				break;
@@ -445,10 +807,10 @@ public class MicroCParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				{
-				setState(76);
+				setState(107);
 				match(R);
 				}
-				setState(77);
+				setState(108);
 				match(FST);
 				}
 				break;
@@ -456,10 +818,10 @@ public class MicroCParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				{
-				setState(78);
+				setState(109);
 				match(R);
 				}
-				setState(79);
+				setState(110);
 				match(SND);
 				}
 				break;
@@ -522,60 +884,60 @@ public class MicroCParser extends Parser {
 		int _parentState = getState();
 		RexprContext _localctx = new RexprContext(_ctx, _parentState);
 		RexprContext _prevctx = _localctx;
-		int _startState = 6;
-		enterRecursionRule(_localctx, 6, RULE_rexpr, _p);
+		int _startState = 22;
+		enterRecursionRule(_localctx, 22, RULE_rexpr, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(122);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
-				setState(83);
+				setState(114);
 				match(INTEGER);
 				}
 				break;
 			case 2:
 				{
-				setState(84);
+				setState(115);
 				match(IDENTIFIER);
-				setState(85);
+				setState(116);
 				array();
 				}
 				break;
 			case 3:
 				{
-				setState(86);
+				setState(117);
 				match(IDENTIFIER);
 				}
 				break;
 			case 4:
 				{
 				{
-				setState(87);
+				setState(118);
 				match(R);
 				}
-				setState(88);
+				setState(119);
 				match(FST);
 				}
 				break;
 			case 5:
 				{
 				{
-				setState(89);
+				setState(120);
 				match(R);
 				}
-				setState(90);
+				setState(121);
 				match(SND);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(99);
+			setState(130);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -584,18 +946,18 @@ public class MicroCParser extends Parser {
 					{
 					_localctx = new RexprContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_rexpr);
-					setState(93);
+					setState(124);
 					if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-					setState(94);
+					setState(125);
 					opa();
-					setState(95);
+					setState(126);
 					rexpr(7);
 					}
 					} 
 				}
-				setState(101);
+				setState(132);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
 			}
 		}
@@ -636,14 +998,14 @@ public class MicroCParser extends Parser {
 
 	public final ArrayContext array() throws RecognitionException {
 		ArrayContext _localctx = new ArrayContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_array);
+		enterRule(_localctx, 24, RULE_array);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(133);
 			match(LBRACKET);
-			setState(103);
+			setState(134);
 			_la = _input.LA(1);
 			if ( !(_la==INTEGER || _la==IDENTIFIER) ) {
 			_errHandler.recoverInline(this);
@@ -653,7 +1015,7 @@ public class MicroCParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(104);
+			setState(135);
 			match(RBRACKET);
 			}
 		}
@@ -718,44 +1080,44 @@ public class MicroCParser extends Parser {
 		int _parentState = getState();
 		BexprContext _localctx = new BexprContext(_ctx, _parentState);
 		BexprContext _prevctx = _localctx;
-		int _startState = 10;
-		enterRecursionRule(_localctx, 10, RULE_bexpr, _p);
+		int _startState = 26;
+		enterRecursionRule(_localctx, 26, RULE_bexpr, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115);
+			setState(146);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case R:
 			case INTEGER:
 			case IDENTIFIER:
 				{
-				setState(107);
+				setState(138);
 				rexpr(0);
-				setState(108);
+				setState(139);
 				opr();
-				setState(109);
+				setState(140);
 				rexpr(0);
 				}
 				break;
 			case TRUE:
 				{
-				setState(111);
+				setState(142);
 				match(TRUE);
 				}
 				break;
 			case FALSE:
 				{
-				setState(112);
+				setState(143);
 				match(FALSE);
 				}
 				break;
 			case NOT:
 				{
-				setState(113);
+				setState(144);
 				match(NOT);
-				setState(114);
+				setState(145);
 				bexpr(1);
 				}
 				break;
@@ -763,9 +1125,9 @@ public class MicroCParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(123);
+			setState(154);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -774,18 +1136,18 @@ public class MicroCParser extends Parser {
 					{
 					_localctx = new BexprContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_bexpr);
-					setState(117);
+					setState(148);
 					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-					setState(118);
+					setState(149);
 					opb();
-					setState(119);
+					setState(150);
 					bexpr(5);
 					}
 					} 
 				}
-				setState(125);
+				setState(156);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
 			}
 		}
@@ -801,41 +1163,23 @@ public class MicroCParser extends Parser {
 	}
 
 	public static class DeclContext extends ParserRuleContext {
-		public List<TerminalNode> INT() { return getTokens(MicroCParser.INT); }
-		public TerminalNode INT(int i) {
-			return getToken(MicroCParser.INT, i);
+		public List<VarDeclContext> varDecl() {
+			return getRuleContexts(VarDeclContext.class);
 		}
-		public List<TerminalNode> IDENTIFIER() { return getTokens(MicroCParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(MicroCParser.IDENTIFIER, i);
+		public VarDeclContext varDecl(int i) {
+			return getRuleContext(VarDeclContext.class,i);
 		}
-		public List<TerminalNode> SEMI() { return getTokens(MicroCParser.SEMI); }
-		public TerminalNode SEMI(int i) {
-			return getToken(MicroCParser.SEMI, i);
+		public List<ArrayDeclContext> arrayDecl() {
+			return getRuleContexts(ArrayDeclContext.class);
 		}
-		public List<TerminalNode> LBRACKET() { return getTokens(MicroCParser.LBRACKET); }
-		public TerminalNode LBRACKET(int i) {
-			return getToken(MicroCParser.LBRACKET, i);
+		public ArrayDeclContext arrayDecl(int i) {
+			return getRuleContext(ArrayDeclContext.class,i);
 		}
-		public List<TerminalNode> INTEGER() { return getTokens(MicroCParser.INTEGER); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(MicroCParser.INTEGER, i);
+		public List<RecordDeclContext> recordDecl() {
+			return getRuleContexts(RecordDeclContext.class);
 		}
-		public List<TerminalNode> RBRACKET() { return getTokens(MicroCParser.RBRACKET); }
-		public TerminalNode RBRACKET(int i) {
-			return getToken(MicroCParser.RBRACKET, i);
-		}
-		public List<TerminalNode> LBRACE() { return getTokens(MicroCParser.LBRACE); }
-		public TerminalNode LBRACE(int i) {
-			return getToken(MicroCParser.LBRACE, i);
-		}
-		public List<TerminalNode> RBRACE() { return getTokens(MicroCParser.RBRACE); }
-		public TerminalNode RBRACE(int i) {
-			return getToken(MicroCParser.RBRACE, i);
-		}
-		public List<TerminalNode> R() { return getTokens(MicroCParser.R); }
-		public TerminalNode R(int i) {
-			return getToken(MicroCParser.R, i);
+		public RecordDeclContext recordDecl(int i) {
+			return getRuleContext(RecordDeclContext.class,i);
 		}
 		public DeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -858,73 +1202,207 @@ public class MicroCParser extends Parser {
 
 	public final DeclContext decl() throws RecognitionException {
 		DeclContext _localctx = new DeclContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_decl);
+		enterRule(_localctx, 28, RULE_decl);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(146);
+			setState(162);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==LBRACE || _la==INT) {
 				{
-				setState(144);
+				setState(160);
 				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+				switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 				case 1:
 					{
-					setState(126);
-					match(INT);
-					setState(127);
-					match(IDENTIFIER);
-					setState(128);
-					match(SEMI);
+					setState(157);
+					varDecl();
 					}
 					break;
 				case 2:
 					{
-					setState(129);
-					match(INT);
-					setState(130);
-					match(LBRACKET);
-					setState(131);
-					match(INTEGER);
-					setState(132);
-					match(RBRACKET);
-					setState(133);
-					match(IDENTIFIER);
-					setState(134);
-					match(SEMI);
+					setState(158);
+					arrayDecl();
 					}
 					break;
 				case 3:
 					{
-					setState(135);
-					match(LBRACE);
-					setState(136);
-					match(INT);
-					setState(137);
-					match(IDENTIFIER);
-					setState(138);
-					match(SEMI);
-					setState(139);
-					match(INT);
-					setState(140);
-					match(IDENTIFIER);
-					setState(141);
-					match(RBRACE);
-					setState(142);
-					match(R);
-					setState(143);
-					match(SEMI);
+					setState(159);
+					recordDecl();
 					}
 					break;
 				}
 				}
-				setState(148);
+				setState(164);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class VarDeclContext extends ParserRuleContext {
+		public TerminalNode INT() { return getToken(MicroCParser.INT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public VarDeclContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_varDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterVarDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitVarDecl(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitVarDecl(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final VarDeclContext varDecl() throws RecognitionException {
+		VarDeclContext _localctx = new VarDeclContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_varDecl);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(165);
+			match(INT);
+			setState(166);
+			match(IDENTIFIER);
+			setState(168);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==SEMI) {
+				{
+				setState(167);
+				match(SEMI);
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ArrayDeclContext extends ParserRuleContext {
+		public TerminalNode INT() { return getToken(MicroCParser.INT, 0); }
+		public TerminalNode LBRACKET() { return getToken(MicroCParser.LBRACKET, 0); }
+		public TerminalNode INTEGER() { return getToken(MicroCParser.INTEGER, 0); }
+		public TerminalNode RBRACKET() { return getToken(MicroCParser.RBRACKET, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public ArrayDeclContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arrayDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterArrayDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitArrayDecl(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitArrayDecl(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ArrayDeclContext arrayDecl() throws RecognitionException {
+		ArrayDeclContext _localctx = new ArrayDeclContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_arrayDecl);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(170);
+			match(INT);
+			setState(171);
+			match(LBRACKET);
+			setState(172);
+			match(INTEGER);
+			setState(173);
+			match(RBRACKET);
+			setState(174);
+			match(IDENTIFIER);
+			setState(175);
+			match(SEMI);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RecordDeclContext extends ParserRuleContext {
+		public BlockStmntContext blockStmnt() {
+			return getRuleContext(BlockStmntContext.class,0);
+		}
+		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
+		public RecordDeclContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_recordDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).enterRecordDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MicroCListener ) ((MicroCListener)listener).exitRecordDecl(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitRecordDecl(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final RecordDeclContext recordDecl() throws RecognitionException {
+		RecordDeclContext _localctx = new RecordDeclContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_recordDecl);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(177);
+			blockStmnt();
+			setState(178);
+			match(R);
+			setState(179);
+			match(SEMI);
 			}
 		}
 		catch (RecognitionException re) {
@@ -965,12 +1443,12 @@ public class MicroCParser extends Parser {
 
 	public final OpaContext opa() throws RecognitionException {
 		OpaContext _localctx = new OpaContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_opa);
+		enterRule(_localctx, 36, RULE_opa);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149);
+			setState(181);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PLUS) | (1L << MINUS) | (1L << MULT) | (1L << DIV) | (1L << MOD))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1021,12 +1499,12 @@ public class MicroCParser extends Parser {
 
 	public final OprContext opr() throws RecognitionException {
 		OprContext _localctx = new OprContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_opr);
+		enterRule(_localctx, 38, RULE_opr);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(151);
+			setState(183);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << GE) | (1L << LT) | (1L << LE) | (1L << EQ) | (1L << NEQ))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1073,12 +1551,12 @@ public class MicroCParser extends Parser {
 
 	public final OpbContext opb() throws RecognitionException {
 		OpbContext _localctx = new OpbContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_opb);
+		enterRule(_localctx, 40, RULE_opb);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(153);
+			setState(185);
 			_la = _input.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			_errHandler.recoverInline(this);
@@ -1103,9 +1581,9 @@ public class MicroCParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 3:
+		case 11:
 			return rexpr_sempred((RexprContext)_localctx, predIndex);
-		case 5:
+		case 13:
 			return bexpr_sempred((BexprContext)_localctx, predIndex);
 		}
 		return true;
@@ -1126,49 +1604,61 @@ public class MicroCParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u009e\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u00be\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\5\3(\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\6\3H\n"+
-		"\3\r\3\16\3I\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4S\n\4\3\5\3\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\5\5^\n\5\3\5\3\5\3\5\3\5\7\5d\n\5\f\5\16\5g\13\5\3\6"+
-		"\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7v\n\7\3\7\3\7\3\7"+
-		"\3\7\7\7|\n\7\f\7\16\7\177\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3"+
-		"\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\b\u0093\n\b\f\b\16\b\u0096\13\b\3"+
-		"\t\3\t\3\n\3\n\3\13\3\13\3\13\2\4\b\f\f\2\4\6\b\n\f\16\20\22\24\2\6\3"+
-		"\2#$\3\2\n\16\3\2\17\24\3\2\26\27\2\u00a9\2\26\3\2\2\2\4G\3\2\2\2\6R\3"+
-		"\2\2\2\b]\3\2\2\2\nh\3\2\2\2\fu\3\2\2\2\16\u0094\3\2\2\2\20\u0097\3\2"+
-		"\2\2\22\u0099\3\2\2\2\24\u009b\3\2\2\2\26\27\7\5\2\2\27\30\5\16\b\2\30"+
-		"\31\5\4\3\2\31\32\7\6\2\2\32\3\3\2\2\2\33\34\7 \2\2\34\35\7\3\2\2\35\36"+
-		"\5\f\7\2\36\37\7\4\2\2\37 \7\5\2\2 !\5\4\3\2!\'\7\6\2\2\"#\7\31\2\2#$"+
-		"\7\5\2\2$%\5\4\3\2%&\7\6\2\2&(\3\2\2\2\'\"\3\2\2\2\'(\3\2\2\2(H\3\2\2"+
-		"\2)*\5\6\4\2*+\7\35\2\2+,\5\b\5\2,-\7\7\2\2-H\3\2\2\2./\7\"\2\2/\60\7"+
-		"\35\2\2\60\61\7\3\2\2\61\62\5\b\5\2\62\63\7\30\2\2\63\64\5\b\5\2\64\65"+
-		"\7\4\2\2\65\66\7\7\2\2\66H\3\2\2\2\678\7!\2\289\7\3\2\29:\5\f\7\2:;\7"+
-		"\4\2\2;<\7\5\2\2<=\5\4\3\2=>\7\6\2\2>H\3\2\2\2?@\7\36\2\2@A\5\6\4\2AB"+
-		"\7\7\2\2BH\3\2\2\2CD\7\37\2\2DE\5\b\5\2EF\7\7\2\2FH\3\2\2\2G\33\3\2\2"+
-		"\2G)\3\2\2\2G.\3\2\2\2G\67\3\2\2\2G?\3\2\2\2GC\3\2\2\2HI\3\2\2\2IG\3\2"+
-		"\2\2IJ\3\2\2\2J\5\3\2\2\2KL\7$\2\2LS\5\n\6\2MS\7$\2\2NO\7\"\2\2OS\7\32"+
-		"\2\2PQ\7\"\2\2QS\7\33\2\2RK\3\2\2\2RM\3\2\2\2RN\3\2\2\2RP\3\2\2\2S\7\3"+
-		"\2\2\2TU\b\5\1\2U^\7#\2\2VW\7$\2\2W^\5\n\6\2X^\7$\2\2YZ\7\"\2\2Z^\7\32"+
-		"\2\2[\\\7\"\2\2\\^\7\33\2\2]T\3\2\2\2]V\3\2\2\2]X\3\2\2\2]Y\3\2\2\2]["+
-		"\3\2\2\2^e\3\2\2\2_`\f\b\2\2`a\5\20\t\2ab\5\b\5\tbd\3\2\2\2c_\3\2\2\2"+
-		"dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2f\t\3\2\2\2ge\3\2\2\2hi\7\b\2\2ij\t\2\2"+
-		"\2jk\7\t\2\2k\13\3\2\2\2lm\b\7\1\2mn\5\b\5\2no\5\22\n\2op\5\b\5\2pv\3"+
-		"\2\2\2qv\7\'\2\2rv\7(\2\2st\7\25\2\2tv\5\f\7\3ul\3\2\2\2uq\3\2\2\2ur\3"+
-		"\2\2\2us\3\2\2\2v}\3\2\2\2wx\f\6\2\2xy\5\24\13\2yz\5\f\7\7z|\3\2\2\2{"+
-		"w\3\2\2\2|\177\3\2\2\2}{\3\2\2\2}~\3\2\2\2~\r\3\2\2\2\177}\3\2\2\2\u0080"+
-		"\u0081\7\34\2\2\u0081\u0082\7$\2\2\u0082\u0093\7\7\2\2\u0083\u0084\7\34"+
-		"\2\2\u0084\u0085\7\b\2\2\u0085\u0086\7#\2\2\u0086\u0087\7\t\2\2\u0087"+
-		"\u0088\7$\2\2\u0088\u0093\7\7\2\2\u0089\u008a\7\5\2\2\u008a\u008b\7\34"+
-		"\2\2\u008b\u008c\7$\2\2\u008c\u008d\7\7\2\2\u008d\u008e\7\34\2\2\u008e"+
-		"\u008f\7$\2\2\u008f\u0090\7\6\2\2\u0090\u0091\7\"\2\2\u0091\u0093\7\7"+
-		"\2\2\u0092\u0080\3\2\2\2\u0092\u0083\3\2\2\2\u0092\u0089\3\2\2\2\u0093"+
-		"\u0096\3\2\2\2\u0094\u0092\3\2\2\2\u0094\u0095\3\2\2\2\u0095\17\3\2\2"+
-		"\2\u0096\u0094\3\2\2\2\u0097\u0098\t\3\2\2\u0098\21\3\2\2\2\u0099\u009a"+
-		"\t\4\2\2\u009a\23\3\2\2\2\u009b\u009c\t\5\2\2\u009c\25\3\2\2\2\f\'GIR"+
-		"]eu}\u0092\u0094";
+		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3"+
+		"\3\5\3\65\n\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4?\n\4\f\4\16\4B\13\4"+
+		"\3\5\3\5\3\5\3\5\3\5\3\5\5\5J\n\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3"+
+		"\n\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\fr\n\f\3\r\3\r\3"+
+		"\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r}\n\r\3\r\3\r\3\r\3\r\7\r\u0083\n\r\f\r"+
+		"\16\r\u0086\13\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\5\17\u0095\n\17\3\17\3\17\3\17\3\17\7\17\u009b\n\17\f\17\16"+
+		"\17\u009e\13\17\3\20\3\20\3\20\7\20\u00a3\n\20\f\20\16\20\u00a6\13\20"+
+		"\3\21\3\21\3\21\5\21\u00ab\n\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\23"+
+		"\3\23\3\23\3\23\3\24\3\24\3\25\3\25\3\26\3\26\3\26\2\4\30\34\27\2\4\6"+
+		"\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*\2\6\3\2#$\3\2\n\16\3\2\17\24"+
+		"\3\2\26\27\2\u00c0\2,\3\2\2\2\4\61\3\2\2\2\6@\3\2\2\2\bC\3\2\2\2\nK\3"+
+		"\2\2\2\fN\3\2\2\2\16S\3\2\2\2\20\\\3\2\2\2\22b\3\2\2\2\24f\3\2\2\2\26"+
+		"q\3\2\2\2\30|\3\2\2\2\32\u0087\3\2\2\2\34\u0094\3\2\2\2\36\u00a4\3\2\2"+
+		"\2 \u00a7\3\2\2\2\"\u00ac\3\2\2\2$\u00b3\3\2\2\2&\u00b7\3\2\2\2(\u00b9"+
+		"\3\2\2\2*\u00bb\3\2\2\2,-\7\5\2\2-.\5\36\20\2./\5\6\4\2/\60\7\6\2\2\60"+
+		"\3\3\2\2\2\61\64\7\5\2\2\62\65\5\36\20\2\63\65\5\6\4\2\64\62\3\2\2\2\64"+
+		"\63\3\2\2\2\65\66\3\2\2\2\66\67\7\6\2\2\67\5\3\2\2\28?\5\b\5\29?\5\f\7"+
+		"\2:?\5\16\b\2;?\5\20\t\2<?\5\22\n\2=?\5\24\13\2>8\3\2\2\2>9\3\2\2\2>:"+
+		"\3\2\2\2>;\3\2\2\2><\3\2\2\2>=\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2A"+
+		"\7\3\2\2\2B@\3\2\2\2CD\7 \2\2DE\7\3\2\2EF\5\34\17\2FG\7\4\2\2GI\5\4\3"+
+		"\2HJ\5\n\6\2IH\3\2\2\2IJ\3\2\2\2J\t\3\2\2\2KL\7\31\2\2LM\5\4\3\2M\13\3"+
+		"\2\2\2NO\5\26\f\2OP\7\35\2\2PQ\5\30\r\2QR\7\7\2\2R\r\3\2\2\2ST\7\"\2\2"+
+		"TU\7\35\2\2UV\7\3\2\2VW\5\30\r\2WX\7\30\2\2XY\5\30\r\2YZ\7\4\2\2Z[\7\7"+
+		"\2\2[\17\3\2\2\2\\]\7!\2\2]^\7\3\2\2^_\5\34\17\2_`\7\4\2\2`a\5\4\3\2a"+
+		"\21\3\2\2\2bc\7\36\2\2cd\5\26\f\2de\7\7\2\2e\23\3\2\2\2fg\7\37\2\2gh\5"+
+		"\30\r\2hi\7\7\2\2i\25\3\2\2\2jk\7$\2\2kr\5\32\16\2lr\7$\2\2mn\7\"\2\2"+
+		"nr\7\32\2\2op\7\"\2\2pr\7\33\2\2qj\3\2\2\2ql\3\2\2\2qm\3\2\2\2qo\3\2\2"+
+		"\2r\27\3\2\2\2st\b\r\1\2t}\7#\2\2uv\7$\2\2v}\5\32\16\2w}\7$\2\2xy\7\""+
+		"\2\2y}\7\32\2\2z{\7\"\2\2{}\7\33\2\2|s\3\2\2\2|u\3\2\2\2|w\3\2\2\2|x\3"+
+		"\2\2\2|z\3\2\2\2}\u0084\3\2\2\2~\177\f\b\2\2\177\u0080\5&\24\2\u0080\u0081"+
+		"\5\30\r\t\u0081\u0083\3\2\2\2\u0082~\3\2\2\2\u0083\u0086\3\2\2\2\u0084"+
+		"\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085\31\3\2\2\2\u0086\u0084\3\2\2"+
+		"\2\u0087\u0088\7\b\2\2\u0088\u0089\t\2\2\2\u0089\u008a\7\t\2\2\u008a\33"+
+		"\3\2\2\2\u008b\u008c\b\17\1\2\u008c\u008d\5\30\r\2\u008d\u008e\5(\25\2"+
+		"\u008e\u008f\5\30\r\2\u008f\u0095\3\2\2\2\u0090\u0095\7\'\2\2\u0091\u0095"+
+		"\7(\2\2\u0092\u0093\7\25\2\2\u0093\u0095\5\34\17\3\u0094\u008b\3\2\2\2"+
+		"\u0094\u0090\3\2\2\2\u0094\u0091\3\2\2\2\u0094\u0092\3\2\2\2\u0095\u009c"+
+		"\3\2\2\2\u0096\u0097\f\6\2\2\u0097\u0098\5*\26\2\u0098\u0099\5\34\17\7"+
+		"\u0099\u009b\3\2\2\2\u009a\u0096\3\2\2\2\u009b\u009e\3\2\2\2\u009c\u009a"+
+		"\3\2\2\2\u009c\u009d\3\2\2\2\u009d\35\3\2\2\2\u009e\u009c\3\2\2\2\u009f"+
+		"\u00a3\5 \21\2\u00a0\u00a3\5\"\22\2\u00a1\u00a3\5$\23\2\u00a2\u009f\3"+
+		"\2\2\2\u00a2\u00a0\3\2\2\2\u00a2\u00a1\3\2\2\2\u00a3\u00a6\3\2\2\2\u00a4"+
+		"\u00a2\3\2\2\2\u00a4\u00a5\3\2\2\2\u00a5\37\3\2\2\2\u00a6\u00a4\3\2\2"+
+		"\2\u00a7\u00a8\7\34\2\2\u00a8\u00aa\7$\2\2\u00a9\u00ab\7\7\2\2\u00aa\u00a9"+
+		"\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab!\3\2\2\2\u00ac\u00ad\7\34\2\2\u00ad"+
+		"\u00ae\7\b\2\2\u00ae\u00af\7#\2\2\u00af\u00b0\7\t\2\2\u00b0\u00b1\7$\2"+
+		"\2\u00b1\u00b2\7\7\2\2\u00b2#\3\2\2\2\u00b3\u00b4\5\4\3\2\u00b4\u00b5"+
+		"\7\"\2\2\u00b5\u00b6\7\7\2\2\u00b6%\3\2\2\2\u00b7\u00b8\t\3\2\2\u00b8"+
+		"\'\3\2\2\2\u00b9\u00ba\t\4\2\2\u00ba)\3\2\2\2\u00bb\u00bc\t\5\2\2\u00bc"+
+		"+\3\2\2\2\16\64>@Iq|\u0084\u0094\u009c\u00a2\u00a4\u00aa";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
