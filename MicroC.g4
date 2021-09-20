@@ -42,7 +42,7 @@ statement
     | recordAssign
     | whileStmnt
     | readStmnt
-    | writeStmnt)*
+    | writeStmnt)+
     ;
 
 ifElse: IF LPAREN bexpr RPAREN blockStmnt (elseStmnt)?;
