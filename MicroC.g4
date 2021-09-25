@@ -35,7 +35,7 @@ R : 'R';
 TRUE : 'true';
 FALSE : 'false';
 
-program: LBRACE decl statement RBRACE;
+program: LBRACE decl statement RBRACE EOF;
 
 blockStmnt: LBRACE (decl | statement) RBRACE;
 
@@ -107,6 +107,9 @@ opr: GT
 opb: AND
     | OR
     ;
+
+
+/* Tokens */
 
 INTEGER : ('0' | '1'..'9' '0'..'9'*);
 IDENTIFIER : LETTER (LETTER|'0'..'9')* ;
