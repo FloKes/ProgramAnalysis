@@ -1,14 +1,13 @@
 package microC;
 
-public class VariableDeclaration extends Expression {
+public class VariableDeclaration extends Declaration {
 
-    private String id;
+    private String identifier;
     private String type; //if we want to extend types create Type class
-    public int value;
 
-    public VariableDeclaration(String id, String type, int value) {
-        this.id = id;
+
+    public VariableDeclaration(String identifier, String type) {
+        this.identifier = identifier;
         this.type = type;
-        this.value = value;
     }
 }

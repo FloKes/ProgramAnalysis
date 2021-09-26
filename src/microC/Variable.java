@@ -1,6 +1,6 @@
 package microC;
 
-public class Variable extends Expression {
+public class Variable extends Rexpression {
     String id;
 
     public Variable(String id) {

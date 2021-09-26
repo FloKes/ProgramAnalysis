@@ -1,10 +1,10 @@
 package microC;
 
 public class Addition {
-    Expression left;
-    Expression right;
+    Rexpression left;
+    Rexpression right;
 
-    public Addition(Expression left, Expression right) {
+    public Addition(Rexpression left, Rexpression right) {
         this.left = right;
         this.right = right;
     }

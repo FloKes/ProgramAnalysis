@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Program {
-    private List<Expression> expressions;
+
+    private List<Rexpression> expressions;
 
 
     public Program() {
@@ -12,7 +13,7 @@ public class Program {
     }
 
 
-    public void addExpression(Expression e) {
+    public void addExpression(Rexpression e) {
         expressions.add(e);
     }
 }

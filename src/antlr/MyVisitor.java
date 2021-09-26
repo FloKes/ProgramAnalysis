@@ -6,7 +6,6 @@ public class MyVisitor extends MicroCBaseVisitor {
     public Object visitProgram(MicroCParser.ProgramContext ctx) {
 
         System.out.println("Sponget");
-
         return visitChildren(ctx);
 
     }

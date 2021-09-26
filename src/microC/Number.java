@@ -1,6 +1,6 @@
 package microC;
 
-public class Number extends Expression {
+public class Number extends Rexpression {
 
     int num;
 

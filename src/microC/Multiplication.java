@@ -1,8 +1,8 @@
 package microC;
 
-public class Multiplication extends Expression {
-    Expression left;
-    Expression right;
+public class Multiplication extends Rexpression {
+    Rexpression left;
+    Rexpression right;
 
     @Override
     public String toString() {
