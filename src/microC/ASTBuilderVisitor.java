@@ -3,6 +3,8 @@ package microC;
 import antlr.MicroCBaseVisitor;
 import antlr.MicroCParser;
 
+import javax.swing.plaf.nimbus.State;
+
 public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
@@ -17,6 +19,28 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
             }
         }
         return prog;
+    }
+
+    @Override
+    public AbstractNode visitStatement(MicroCParser.StatementContext ctx) {
+        var statement =  new Statement();
+        for (var a : ctx.children) {
+            if (a instanceof MicroCParser.IfElseContext){
+
+            }
+            else if(a instanceof MicroCParser.LAssignContext){
+            }
+            else if(a instanceof MicroCParser.RecordAssignContext){
+            }
+            else if(a instanceof MicroCParser.WhileStmntContext){
+            }
+            else if(a instanceof MicroCParser.ReadStmntContext){
+            }
+            else if(a instanceof MicroCParser.WriteStmntContext){
+
+            }
+        }
+        return statement;
     }
 
     @Override
