@@ -1,6 +1,6 @@
 package microC;
 
-public class ArrayDeclaration extends Declaration{
+public class ArrayDeclaration extends AbstractNode{
     private int size;
     private String type;
     private String identifier;

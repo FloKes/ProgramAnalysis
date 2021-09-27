@@ -86,7 +86,7 @@ decl: (varDecl
 
 varDecl: INT IDENTIFIER (EQUAL INTEGER)? (SEMI)?;
 arrayDecl: INT LBRACKET INTEGER RBRACKET IDENTIFIER SEMI;
-recordDecl: blockStmnt R SEMI;
+recordDecl: LBRACE varDecl varDecl RBRACE  R SEMI;
 
 opa: PLUS
     | MINUS

@@ -1,6 +1,6 @@
 package microC;
 
-public class VariableDeclaration extends Declaration {
+public class VariableDeclaration extends AbstractNode {
 
     private String identifier;
     private String type; //if we want to extend types create Type class

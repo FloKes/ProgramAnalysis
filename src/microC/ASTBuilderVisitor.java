@@ -87,6 +87,9 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
     public AbstractNode visitRecordDecl(MicroCParser.RecordDeclContext ctx) {
-        return super.visitRecordDecl(ctx);
+        return new RecordDeclaration(
+                (VariableDeclaration) visit(ctx.varDecl(0)),
+                (VariableDeclaration) visit(ctx.varDecl(1))
+        );
     }
 }
