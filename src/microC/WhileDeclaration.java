@@ -6,9 +6,9 @@ import java.util.List;
 public class WhileDeclaration extends AbstractNode {
 
     private Bexpression bExpr;
-    private BlockStatement blockStatement;
+    private BlockNode blockStatement;
 
-    public WhileDeclaration(Bexpression bExpr, BlockStatement blockStatement) {
+    public WhileDeclaration(Bexpression bExpr, BlockNode blockStatement) {
         this.bExpr = bExpr;
         this.blockStatement = blockStatement;
     }

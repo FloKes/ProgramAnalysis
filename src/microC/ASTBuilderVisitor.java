@@ -72,7 +72,7 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     public AbstractNode visitWhileStmnt(MicroCParser.WhileStmntContext ctx) {
             return new WhileDeclaration(
                 (Bexpression) visit(ctx.bexpr()),
-                (BlockStatement) visit(ctx.blockStmnt()));
+                (BlockNode) visit(ctx.blockStmnt()));
     }
 
 
@@ -130,13 +130,13 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     public AbstractNode visitIfElse(MicroCParser.IfElseContext ctx) {
         if(ctx.elseStmnt() != null){
             return new IfElseNode(
-                    (BooleanExprNode) visit(ctx.bexpr()),
+                    (Bexpression) visit(ctx.bexpr()),
                     (BlockNode) visit(ctx.blockStmnt()),
                     (ElseNode) visit(ctx.elseStmnt())
             );
         }
         return new IfElseNode(
-                (BooleanExprNode) visit(ctx.bexpr()),
+                (Bexpression) visit(ctx.bexpr()),
                 (BlockNode) visit(ctx.blockStmnt())
         );
     }

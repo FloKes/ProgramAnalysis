@@ -1,16 +1,16 @@
 package microC;
 
 public class IfElseNode extends AbstractNode{
-    private BooleanExprNode bexpr;
+    private Bexpression bexpr;
     private BlockNode block;
     private ElseNode elseNode;
 
-    public IfElseNode(BooleanExprNode bexpr, BlockNode block, ElseNode elseNode) {
+    public IfElseNode(Bexpression bexpr, BlockNode block, ElseNode elseNode) {
         this.bexpr = bexpr;
         this.block = block;
         this.elseNode = elseNode;
     }
-    public IfElseNode(BooleanExprNode bexpr, BlockNode block) {
+    public IfElseNode(Bexpression bexpr, BlockNode block) {
         this.bexpr = bexpr;
         this.block = block;
     }

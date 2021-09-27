@@ -16,4 +16,8 @@ ArrayList<AbstractNode> children = new ArrayList<>();
     public void setChildren(ArrayList<AbstractNode> children) {
         this.children = children;
     }
+
+    public <T>T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
+        return astBaseVisitor.visit(this);
+    }
 }

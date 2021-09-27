@@ -23,8 +23,12 @@ public class ASTBaseVisitor<T> {
         return visitChildren(bexpr);
     }
 
-    public T visit(BlockStatement bstmnt) {
+    public T visit(BlockNode bstmnt) {
         return visitChildren(bstmnt);
+    }
+
+    protected T aggregateResult(T aggregate, T nextResult) {
+        return nextResult;
     }
 
     public T visit(Declaration d) {
