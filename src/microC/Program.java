@@ -3,17 +3,24 @@ package microC;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Program {
+public class Program extends AbstractNode {
 
-    private List<Rexpression> expressions;
+    private Declaration declNode;
+    private Statement statementNode;
 
-
-    public Program() {
-        this.expressions = new ArrayList<>();
+    public Declaration getDeclNode() {
+        return declNode;
     }
 
+    public void setDeclNode(Declaration declNode) {
+        this.declNode = declNode;
+    }
 
-    public void addExpression(Rexpression e) {
-        expressions.add(e);
+    public Statement getStatementNode() {
+        return statementNode;
+    }
+
+    public void setStatementNode(Statement statementNode) {
+        this.statementNode = statementNode;
     }
 }

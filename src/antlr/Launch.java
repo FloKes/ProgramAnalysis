@@ -1,5 +1,6 @@
 package antlr;
 
+import microC.ASTBuilderVisitor;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -21,8 +22,8 @@ public class Launch {
             MicroCParser parser = new MicroCParser(token);
             ParseTree tree = parser.program();
 
-            MyVisitor visitor = new MyVisitor();
-            visitor.visit(tree);
+            ASTBuilderVisitor visitor = new ASTBuilderVisitor();
+            var prog = visitor.visit(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
