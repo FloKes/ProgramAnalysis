@@ -1,4 +1,4 @@
 package microC;
 
-public class RExprNode extends AbstractNode {
+public class RExprNode extends AbstractNode implements IExprNode {
 }

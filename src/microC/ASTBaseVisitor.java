@@ -35,11 +35,11 @@ public class ASTBaseVisitor<T> {
         return visitChildren(d);
     }
 
-    public T visit(Lexpression lexpr) {
+    public T visit(LExprNode lexpr) {
         return visitChildren(lexpr);
     }
 
-    public T visit(Rexpression rexpr) {
+    public T visit(RExprNode rexpr) {
         return visitChildren(rexpr);
     }
 

@@ -2,9 +2,9 @@ package microC;
 
 public class WriteStatement extends AbstractNode {
 
-    private Rexpression rexpr;
+    private RExprNode rexpr;
 
-    public WriteStatement(Rexpression rexpr) {
+    public WriteStatement(RExprNode rexpr) {
         this.rexpr = rexpr;
     }
 }

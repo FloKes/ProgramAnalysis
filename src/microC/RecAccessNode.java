@@ -1,6 +1,6 @@
 package microC;
 
-public class RecAccessNode extends AbstractNode {
+public class RecAccessNode extends LExprNode {
 
     private RecAccessEnum accessEnum;
     private String Id;

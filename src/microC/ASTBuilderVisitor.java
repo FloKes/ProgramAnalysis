@@ -35,7 +35,7 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
             }
             else if(a instanceof MicroCParser.WhileStmntContext) {
-                statement.addWhileStatement((Statement) visit(a));
+                statement.addWhileStatement((WhileDeclaration) visit(a));
             }
 
             else if(a instanceof MicroCParser.ArrayDeclContext){
@@ -45,10 +45,10 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
             }
             else if(a instanceof MicroCParser.ReadStmntContext) {
-                statement.addReadStatement((Statement) visit(a));
+                statement.addReadStatement((ReadStatement) visit(a));
             }
             else if(a instanceof MicroCParser.WriteStmntContext) {
-                statement.addWriteStatement((Statement) visit(a));
+                statement.addWriteStatement((WriteStatement) visit(a));
             }
         }
         return statement;
@@ -57,14 +57,14 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     @Override
     public AbstractNode visitReadStmnt(MicroCParser.ReadStmntContext ctx) {
         return new ReadStatement(
-                (Lexpression) visit(ctx.lexpr())
+                (LExprNode) visit(ctx.lexpr())
                 );
     }
 
     @Override
     public AbstractNode visitWriteStmnt(MicroCParser.WriteStmntContext ctx) {
         return new WriteStatement(
-                (Rexpression) visit(ctx.rexpr())
+                (RExprNode) visit(ctx.rexpr())
                 );
     }
 

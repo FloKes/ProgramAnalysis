@@ -67,7 +67,6 @@ varIdentifier: IDENTIFIER;
 arrayIndexId: IDENTIFIER array;
 number: INTEGER;
 
-
 rexpr: rexpr opa rexpr
     | number
     | arrayIndexId
