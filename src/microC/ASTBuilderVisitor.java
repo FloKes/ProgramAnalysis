@@ -25,23 +25,56 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     public AbstractNode visitStatement(MicroCParser.StatementContext ctx) {
         var statement =  new Statement();
         for (var a : ctx.children) {
-            if (a instanceof MicroCParser.IfElseContext){
+            if (a instanceof MicroCParser.IfElseContext) {
 
             }
-            else if(a instanceof MicroCParser.LAssignContext){
-            }
-            else if(a instanceof MicroCParser.RecordAssignContext){
-            }
-            else if(a instanceof MicroCParser.WhileStmntContext){
-            }
-            else if(a instanceof MicroCParser.ReadStmntContext){
-            }
-            else if(a instanceof MicroCParser.WriteStmntContext){
+            else if(a instanceof MicroCParser.LAssignContext) {
 
+            }
+            else if(a instanceof MicroCParser.RecordAssignContext) {
+
+            }
+            else if(a instanceof MicroCParser.WhileStmntContext) {
+                statement.addWhileStatement((Statement) visit(a));
+            }
+
+            else if(a instanceof MicroCParser.ArrayDeclContext){
+
+            }
+            else if(a instanceof MicroCParser.RecordDeclContext){
+
+            }
+            else if(a instanceof MicroCParser.ReadStmntContext) {
+                statement.addReadStatement((Statement) visit(a));
+            }
+            else if(a instanceof MicroCParser.WriteStmntContext) {
+                statement.addWriteStatement((Statement) visit(a));
             }
         }
         return statement;
     }
+
+    @Override
+    public AbstractNode visitReadStmnt(MicroCParser.ReadStmntContext ctx) {
+        return new ReadStatement(
+                (Lexpression) visit(ctx.lexpr())
+                );
+    }
+
+    @Override
+    public AbstractNode visitWriteStmnt(MicroCParser.WriteStmntContext ctx) {
+        return new WriteStatement(
+                (Rexpression) visit(ctx.rexpr())
+                );
+    }
+
+    @Override
+    public AbstractNode visitWhileStmnt(MicroCParser.WhileStmntContext ctx) {
+            return new WhileDeclaration(
+                (Bexpression) visit(ctx.bexpr()),
+                (BlockStatement) visit(ctx.blockStmnt()));
+    }
+
 
     @Override
     public AbstractNode visitDecl(MicroCParser.DeclContext ctx) {
