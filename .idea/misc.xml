@@ -13,6 +13,16 @@
           <option name="language" value="" />
           <option name="generateVisitor" value="true" />
         </PerGrammarGenerationSettings>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/src/antlr/MicroC.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="C:\Users\musta\OneDrive\Project-folder DTU\7 semester\Program Analysis\Program-Analysis-DTU-Fall-21\src" />
+          <option name="libDir" value="" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="" />
+          <option name="language" value="" />
+          <option name="generateVisitor" value="true" />
+        </PerGrammarGenerationSettings>
       </list>
     </option>
   </component>
