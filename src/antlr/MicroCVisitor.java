@@ -77,6 +77,36 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLexpr(MicroCParser.LexprContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MicroCParser#recFst}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecFst(MicroCParser.RecFstContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#recSnd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecSnd(MicroCParser.RecSndContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#varIdentifier}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarIdentifier(MicroCParser.VarIdentifierContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#arrayIndexId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayIndexId(MicroCParser.ArrayIndexIdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#number}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumber(MicroCParser.NumberContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MicroCParser#rexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -55,18 +55,25 @@ recordAssign:  R EQUAL LPAREN rexpr COMMA rexpr RPAREN SEMI;
 whileStmnt: WHILE LPAREN bexpr RPAREN blockStmnt;
 readStmnt:READ lexpr SEMI;
 writeStmnt:WRITE rexpr SEMI;
-lexpr: IDENTIFIER array
-    | IDENTIFIER
-    | (R)FST
-    | (R)SND
+
+lexpr: arrayIndexId
+    | varIdentifier
+    | recFst
+    | recSnd
     ;
+recFst: (R)FST ;
+recSnd: (R)SND ;
+varIdentifier: IDENTIFIER;
+arrayIndexId: IDENTIFIER array;
+number: INTEGER;
+
 
 rexpr: rexpr opa rexpr
-    | INTEGER
-    | IDENTIFIER array
-    | IDENTIFIER
-    | (R)FST
-    | (R)SND
+    | number
+    | arrayIndexId
+    | varIdentifier
+    | recFst
+    | recSnd
     ;
 
 array: LBRACKET (INTEGER|IDENTIFIER) RBRACKET ;

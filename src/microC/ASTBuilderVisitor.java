@@ -26,9 +26,10 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
         var statement =  new Statement();
         for (var a : ctx.children) {
             if (a instanceof MicroCParser.IfElseContext){
-
+                statement.AddIfElse((IfElseNode) visit(a));
             }
             else if(a instanceof MicroCParser.LAssignContext){
+                statement.AddLAssign((LAssignNode) visit(a));
             }
             else if(a instanceof MicroCParser.RecordAssignContext){
             }
@@ -91,5 +92,73 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
                 (VariableDeclaration) visit(ctx.varDecl(0)),
                 (VariableDeclaration) visit(ctx.varDecl(1))
         );
+    }
+
+    @Override
+    public AbstractNode visitIfElse(MicroCParser.IfElseContext ctx) {
+        if(ctx.elseStmnt() != null){
+            return new IfElseNode(
+                    (BooleanExprNode) visit(ctx.bexpr()),
+                    (BlockNode) visit(ctx.blockStmnt()),
+                    (ElseNode) visit(ctx.elseStmnt())
+            );
+        }
+        return new IfElseNode(
+                (BooleanExprNode) visit(ctx.bexpr()),
+                (BlockNode) visit(ctx.blockStmnt())
+        );
+    }
+
+    @Override
+    public AbstractNode visitElseStmnt(MicroCParser.ElseStmntContext ctx) {
+        return new ElseNode((BlockNode) visit(ctx.blockStmnt()));
+    }
+
+    @Override
+    public AbstractNode visitLAssign(MicroCParser.LAssignContext ctx) {
+        return new LAssignNode(
+                (LExprNode) visit(ctx.lexpr()),
+                (RExprNode) visit(ctx.rexpr())
+        );
+    }
+
+
+    @Override
+    public AbstractNode visitArray(MicroCParser.ArrayContext ctx) {
+        if(ctx.IDENTIFIER() != null){
+            return new ArrayIndexNode<>(ctx.IDENTIFIER().getText());
+        }
+        return new ArrayIndexNode<>(Integer.parseInt(ctx.INTEGER().getText()));
+    }
+
+    @Override
+    public AbstractNode visitVarIdentifier(MicroCParser.VarIdentifierContext ctx) {
+        return new LExprVarIdNode(ctx.IDENTIFIER().getText());
+    }
+
+    @Override
+    public AbstractNode visitArrayIndexId(MicroCParser.ArrayIndexIdContext ctx) {
+        return new LExprArrayIdNode(ctx.IDENTIFIER().getText(), (ArrayIndexNode) visit(ctx.array()));
+    }
+
+
+    @Override
+    public AbstractNode visitRecFst(MicroCParser.RecFstContext ctx) {
+        return new RecAccessNode(RecAccessEnum.FST, ctx.FST().getText());
+    }
+
+    @Override
+    public AbstractNode visitRecSnd(MicroCParser.RecSndContext ctx) {
+        return new RecAccessNode(RecAccessEnum.SND, ctx.SND().getText());
+    }
+
+    @Override
+    public AbstractNode visitRexpr(MicroCParser.RexprContext ctx) {
+        return super.visitRexpr(ctx);
+    }
+
+    @Override
+    public AbstractNode visitRecordAssign(MicroCParser.RecordAssignContext ctx) {
+        return super.visitRecordAssign(ctx);
     }
 }
