@@ -50,38 +50,33 @@ statement
 
 ifElse: IF LPAREN bexpr RPAREN blockStmnt (elseStmnt)?;
 elseStmnt: ELSE blockStmnt;
-lAssign: lexpr EQUAL rexpr SEMI;
-recordAssign:  R EQUAL LPAREN rexpr COMMA rexpr RPAREN SEMI;
+lAssign: identifierExpr EQUAL valueExpr SEMI;
+recordAssign:  R EQUAL LPAREN valueExpr COMMA valueExpr RPAREN SEMI;
 whileStmnt: WHILE LPAREN bexpr RPAREN blockStmnt;
-readStmnt:READ lexpr SEMI;
-writeStmnt:WRITE rexpr SEMI;
+readStmnt:READ identifierExpr SEMI;
+writeStmnt:WRITE valueExpr SEMI;
 
-lexpr: arrayIndexId
+identifierExpr: arrayIndexId
     | varIdentifier
     | recFst
     | recSnd
     ;
+valueExpr: identifierExpr
+    | number
+    | valueExpr opa valueExpr;
+
 recFst: (R)FST ;
 recSnd: (R)SND ;
 varIdentifier: IDENTIFIER;
-arrayIndexId: IDENTIFIER array;
+arrayIndexId: IDENTIFIER LBRACKET (INTEGER|IDENTIFIER) RBRACKET;
 number: INTEGER;
 
-rexpr: rexpr opa rexpr
-    | number
-    | arrayIndexId
-    | varIdentifier
-    | recFst
-    | recSnd
-    ;
 
-array: LBRACKET (INTEGER|IDENTIFIER) RBRACKET ;
-
-bexpr: rexpr opr rexpr
-    | bexpr opb bexpr
-    | TRUE
-    | FALSE
-    | NOT bexpr
+bexpr: valueExpr opr valueExpr #vexprOpRvexpr
+    | bexpr opb bexpr #bexprOpBbexpr
+    | TRUE #trueTerm
+    | FALSE #falseTerm
+    | NOT bexpr #notBexpr
     ;
 
 decl: (varDecl

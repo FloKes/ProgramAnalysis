@@ -1,6 +1,8 @@
-package microC;
+package microC.Expressions;
 
-public class RecAccessNode extends LExprNode {
+import microC.ASTBaseVisitor;
+
+public class RecAccessNode extends IdentifierExpressionNode {
 
     private RecAccessEnum accessEnum;
     private String Id;
@@ -16,5 +18,10 @@ public class RecAccessNode extends LExprNode {
     public RecAccessNode(RecAccessEnum accessEnum, String Id) {
         this.accessEnum = accessEnum;
         this.Id = Id;
+    }
+
+    @Override
+    public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
+        return astBaseVisitor.visit(this);
     }
 }

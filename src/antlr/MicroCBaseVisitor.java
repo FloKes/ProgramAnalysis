@@ -1,4 +1,4 @@
-// Generated from C:/Users/mkbm/Desktop/School/programanalysis/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/mk96/IdeaProjects/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -87,7 +87,21 @@ public class MicroCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLexpr(MicroCParser.LexprContext ctx) { return visitChildren(ctx); }
+    @Override
+    public T visitIdentifierExpr(MicroCParser.IdentifierExprContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitValueExpr(MicroCParser.ValueExprContext ctx) {
+        return visitChildren(ctx);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -128,22 +142,53 @@ public class MicroCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitRexpr(MicroCParser.RexprContext ctx) { return visitChildren(ctx); }
+     */
+    @Override
+    public T visitFalseTerm(MicroCParser.FalseTermContext ctx) {
+        return visitChildren(ctx);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArray(MicroCParser.ArrayContext ctx) { return visitChildren(ctx); }
+     */
+    @Override
+    public T visitBexprOpBbexpr(MicroCParser.BexprOpBbexprContext ctx) {
+        return visitChildren(ctx);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitBexpr(MicroCParser.BexprContext ctx) { return visitChildren(ctx); }
+     */
+    @Override
+    public T visitTrueTerm(MicroCParser.TrueTermContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitNotBexpr(MicroCParser.NotBexprContext ctx) {
+        return visitChildren(ctx);
+    }
 	/**
 	 * {@inheritDoc}
 	 *

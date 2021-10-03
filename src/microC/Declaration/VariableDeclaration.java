@@ -1,6 +1,8 @@
-package microC;
+package microC.Declaration;
 
-public class VariableDeclaration extends AbstractNode {
+import microC.ASTBaseVisitor;
+
+public class VariableDeclaration extends Declaration {
 
     private String identifier;
     private String type; //if we want to extend types create Type class
@@ -39,5 +41,10 @@ public class VariableDeclaration extends AbstractNode {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
+        return astBaseVisitor.visit(this);
     }
 }

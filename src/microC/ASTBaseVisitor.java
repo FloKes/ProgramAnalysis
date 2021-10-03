@@ -1,73 +1,55 @@
 package microC;
 
-public class ASTBaseVisitor<T> {
+import microC.Declaration.ArrayDeclaration;
+import microC.Declaration.RecordDeclaration;
+import microC.Declaration.VariableDeclaration;
+import microC.Expressions.*;
+import microC.Statement.*;
 
-    public T visit(AbstractNode an) {
-        return visitChildren(an);
-    }
+public interface ASTBaseVisitor<T> {
 
-    public T visitChildren(AbstractNode node) {
-        T result = defaultResult();
-        for (AbstractNode n : node.getChildren()) {
-            T newResult = n.accept(this);
-            result = aggregateResult(result, newResult);
-        }
-        return result;
-    }
+    //PROGRAM
+    T visit(ProgramNode prog);
 
-    protected T defaultResult(){
-        return null;
-    }
+    //BLOCK
+    T visit(BlockNode bstmnt);
 
-    public T visit(Bexpression bexpr) {
-        return visitChildren(bexpr);
-    }
+    //DECLARATIONS
+    T visit(RecordDeclaration rd);
 
-    public T visit(BlockNode bstmnt) {
-        return visitChildren(bstmnt);
-    }
+    T visit(VariableDeclaration vd);
 
-    protected T aggregateResult(T aggregate, T nextResult) {
-        return nextResult;
-    }
+    T visit(ArrayDeclaration ad);
 
-    public T visit(Declaration d) {
-        return visitChildren(d);
-    }
+    //EXPRESSIONS
+    T visit(ArrayIdentifierExpression n);
 
-    public T visit(LExprNode lexpr) {
-        return visitChildren(lexpr);
-    }
+    T visit(BooleanOpBBooleanNode n);
 
-    public T visit(RExprNode rexpr) {
-        return visitChildren(rexpr);
-    }
+    T visit(BooleanValueExpressionNode n);
 
-    public T visit(Program prog) {
-        return visitChildren(prog);
-    }
+    T visit(NegationBooleanExprNode n);
 
-    public T visit(ReadStatement read) {
-        return visitChildren(read);
-    }
+    T visit(NumberExpressionNode n);
 
-    public T visit(RecordDeclaration rd) {
-        return visitChildren(rd);
-    }
+    T visit(RecAccessNode n);
 
-    public T visit(Statement st) {
-        return visitChildren(st);
-    }
+    T visit(VariableIdentifierNode n);
 
-    public T visit(VariableDeclaration vd) {
-        return visitChildren(vd);
-    }
+    T visit(BooleanOpRBooleanNode n);
 
-    public T visit(WhileDeclaration wd) {
-        return visitChildren(wd);
-    }
+    //STATEMENTS
+    T visit(ElseNode n);
 
-    public T visit(WriteStatement ws) {
-        return visitChildren(ws);
-    }
+    T visit(IfElseNode n);
+
+    T visit(LAssignNode n);
+
+    T visit(ReadStatement n);
+
+    T visit(WhileDeclaration n);
+
+    T visit(WriteStatement n);
+
+
 }

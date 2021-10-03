@@ -1,6 +1,8 @@
-package microC;
+package microC.Declaration;
 
-public class ArrayDeclaration extends AbstractNode{
+import microC.ASTBaseVisitor;
+
+public class ArrayDeclaration extends Declaration {
     private int size;
     private String type;
     private String identifier;
@@ -33,5 +35,10 @@ public class ArrayDeclaration extends AbstractNode{
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    @Override
+    public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
+        return astBaseVisitor.visit(this);
     }
 }

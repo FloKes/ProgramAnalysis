@@ -1,10 +1,13 @@
 package antlr;
 
 import microC.ASTBuilderVisitor;
+import microC.PrintVisitor;
+import microC.ProgramNode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+
 import java.io.IOException;
 
 
@@ -24,6 +27,8 @@ public class Launch {
 
             ASTBuilderVisitor visitor = new ASTBuilderVisitor();
             var prog = visitor.visit(tree);
+            PrintVisitor pv = new PrintVisitor();
+            System.out.println(pv.visit((ProgramNode) prog));
         } catch (IOException e) {
             e.printStackTrace();
         }
