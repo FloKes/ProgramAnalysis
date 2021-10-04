@@ -9,6 +9,10 @@ public class ElseNode extends Statement {
         this.block = block;
     }
 
+    public BlockNode getBlock() {
+        return block;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);

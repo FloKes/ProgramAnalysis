@@ -13,6 +13,10 @@ public class RecordDeclaration extends Declaration {
         this.identifier = identifier;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
     public VariableDeclaration getFirst() {
         return first;
     }

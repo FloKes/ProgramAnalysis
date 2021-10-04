@@ -5,24 +5,23 @@ import microC.ASTBaseVisitor;
 public class ArrayIdentifierExpression extends IdentifierExpressionNode {
     private int index;
     private String indexIdentifier;
-    private String identifier;
 
     public ArrayIdentifierExpression(String identifier, int index) {
+        super(identifier);
         this.index = index;
-        this.identifier = identifier;
     }
 
     public ArrayIdentifierExpression(String indexIdentifier, String identifier) {
+        super(identifier);
         this.indexIdentifier = indexIdentifier;
-        this.identifier = identifier;
-    }
-
-    public String getIdentifier() {
-        return identifier;
     }
 
     public int getIndex() {
         return index;
+    }
+
+    public String getIndexIdentifier() {
+        return indexIdentifier;
     }
 
     @Override

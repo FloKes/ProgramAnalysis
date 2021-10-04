@@ -2,6 +2,8 @@ package antlr;
 
 import microC.ASTBuilderVisitor;
 import microC.PrintVisitor;
+import microC.ProgramGraph.EdgeInformation;
+import microC.ProgramGraph.ProgramGraphBuilderVisitor;
 import microC.ProgramNode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -16,7 +18,7 @@ import java.io.IOException;
 
 public class Launch {
 
-    public static void main(String[] arg) {
+    public static void main(String[] arg) throws IOException {
         try {
             String source = "micro_c.txt";
             CharStream cs = CharStreams.fromFileName(source);
@@ -27,10 +29,12 @@ public class Launch {
 
             ASTBuilderVisitor visitor = new ASTBuilderVisitor();
             var prog = visitor.visit(tree);
-            PrintVisitor pv = new PrintVisitor();
-            System.out.println(pv.visit((ProgramNode) prog));
+            ProgramGraphBuilderVisitor pg = new ProgramGraphBuilderVisitor();
+            var n = pg.visit((ProgramNode) prog);
+            int i = 0;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
+
         }
     }
 }
