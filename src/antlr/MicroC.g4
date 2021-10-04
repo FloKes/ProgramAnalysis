@@ -37,7 +37,7 @@ FALSE : 'false';
 
 program: LBRACE decl statement RBRACE EOF;
 
-blockStmnt: LBRACE (decl | statement) RBRACE;
+blockStmnt: LBRACE statement RBRACE;
 
 statement
     : (ifElse

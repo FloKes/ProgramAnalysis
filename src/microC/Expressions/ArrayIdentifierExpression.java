@@ -30,3 +30,5 @@ public class ArrayIdentifierExpression extends IdentifierExpressionNode {
         return astBaseVisitor.visit(this);
     }
 }
+
+

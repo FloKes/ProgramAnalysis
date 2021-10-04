@@ -10,19 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockNode extends AbstractNode implements Visitable {
-    private List<Declaration> decls = new ArrayList<>();
     private List<Statement> statements = new ArrayList<>();
-
-    public List<Declaration> getDecls() {
-        return decls;
-    }
 
     public List<Statement> getStatements() {
         return statements;
-    }
-
-    public void addDecl(Declarations decls) {
-        this.decls.addAll(decls.getDecls());
     }
 
     public void addStatement(Statements statements) {

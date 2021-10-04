@@ -50,12 +50,10 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     @Override
     public AbstractNode visitBlockStmnt(MicroCParser.BlockStmntContext ctx) {
         var block = new BlockNode();
-        if (ctx.decl() != null) {
-            block.addDecl((Declarations) visit(ctx.decl()));
-        }
-        if (ctx.statement() != null) {
+
+
             block.addStatement((Statements) visit(ctx.statement()));
-        }
+
 
         return block;
     }
@@ -140,7 +138,7 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     public AbstractNode visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx) {
         return new BooleanOpRBooleanNode(
                 (ExpressionNode) visit(ctx.valueExpr(0)),
-                (ExpressionNode) visit(ctx.valueExpr(0)),
+                (ExpressionNode) visit(ctx.valueExpr(1)),
                 ctx.opr().getText()
         );
     }

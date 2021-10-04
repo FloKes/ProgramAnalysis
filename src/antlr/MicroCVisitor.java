@@ -1,4 +1,4 @@
-// Generated from C:/Users/mk96/IdeaProjects/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/giaco/IdeaProjects/Program-Analysis/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -71,18 +71,17 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWriteStmnt(MicroCParser.WriteStmntContext ctx);
 	/**
-     * Visit a parse tree produced by {@link MicroCParser#identifierExpr}.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitIdentifierExpr(MicroCParser.IdentifierExprContext ctx);
-
-    /**
-     * Visit a parse tree produced by {@link MicroCParser#valueExpr}.
+	 * Visit a parse tree produced by {@link MicroCParser#identifierExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    T visitValueExpr(MicroCParser.ValueExprContext ctx);
+	T visitIdentifierExpr(MicroCParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MicroCParser#valueExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValueExpr(MicroCParser.ValueExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MicroCParser#recFst}.
 	 * @param ctx the parse tree
@@ -114,43 +113,40 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumber(MicroCParser.NumberContext ctx);
 	/**
-     * Visit a parse tree produced by the {@code falseTerm}
-     * labeled alternative in {@link MicroCParser#bexpr}.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitFalseTerm(MicroCParser.FalseTermContext ctx);
-
-    /**
-     * Visit a parse tree produced by the {@code bexprOpBbexpr}
-     * labeled alternative in {@link MicroCParser#bexpr}.
+	 * Visit a parse tree produced by the {@code falseTerm}
+	 * labeled alternative in {@link MicroCParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    T visitBexprOpBbexpr(MicroCParser.BexprOpBbexprContext ctx);
+	T visitFalseTerm(MicroCParser.FalseTermContext ctx);
 	/**
-     * Visit a parse tree produced by the {@code trueTerm}
-     * labeled alternative in {@link MicroCParser#bexpr}.
+	 * Visit a parse tree produced by the {@code bexprOpBbexpr}
+	 * labeled alternative in {@link MicroCParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    T visitTrueTerm(MicroCParser.TrueTermContext ctx);
+	T visitBexprOpBbexpr(MicroCParser.BexprOpBbexprContext ctx);
 	/**
-     * Visit a parse tree produced by the {@code vexprOpRvexpr}
-     * labeled alternative in {@link MicroCParser#bexpr}.
+	 * Visit a parse tree produced by the {@code trueTerm}
+	 * labeled alternative in {@link MicroCParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    T visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx);
-
-    /**
-     * Visit a parse tree produced by the {@code notBexpr}
-     * labeled alternative in {@link MicroCParser#bexpr}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitNotBexpr(MicroCParser.NotBexprContext ctx);
+	T visitTrueTerm(MicroCParser.TrueTermContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code vexprOpRvexpr}
+	 * labeled alternative in {@link MicroCParser#bexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code notBexpr}
+	 * labeled alternative in {@link MicroCParser#bexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotBexpr(MicroCParser.NotBexprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MicroCParser#decl}.
 	 * @param ctx the parse tree
