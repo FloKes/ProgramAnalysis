@@ -1,5 +1,3 @@
-digraph programGraph{"{}" -> "{a}" 
-"{}" -> "{b}" 
-"{a}" -> "{a,b}" 
-"{b}" -> "{a,b}" 
+graph ASTGraph{"Prog" -- "i: int = 5" 
+"Prog" -- "i = 0" 
 }

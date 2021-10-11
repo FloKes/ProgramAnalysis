@@ -1,11 +1,7 @@
 package antlr;
 
-import graphviz.graphRun;
+import graphviz.ASTGraphGenerator;
 import microC.ASTBuilderVisitor;
-import microC.PrintVisitor;
-import microC.ProgramGraph.EdgeInformation;
-import microC.ProgramGraph.ProgramGraphBuilderVisitor;
-import microC.ProgramNode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -21,7 +17,8 @@ public class Launch {
 
     public static void main(String[] arg) throws IOException {
         try {
-            String source = "micro_c.txt";
+            //String source = "micro_c.txt";
+            String source = "test.txt";
             CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
@@ -32,9 +29,12 @@ public class Launch {
             var prog = visitor.visit(tree);
 //            PrintVisitor pv = new PrintVisitor();
 //            System.out.println(pv.visit((ProgramNode) prog));
-            ProgramGraphBuilderVisitor pg = new ProgramGraphBuilderVisitor();
-            var n = pg.visit((ProgramNode) prog);
-            int i = 0;
+//            ProgramGraphBuilderVisitor pg = new ProgramGraphBuilderVisitor();
+//            var n = pg.visit((ProgramNode) prog);
+//            int i = 0;
+
+            ASTGraphGenerator generator = new ASTGraphGenerator();
+            generator.generateASTDot(prog);
         } catch (IOException e) {
             throw e;
 

@@ -1,6 +1,7 @@
 package microC;
 
 import microC.Declaration.ArrayDeclaration;
+import microC.Declaration.Declaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
@@ -31,6 +32,7 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     public String visit(RecordDeclaration rd) {
         return "rd";
     }
+
 
     @Override
     public String visit(VariableDeclaration vd) {
