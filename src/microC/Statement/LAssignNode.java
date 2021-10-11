@@ -14,6 +14,14 @@ public class LAssignNode extends Statement {
         this.right = right;
     }
 
+    public IdentifierExpressionNode getLeft() {
+        return left;
+    }
+
+    public ExpressionNode getRight() {
+        return right;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);

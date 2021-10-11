@@ -13,6 +13,14 @@ public class WhileDeclaration extends Statement {
         this.blockStatement = blockStatement;
     }
 
+    public BooleanExpressionNode getbExpr() {
+        return bExpr;
+    }
+
+    public BlockNode getBlockStatement() {
+        return blockStatement;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);
