@@ -19,6 +19,18 @@ public class IfElseNode extends Statement {
         this.block = block;
     }
 
+    public BooleanExpressionNode getBexpr() {
+        return bexpr;
+    }
+
+    public BlockNode getBlock() {
+        return block;
+    }
+
+    public ElseNode getElseNode() {
+        return elseNode;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);

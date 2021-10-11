@@ -11,6 +11,10 @@ public class ReadStatement extends Statement {
         this.lexpr = lexpr;
     }
 
+    public IdentifierExpressionNode getLexpr() {
+        return lexpr;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);
