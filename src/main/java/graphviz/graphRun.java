@@ -6,8 +6,11 @@ package graphviz;
 
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,9 +21,9 @@ public class graphRun {
                 InterruptedException {
 
             // This is the set of integers that we want to draw the powerset of
-            String[] set = new String[] { "a", "b", "c", "d"};
+            String[] set = new String[] { "a", "b"};
 
-            String input_dot = "./src/graphviz/input.dot";
+            String input_dot = "./src/main/java/graphviz/input.dot";
             // create the file
             try {
                 File myObj = new File(input_dot);
