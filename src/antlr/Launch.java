@@ -1,5 +1,6 @@
 package antlr;
 
+import graphviz.graphRun;
 import microC.ASTBuilderVisitor;
 import microC.PrintVisitor;
 import microC.ProgramNode;
@@ -27,8 +28,9 @@ public class Launch {
 
             ASTBuilderVisitor visitor = new ASTBuilderVisitor();
             var prog = visitor.visit(tree);
-            PrintVisitor pv = new PrintVisitor();
-            System.out.println(pv.visit((ProgramNode) prog));
+//            PrintVisitor pv = new PrintVisitor();
+//            System.out.println(pv.visit((ProgramNode) prog));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

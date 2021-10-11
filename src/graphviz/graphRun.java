@@ -1,33 +1,37 @@
 //C:\Users\giaco\IdeaProjects\Program-Analysis\src\graphviz>dot -Tpng input.dot > output.png
-
+//dot -Tpng input.dot -o output.png
 package graphviz;
 
 import javax.swing.text.html.parser.Parser;
+import java.io.*;
 import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 public class graphRun {
-
-    public static class DrawPowerSet {
-
         public static void main(String[] arg) throws IOException,
                 InterruptedException {
 
             // This is the set of integers that we want to draw the powerset of
-            String[] set = new String[] { "a", "b", "c", "d", "e" };
+            String[] set = new String[] { "a", "b", "c", "d"};
 
-            // output file
-            String output = "./input.dot";
-
+            String input_dot = "./src/graphviz/input.dot";
             // create the file
-            BufferedWriter writer = new BufferedWriter(new FileWriter(output)); //TODO: create file inside graphviz package
+            try {
+                File myObj = new File(input_dot);
+                if (myObj.createNewFile()) {
+                    System.out.println("File created: " + myObj.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(input_dot)); //TODO: create file inside graphviz package
             writer.write("digraph programGraph{");
 
             // We will enumerate all the subset
@@ -92,5 +96,4 @@ public class graphRun {
             buffer.append("}\"");
             return buffer.toString();
         }
-    }
 }
