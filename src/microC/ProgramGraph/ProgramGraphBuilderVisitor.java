@@ -46,21 +46,29 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(BlockNode bstmnt) {
-        return null;
+        ArrayList<Statement> statements = new ArrayList<>();
+        statements.addAll(bstmnt.getStatements());
+        for (Statement statement: statements){
+            statement.accept(this);
+        }
+
+        return true;
     }
 
-    @Override
-    public Boolean visit(RecordDeclaration rd) {
-        return null;
-    }
 
     // Declarations
+
     @Override
     public Boolean visit(VariableDeclaration vd) {
         String s = vd.accept(printVisitor);
         node = node.addEdgeOut(new ProgramGraphEdge(s));
         programGraph.addNode(node);
         return true;
+    }
+
+    @Override
+    public Boolean visit(RecordDeclaration rd) {
+        return null;
     }
 
     @Override
@@ -125,7 +133,25 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(IfElseNode n) {
-        return null;
+        var bexpr = n.getBexpr();
+        var block = n.getBlock();
+
+        var bexprString = bexpr.accept(printVisitor);
+        var bexprNotString = "!(" + bexprString + ")";
+
+        int ifNodeNumber = node.getNumber();
+
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString));
+        programGraph.addNode(node);
+
+        block.accept(this);
+
+        var nodeAfterBlock = node;
+
+        node = programGraph.getProgramGraphNode(ifNodeNumber);
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
+        programGraph.addNode(node);
+        return true;
     }
 
     @Override

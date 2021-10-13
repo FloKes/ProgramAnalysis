@@ -70,7 +70,13 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(BooleanOpRBooleanNode n) {
-        return null;
+        var left = n.getLeft();
+        var leftString = left.accept(this);
+        var right = n.getRight();
+        var rightString = right.accept(this);
+        var operator = n.getOperator();
+
+        return leftString + operator + rightString;
     }
 
     @Override

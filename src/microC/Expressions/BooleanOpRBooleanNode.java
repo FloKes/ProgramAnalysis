@@ -12,6 +12,18 @@ public class BooleanOpRBooleanNode extends BooleanExpressionNode {
         Operator = operator;
     }
 
+    public ExpressionNode getLeft() {
+        return left;
+    }
+
+    public ExpressionNode getRight() {
+        return right;
+    }
+
+    public String getOperator() {
+        return Operator;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);

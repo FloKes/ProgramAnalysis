@@ -16,4 +16,13 @@ public class ProgramGraph {
     public ArrayList<ProgramGraphNode> getProgramGraphNodes(){
         return this.programGraph;
     }
+
+    public ProgramGraphNode getProgramGraphNode(int index){
+        for (ProgramGraphNode programGraphNode: programGraph){
+            if (programGraphNode.getNumber() == index){
+                return programGraphNode;
+            }
+        }
+        return null;
+    }
 }

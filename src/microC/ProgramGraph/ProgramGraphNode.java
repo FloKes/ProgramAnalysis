@@ -35,6 +35,19 @@ public class ProgramGraphNode {
         return newNode;
     }
 
+    public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge, ProgramGraphNode node) {
+        //TODO Create new node only if the next number this.number + 1 doesn't exist
+
+        edge.setOrigin(this);
+        edge.setEnd(node);
+
+        this.outgoingEdges.add(edge);
+        node.addEdgeIn(edge);
+
+        //New node or the next in line
+        return node;
+    }
+
     public void addEdgeIn(ProgramGraphEdge edge){
         this.ingoingEdges.add(edge);
     }
