@@ -150,7 +150,9 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
         node = programGraph.getProgramGraphNode(ifNodeNumber);
         node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
-        programGraph.addNode(node);
+        if (!programGraph.getProgramGraphNodes().contains(node)){
+            programGraph.addNode(node);
+        }
         return true;
     }
 
