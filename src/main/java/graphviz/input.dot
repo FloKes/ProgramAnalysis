@@ -1,3 +1,7 @@
-graph ASTGraph{"Prog" -- "i: int = 5" 
-"Prog" -- "i = 0" 
+digraph ProgramGraph{
+"0" -> "1" [label="  i: int = 5   "] 
+"1" -> "2" [label="  b: int = 0   "] 
+"2" -> "3" [label="  c: int = 0   "] 
+"3" -> "4" [label="  i = 0   "] 
+"4" -> "5" [label="  c = 5   "] 
 }

@@ -12,38 +12,41 @@ public class ProgramGraphGenerator {
     private ProgramGraphBuilderVisitor programGraphVisitor = new ProgramGraphBuilderVisitor();
     private ArrayList<Declaration> declarations;
     private ArrayList<Statement> statements;
-
+    private ArrayList<ProgramGraphNode> programGraphNodes;
+    ProgramGraphNode node;
     public ProgramGraphGenerator() {
         this.declarations = new ArrayList<>();
         this.statements = new ArrayList<>();
+        programGraphNodes = new ArrayList<>();
+        node = new ProgramGraphNode();
+        programGraphNodes.add(node);
     }
 
-    public void generateProgramGraph(AbstractNode node){
+    public ArrayList<ProgramGraphNode> generateProgramGraph(AbstractNode node){
         ProgramNode programNode = (ProgramNode) node;
         //programNode.accept(programGraphVisitor);
         declarations.addAll(programNode.getDecls());
         statements.addAll(programNode.getStatements());
         generateForDeclarations(declarations);
         generateForStatements(statements);
+        return this.programGraphNodes;
     }
 
     private void generateForDeclarations(ArrayList<Declaration> declarations){
-        ProgramGraphNode node = new ProgramGraphNode();
         for (Declaration declaration: declarations){
             String s = declaration.accept(programGraphVisitor);
             node = node.addEdgeOut(new ProgramGraphEdge(s));
-
+            programGraphNodes.add(node);
             System.out.println(s);
         }
-        System.out.println("Endinho");
     }
 
-    private void generateForStatements(List<Statement> statements){
-//        ArrayList<String> elements = new ArrayList<>();
-//        for (Statement statement : statements){
-//            //System.out.println(statement.accept(visitor));
-//            elements.add(statement.accept(visitor));
-//        }
-//        graphElements.addAll(elements);
+    private void generateForStatements(ArrayList<Statement> statements){
+        for (Statement statement: statements){
+            String s = statement.accept(programGraphVisitor);
+            node = node.addEdgeOut(new ProgramGraphEdge(s));
+            programGraphNodes.add(node);
+            System.out.println(s);
+        }
     }
 }

@@ -1,14 +1,17 @@
 package antlr;
 
 import graphviz.ASTGraphGenerator;
+import graphviz.DOTFileGenerator;
 import microC.ASTBuilderVisitor;
 import microC.ProgramGraph.ProgramGraphGenerator;
+import microC.ProgramGraph.ProgramGraphNode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 //based on tutorial: https://www.youtube.com/watch?v=dPWWcH5uM0g
@@ -34,11 +37,12 @@ public class Launch {
 //            var n = pg.visit((ProgramNode) prog);
 //            int i = 0;
 
-//            ASTGraphGenerator generator = new ASTGraphGenerator();
-//            generator.generateASTDot(prog);
 
             ProgramGraphGenerator programGraphGenerator = new ProgramGraphGenerator();
-            programGraphGenerator.generateProgramGraph(prog);
+            ArrayList<ProgramGraphNode> programGraphNodes = programGraphGenerator.generateProgramGraph(prog);
+
+            DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
+            dotFileGenerator.GenerateFile(programGraphNodes);
 
         } catch (IOException e) {
             throw e;

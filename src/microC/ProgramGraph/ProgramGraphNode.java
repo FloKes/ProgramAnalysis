@@ -7,18 +7,18 @@ import java.util.LinkedList;
 public class ProgramGraphNode {
     int number;
 
-    List<ProgramGraphEdge> in;
-    List<ProgramGraphEdge> out;
+    List<ProgramGraphEdge> ingoingEdges;
+    List<ProgramGraphEdge> outgoingEdges;
 
     public ProgramGraphNode(){
         this.number = 0;
-        this.out = new LinkedList<ProgramGraphEdge>();;
+        this.outgoingEdges = new LinkedList<ProgramGraphEdge>();;
     }
 
     public ProgramGraphNode(int number) {
         this.number = number;
-        this.in = new LinkedList<ProgramGraphEdge>();
-        this.out = new LinkedList<ProgramGraphEdge>();
+        this.ingoingEdges = new LinkedList<ProgramGraphEdge>();
+        this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
     }
 
     public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge) {
@@ -28,7 +28,7 @@ public class ProgramGraphNode {
         edge.setOrigin(this);
         edge.setEnd(newNode);
 
-        this.out.add(edge);
+        this.outgoingEdges.add(edge);
         newNode.addEdgeIn(edge);
 
         //New node or the next in line
@@ -36,6 +36,22 @@ public class ProgramGraphNode {
     }
 
     public void addEdgeIn(ProgramGraphEdge edge){
-        this.in.add(edge);
+        this.ingoingEdges.add(edge);
+    }
+
+    public List<ProgramGraphEdge> getInGoing(){
+        return this.ingoingEdges;
+    }
+
+    public List<ProgramGraphEdge> getOutGoing(){
+        return this.outgoingEdges;
+    }
+
+    public int getNumber(){
+        return this.number;
+    }
+
+    public boolean isFinalNode(){
+        return this.outgoingEdges.isEmpty();
     }
 }
