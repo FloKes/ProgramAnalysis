@@ -6,32 +6,65 @@ import microC.Declaration.Declaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
+import microC.PrintVisitor;
 import microC.ProgramNode;
 import microC.Statement.*;
 
-public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<String> {
+import java.util.ArrayList;
+
+public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
+    private PrintVisitor printVisitor;
+    ProgramGraph programGraph;
+    ProgramGraphNode node;
+
+    public ProgramGraphBuilderVisitor(ProgramGraph programGraph) {
+        printVisitor = new PrintVisitor();
+        this.programGraph = programGraph;
+    }
+
     @Override
-    public String visit(ProgramNode prog) {
+    public Boolean visit(ProgramNode prog) {
+        node = new ProgramGraphNode();
+        programGraph.addNode(node);
+
+        //Update program graph for declarations
+        ArrayList<Declaration> declarations= new ArrayList<>();
+        declarations.addAll(prog.getDecls());
+        for (Declaration declaration: declarations){
+            declaration.accept(this);
+        }
+
+        //Update program graph for statements
+        ArrayList<Statement> statements = new ArrayList<>();
+        statements.addAll(prog.getStatements());
+        for (Statement statement: statements){
+            statement.accept(this);
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean visit(BlockNode bstmnt) {
         return null;
     }
 
     @Override
-    public String visit(BlockNode bstmnt) {
+    public Boolean visit(RecordDeclaration rd) {
         return null;
     }
 
+    // Declarations
     @Override
-    public String visit(RecordDeclaration rd) {
-        return null;
+    public Boolean visit(VariableDeclaration vd) {
+        String s = vd.accept(printVisitor);
+        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        programGraph.addNode(node);
+        return true;
     }
 
     @Override
-    public String visit(VariableDeclaration vd) {
-        return (vd.getIdentifier() + ": " + vd.getType() + " = " + vd.getInitVal());
-    }
-
-    @Override
-    public String visit(ArrayDeclaration ad) {
+    public Boolean visit(ArrayDeclaration ad) {
         return null;
     }
 
@@ -39,75 +72,79 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<String> {
     //Expressions
 
     @Override
-    public String visit(VariableIdentifierNode n) {
-        return n.getIdentifier();
+    public Boolean visit(VariableIdentifierNode n) {
+        return null;
     }
 
     @Override
-    public String visit(NumberExpressionNode n) {
-        return String.valueOf(n.getValue());
+    public Boolean visit(NumberExpressionNode n) {
+        return null;
     }
 
     @Override
-    public String visit(ArrayIdentifierExpression n) {
+    public Boolean visit(ArrayIdentifierExpression n) {
         return null;
     }
 
 
     @Override
-    public String visit(BooleanValueExpressionNode n) {
+    public Boolean visit(BooleanValueExpressionNode n) {
         return null;
     }
 
     @Override
-    public String visit(NegationBooleanExprNode n) {
+    public Boolean visit(NegationBooleanExprNode n) {
         return null;
     }
 
     @Override
-    public String visit(BooleanOpBBooleanNode n) {
+    public Boolean visit(BooleanOpBBooleanNode n) {
         return null;
     }
 
     @Override
-    public String visit(BooleanOpRBooleanNode n) {
+    public Boolean visit(BooleanOpRBooleanNode n) {
         return null;
     }
 
     @Override
-    public String visit(RecAccessNode n) {
+    public Boolean visit(RecAccessNode n) {
         return null;
     }
 
     // Statements
 
     @Override
-    public String visit(LAssignNode n) {
-        return n.getLeft().accept(this) + " = " + n.getRight().accept(this);
+    public Boolean visit(LAssignNode n) {
+        String s = n.accept(printVisitor);
+        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        programGraph.addNode(node);
+
+        return true;
     }
 
     @Override
-    public String visit(IfElseNode n) {
+    public Boolean visit(IfElseNode n) {
         return null;
     }
 
     @Override
-    public String visit(ElseNode n) {
+    public Boolean visit(ElseNode n) {
         return null;
     }
 
     @Override
-    public String visit(WhileDeclaration n) {
+    public Boolean visit(WhileDeclaration n) {
         return null;
     }
 
     @Override
-    public String visit(ReadStatement n) {
+    public Boolean visit(ReadStatement n) {
         return null;
     }
 
     @Override
-    public String visit(WriteStatement n) {
+    public Boolean visit(WriteStatement n) {
         return null;
     }
 }

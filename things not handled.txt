@@ -1,0 +1,1 @@
+1. We can assign values to undeclared variables

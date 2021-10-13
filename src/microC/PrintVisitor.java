@@ -9,18 +9,9 @@ import microC.Statement.*;
 
 public class PrintVisitor implements ASTBaseVisitor<String> {
 
-
     @Override
     public String visit(ProgramNode prog) {
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
-        for (var d : prog.getDecls()) {
-            sb.append("D" + i++ + ": " + d.accept(this) + "\n");
-        }
-        for (var s : prog.getStatements()) {
-            sb.append("S" + i++ + ": " + s.accept(this) + "\n");
-        }
-        return sb.toString();
+        return null;
     }
 
     @Override
@@ -30,18 +21,30 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(RecordDeclaration rd) {
-        return "rd";
+        return null;
     }
-
 
     @Override
     public String visit(VariableDeclaration vd) {
-        return "vd";
+        return (vd.getIdentifier() + ": " + vd.getType() + " = " + vd.getInitVal());
     }
 
     @Override
     public String visit(ArrayDeclaration ad) {
-        return "ad";
+        return null;
+    }
+
+
+    //Expressions
+
+    @Override
+    public String visit(VariableIdentifierNode n) {
+        return n.getIdentifier();
+    }
+
+    @Override
+    public String visit(NumberExpressionNode n) {
+        return String.valueOf(n.getValue());
     }
 
     @Override
@@ -49,10 +52,6 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
         return null;
     }
 
-    @Override
-    public String visit(BooleanOpBBooleanNode n) {
-        return null;
-    }
 
     @Override
     public String visit(BooleanValueExpressionNode n) {
@@ -65,17 +64,7 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(NumberExpressionNode n) {
-        return null;
-    }
-
-    @Override
-    public String visit(RecAccessNode n) {
-        return null;
-    }
-
-    @Override
-    public String visit(VariableIdentifierNode n) {
+    public String visit(BooleanOpBBooleanNode n) {
         return null;
     }
 
@@ -85,8 +74,15 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(ElseNode n) {
+    public String visit(RecAccessNode n) {
         return null;
+    }
+
+    // Statements
+
+    @Override
+    public String visit(LAssignNode n) {
+        return n.getLeft().accept(this) + " = " + n.getRight().accept(this);
     }
 
     @Override
@@ -95,17 +91,17 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(LAssignNode n) {
-        return null;
-    }
-
-    @Override
-    public String visit(ReadStatement n) {
+    public String visit(ElseNode n) {
         return null;
     }
 
     @Override
     public String visit(WhileDeclaration n) {
+        return null;
+    }
+
+    @Override
+    public String visit(ReadStatement n) {
         return null;
     }
 

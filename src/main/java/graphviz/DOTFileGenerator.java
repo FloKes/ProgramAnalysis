@@ -1,4 +1,6 @@
-//dot -Tpng input.dot -o output.png
+// dot -Tpng input.dot -o output.png
+// When in root of project run command below
+// dot -Tpng src\main\java\graphviz/input.dot -o images\output.png
 
 package graphviz;
 
