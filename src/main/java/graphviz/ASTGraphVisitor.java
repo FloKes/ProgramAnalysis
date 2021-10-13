@@ -2,11 +2,9 @@ package graphviz;
 
 import microC.*;
 import microC.Declaration.ArrayDeclaration;
-import microC.Declaration.Declaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
-import microC.ProgramGraph.Node;
 import microC.Statement.*;
 
 public class ASTGraphVisitor implements ASTBaseVisitor<String> {

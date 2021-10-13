@@ -2,6 +2,7 @@ package antlr;
 
 import graphviz.ASTGraphGenerator;
 import microC.ASTBuilderVisitor;
+import microC.ProgramGraph.ProgramGraphGenerator;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -33,8 +34,12 @@ public class Launch {
 //            var n = pg.visit((ProgramNode) prog);
 //            int i = 0;
 
-            ASTGraphGenerator generator = new ASTGraphGenerator();
-            generator.generateASTDot(prog);
+//            ASTGraphGenerator generator = new ASTGraphGenerator();
+//            generator.generateASTDot(prog);
+
+            ProgramGraphGenerator programGraphGenerator = new ProgramGraphGenerator();
+            programGraphGenerator.generateProgramGraph(prog);
+
         } catch (IOException e) {
             throw e;
 

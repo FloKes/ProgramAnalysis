@@ -30,28 +30,29 @@ public interface ASTBaseVisitor<T> {
 
     T visit(ArrayIdentifierExpression n);
 
-    T visit(BooleanOpBBooleanNode n);
-
     T visit(BooleanValueExpressionNode n);
 
     T visit(NegationBooleanExprNode n);
 
-    T visit(RecAccessNode n);
+    T visit(BooleanOpBBooleanNode n);
 
     T visit(BooleanOpRBooleanNode n);
 
-    //STATEMENTS
-    T visit(ElseNode n);
+    T visit(RecAccessNode n);
 
-    T visit(IfElseNode n);
+
+
+    //STATEMENTS
 
     T visit(LAssignNode n);
 
-    T visit(ReadStatement n);
+    T visit(IfElseNode n);
+
+    T visit(ElseNode n);
 
     T visit(WhileDeclaration n);
 
+    T visit(ReadStatement n);
+
     T visit(WriteStatement n);
-
-
 }

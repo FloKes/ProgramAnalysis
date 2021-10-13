@@ -4,24 +4,12 @@
 //https://github.com/nidi3/graphviz-java
 package graphviz;
 
-import Structs.TreeNode;
-import microC.ASTBaseVisitor;
 import microC.AbstractNode;
 import microC.Declaration.Declaration;
-import microC.Declaration.VariableDeclaration;
-import microC.ProgramGraph.Node;
 import microC.ProgramNode;
 import microC.Statement.Statement;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 

@@ -9,99 +9,105 @@ import microC.Expressions.*;
 import microC.ProgramNode;
 import microC.Statement.*;
 
-public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Node> {
+public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<String> {
     @Override
-    public Node visit(ProgramNode prog) {
+    public String visit(ProgramNode prog) {
         return null;
     }
 
     @Override
-    public Node visit(BlockNode bstmnt) {
+    public String visit(BlockNode bstmnt) {
         return null;
     }
 
     @Override
-    public Node visit(RecordDeclaration rd) {
+    public String visit(RecordDeclaration rd) {
         return null;
     }
 
     @Override
-    public Node visit(VariableDeclaration vd) {
+    public String visit(VariableDeclaration vd) {
+        return (vd.getIdentifier() + ": " + vd.getType() + " = " + vd.getInitVal());
+    }
+
+    @Override
+    public String visit(ArrayDeclaration ad) {
+        return null;
+    }
+
+
+    //Expressions
+
+    @Override
+    public String visit(VariableIdentifierNode n) {
+        return n.getIdentifier();
+    }
+
+    @Override
+    public String visit(NumberExpressionNode n) {
+        return String.valueOf(n.getValue());
+    }
+
+    @Override
+    public String visit(ArrayIdentifierExpression n) {
+        return null;
+    }
+
+
+    @Override
+    public String visit(BooleanValueExpressionNode n) {
         return null;
     }
 
     @Override
-    public Node visit(ArrayDeclaration ad) {
+    public String visit(NegationBooleanExprNode n) {
         return null;
     }
 
     @Override
-    public Node visit(VariableIdentifierNode n) {
+    public String visit(BooleanOpBBooleanNode n) {
         return null;
     }
 
     @Override
-    public Node visit(NumberExpressionNode n) {
+    public String visit(BooleanOpRBooleanNode n) {
         return null;
     }
 
     @Override
-    public Node visit(ArrayIdentifierExpression n) {
+    public String visit(RecAccessNode n) {
+        return null;
+    }
+
+    // Statements
+
+    @Override
+    public String visit(LAssignNode n) {
+        return n.getLeft().accept(this) + " = " + n.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(IfElseNode n) {
         return null;
     }
 
     @Override
-    public Node visit(BooleanOpBBooleanNode n) {
+    public String visit(ElseNode n) {
         return null;
     }
 
     @Override
-    public Node visit(BooleanValueExpressionNode n) {
+    public String visit(WhileDeclaration n) {
         return null;
     }
 
     @Override
-    public Node visit(NegationBooleanExprNode n) {
+    public String visit(ReadStatement n) {
         return null;
     }
 
     @Override
-    public Node visit(RecAccessNode n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(BooleanOpRBooleanNode n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(ElseNode n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(IfElseNode n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(LAssignNode n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(ReadStatement n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(WhileDeclaration n) {
-        return null;
-    }
-
-    @Override
-    public Node visit(WriteStatement n) {
+    public String visit(WriteStatement n) {
         return null;
     }
 }
