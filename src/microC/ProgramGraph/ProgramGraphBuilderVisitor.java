@@ -175,7 +175,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             // The last statement of the elseBlock needs to be joined to the end of the previous block
             // Since we are using visitor pattern that statement by default creates a new node, whereas it should join
 
-            //TODO Cover this case: last node that needs to be replaced has multiple edges
+            //Since the incorrect node can have multiple edges coming in we need to change the end for all of them
             var lastNode = node;
             for (ProgramGraphEdge inGoingEdge: lastNode.getInGoing()){
                 inGoingEdge.setEndNode(nodeAfterBlock);
