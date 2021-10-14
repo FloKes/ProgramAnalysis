@@ -3,26 +3,42 @@ package microC.ProgramGraph;
 import java.util.ArrayList;
 
 public class ProgramGraph {
-    private ArrayList<ProgramGraphNode> programGraph;
+    private ArrayList<ProgramGraphNode> programGraphNodes;
 
     public ProgramGraph() {
-        this.programGraph = new ArrayList<>();
+        this.programGraphNodes = new ArrayList<>();
     }
 
     public void addNode(ProgramGraphNode node){
-        this.programGraph.add(node);
+        this.programGraphNodes.add(node);
+
+        // Each gets has a reference of the program graph it belongs to
+        node.setParentProgramGraph(this);
     }
 
     public ArrayList<ProgramGraphNode> getProgramGraphNodes(){
-        return this.programGraph;
+        return this.programGraphNodes;
     }
 
     public ProgramGraphNode getProgramGraphNode(int index){
-        for (ProgramGraphNode programGraphNode: programGraph){
+        for (ProgramGraphNode programGraphNode: programGraphNodes){
             if (programGraphNode.getNumber() == index){
                 return programGraphNode;
             }
         }
         return null;
+    }
+
+    public ArrayList<Integer> getExistingNodeNumbers(){
+        ArrayList<Integer> existingNodeNumbers = new ArrayList<>();
+        for(ProgramGraphNode programGraphNode: programGraphNodes){
+            existingNodeNumbers.add(programGraphNode.getNumber());
+        }
+        return existingNodeNumbers;
+    }
+
+    public Boolean removeProgramGraphNode(ProgramGraphNode programGraphNode){
+        this.programGraphNodes.remove(programGraphNode);
+        return true;
     }
 }

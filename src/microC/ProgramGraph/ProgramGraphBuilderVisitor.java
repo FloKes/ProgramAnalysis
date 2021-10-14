@@ -1,5 +1,10 @@
 package microC.ProgramGraph;
 
+// MUCHO IMPORTANTE
+// If you create a new node and don't add it to the program graph it won't have a reference to the program graph,
+// And therefore won't be able to create outgoing edges and nodes as it can't check if the new number of the node
+// is already in the program graph
+
 import microC.ASTBaseVisitor;
 import microC.Declaration.ArrayDeclaration;
 import microC.Declaration.Declaration;
@@ -135,30 +140,59 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     public Boolean visit(IfElseNode n) {
         var bexpr = n.getBexpr();
         var block = n.getBlock();
+        var elseNode = n.getElseNode();
 
+        // Get string for boolean expression and not boolean expression
         var bexprString = bexpr.accept(printVisitor);
         var bexprNotString = "!(" + bexprString + ")";
 
+        // Save number of the node where the if statement is evaluated
         int ifNodeNumber = node.getNumber();
 
+        // Add node after boolean expression is evaluated true
         node = node.addEdgeOut(new ProgramGraphEdge(bexprString));
         programGraph.addNode(node);
 
+        // Add nodes for the block statement where boolean expression is evaluated true
         block.accept(this);
 
+        // Save node where code after the if / if else statement continues
         var nodeAfterBlock = node;
 
+        // Add edge from if node where boolean statement is not true
+        // There are two cases, if statement and if-else statement
         node = programGraph.getProgramGraphNode(ifNodeNumber);
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
-        if (!programGraph.getProgramGraphNodes().contains(node)){
-            programGraph.addNode(node);
+
+        if (elseNode == null){
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
         }
+        else {
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString));
+            programGraph.addNode(node);
+
+            elseNode.accept(this);
+
+            // The last statement of the elseBlock needs to be joined to the end of the previous block
+            // Since we are using visitor pattern that statement by default creates a new node, whereas it should join
+            var lastEdge = node.getInGoing().get(0);
+            var lastEdgeEndNode = lastEdge.getEndNode();
+
+            lastEdge.setEndNode(nodeAfterBlock);
+            nodeAfterBlock.addEdgeIn(lastEdge);
+            node = nodeAfterBlock;
+
+            // Clear up connection of the unnecessary node
+            lastEdgeEndNode.clearAll();
+            programGraph.removeProgramGraphNode(lastEdgeEndNode);
+        }
+
         return true;
     }
 
     @Override
     public Boolean visit(ElseNode n) {
-        return null;
+        n.getBlock().accept(this);
+        return true;
     }
 
     @Override

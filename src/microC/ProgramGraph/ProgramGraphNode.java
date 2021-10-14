@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class ProgramGraphNode {
-    int number;
-
-    List<ProgramGraphEdge> ingoingEdges;
-    List<ProgramGraphEdge> outgoingEdges;
+    private int number;
+    private ProgramGraph programGraph;
+    private List<ProgramGraphEdge> ingoingEdges;
+    private List<ProgramGraphEdge> outgoingEdges;
 
     public ProgramGraphNode(){
+        //initial node
         this.number = 0;
-        this.outgoingEdges = new LinkedList<ProgramGraphEdge>();;
+        this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
     }
 
     public ProgramGraphNode(int number) {
@@ -22,11 +23,24 @@ public class ProgramGraphNode {
     }
 
     public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge) {
-        //TODO Create new node only if the next number this.number + 1 doesn't exist
-        ProgramGraphNode newNode = new ProgramGraphNode(this.number+1);
+        // When creating fresh edges check if node with number exists and increment if yes
+        int newNodeNumber = this.number + 1;
 
-        edge.setOrigin(this);
-        edge.setEnd(newNode);
+        // If node is not added to program graph it throws a NullPointerException when this method is called
+        // The node MUST be added to the programGraph to create a reference
+        try {
+            while (programGraph.getExistingNodeNumbers().contains(newNodeNumber)){
+                newNodeNumber++;
+            }
+        }catch (NullPointerException e){
+            System.out.println("Program graph node has no reference to program graph\nAdd node to program graph when created");
+            throw e;
+        }
+
+        ProgramGraphNode newNode = new ProgramGraphNode(newNodeNumber);
+
+        edge.setOriginNode(this);
+        edge.setEndNode(newNode);
 
         this.outgoingEdges.add(edge);
         newNode.addEdgeIn(edge);
@@ -36,10 +50,8 @@ public class ProgramGraphNode {
     }
 
     public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge, ProgramGraphNode node) {
-        //TODO Create new node only if the next number this.number + 1 doesn't exist
-
-        edge.setOrigin(this);
-        edge.setEnd(node);
+        edge.setOriginNode(this);
+        edge.setEndNode(node);
 
         this.outgoingEdges.add(edge);
         node.addEdgeIn(edge);
@@ -60,11 +72,33 @@ public class ProgramGraphNode {
         return this.outgoingEdges;
     }
 
-    public int getNumber(){
-        return this.number;
+    public void clearIngoingEdges(){
+        this.ingoingEdges.clear();
+    }
+
+    public void clearOutGoingEdges(){
+        this.outgoingEdges.clear();
+    }
+
+    public void clearAll(){
+        clearIngoingEdges();
+        clearOutGoingEdges();
+        this.programGraph = null;
+    }
+
+    public void setParentProgramGraph(ProgramGraph programGraph){
+        this.programGraph = programGraph;
     }
 
     public boolean isFinalNode(){
         return this.outgoingEdges.isEmpty();
+    }
+
+    public int getNumber(){
+        return this.number;
+    }
+
+    public void setNumber(Integer number){
+        this.number = number;
     }
 }

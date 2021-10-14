@@ -9,11 +9,11 @@ public class ProgramGraphEdge {
         this.data = data;
     }
 
-    public void setOrigin(ProgramGraphNode qs){
+    public void setOriginNode(ProgramGraphNode qs){
         this.qs = qs;
     }
 
-    public void setEnd (ProgramGraphNode qe){ this.qe = qe; }
+    public void setEndNode(ProgramGraphNode qe){ this.qe = qe; }
 
     public ProgramGraphNode getOriginNode(){
         return this.qs;
