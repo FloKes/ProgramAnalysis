@@ -34,7 +34,21 @@ public class ProgramGraph {
         for(ProgramGraphNode programGraphNode: programGraphNodes){
             existingNodeNumbers.add(programGraphNode.getNumber());
         }
+
+        fillGapsInNodeNumbers(existingNodeNumbers);
         return existingNodeNumbers;
+    }
+
+    public void fillGapsInNodeNumbers(ArrayList<Integer> existingNodeNumbers){
+        for (int i = 1; i < existingNodeNumbers.size(); i++){
+            int gapSize = existingNodeNumbers.get(i)-existingNodeNumbers.get(i-1);
+            if(gapSize > 1){
+                for (int j = i; j < existingNodeNumbers.size(); j++){
+                    programGraphNodes.get(j).setNumber(j);
+                    existingNodeNumbers.set(j, j);
+                }
+            }
+        }
     }
 
     public Boolean removeProgramGraphNode(ProgramGraphNode programGraphNode){

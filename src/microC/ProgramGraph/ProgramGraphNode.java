@@ -26,6 +26,10 @@ public class ProgramGraphNode {
         // When creating fresh edges check if node with number exists and increment if yes
         int newNodeNumber = this.number + 1;
 
+
+        //TODO Check for gaps in program graph numbers and fill gaps
+
+
         // If node is not added to program graph it throws a NullPointerException when this method is called
         // The node MUST be added to the programGraph to create a reference
         try {

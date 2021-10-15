@@ -181,7 +181,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
                 inGoingEdge.setEndNode(nodeAfterBlock);
                 nodeAfterBlock.addEdgeIn(inGoingEdge);
             }
-
             node = nodeAfterBlock;
 
             // Clear up connection of the unnecessary node

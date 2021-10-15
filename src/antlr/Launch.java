@@ -22,7 +22,7 @@ public class Launch {
     public static void main(String[] arg) throws IOException {
         try {
             //String source = "micro_c.txt";
-            String source = "test.txt";
+            String source = "tests/test.txt";
             CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
