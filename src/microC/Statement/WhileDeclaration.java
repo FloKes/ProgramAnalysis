@@ -13,11 +13,11 @@ public class WhileDeclaration extends Statement {
         this.blockStatement = blockStatement;
     }
 
-    public BooleanExpressionNode getbExpr() {
+    public BooleanExpressionNode getBexpr() {
         return bExpr;
     }
 
-    public BlockNode getBlockStatement() {
+    public BlockNode getBlock() {
         return blockStatement;
     }
 

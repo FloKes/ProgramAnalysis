@@ -159,11 +159,11 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         // Save node where code after the if / if else statement continues
         var nodeAfterBlock = node;
 
-        // Add edge from if node where boolean statement is not true
         // There are two cases, if statement and if-else statement
         node = programGraph.getProgramGraphNode(ifNodeNumber);
 
         if (elseNode == null){
+            // Add edge from if node where boolean statement is not true
             node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
         }
         else {
@@ -187,7 +187,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             lastNode.clearAll();
             programGraph.removeProgramGraphNode(lastNode);
         }
-
         return true;
     }
 
@@ -199,7 +198,44 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(WhileDeclaration n) {
-        return null;
+        var bexpr = n.getBexpr();
+        var block = n.getBlock();
+
+        // Get string for boolean expression and not boolean expression
+        var bexprString = bexpr.accept(printVisitor);
+        var bexprNotString = "!(" + bexprString + ")";
+
+        // Save number of the node where the boolean statement is evaluated
+        int evalNodeNumber = node.getNumber();
+
+        // Add node after boolean expression is evaluated true
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString));
+        programGraph.addNode(node);
+
+        // Add nodes for the block statement where boolean expression is evaluated true
+        block.accept(this);
+
+        // The last statement of the block needs to be joined to the node where the boolean expression is evaluated
+        // Since we are using visitor pattern that statement by default creates a new node, whereas it should join
+
+        //Since the incorrect node can have multiple edges coming in we need to change the end for all of them
+        var lastNode = node;
+        var evalNode = programGraph.getProgramGraphNode(evalNodeNumber);
+        for (ProgramGraphEdge inGoingEdge: lastNode.getInGoing()){
+            inGoingEdge.setEndNode(evalNode);
+            evalNode.addEdgeIn(inGoingEdge);
+        }
+
+        // Clear up connection of the unnecessary node
+        lastNode.clearAll();
+        programGraph.removeProgramGraphNode(lastNode);
+
+        // Add edge from if node where boolean statement is not true
+        node = evalNode;
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString));
+        programGraph.addNode(node);
+
+        return true;
     }
 
     @Override
