@@ -11,6 +11,10 @@ public class WriteStatement extends Statement {
         this.rexpr = rexpr;
     }
 
+    public ExpressionNode getExpressionNode() {
+        return rexpr;
+    }
+
     @Override
     public <T> T accept(ASTBaseVisitor<? extends T> astBaseVisitor) {
         return astBaseVisitor.visit(this);

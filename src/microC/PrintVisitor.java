@@ -114,12 +114,16 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(ReadStatement n) {
-        return null;
+        String s = "read ";
+        s = s + n.getLexpr().accept(this);
+        return s;
     }
 
     @Override
     public String visit(WriteStatement n) {
-        return null;
+        String s = "write ";
+        s = s + n.getExpressionNode().accept(this);
+        return s;
     }
 
 }

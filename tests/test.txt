@@ -4,4 +4,5 @@ int y := 1;
 {int r; int z;} R;
 int[6] A;
 write x;
+read y;
 }
