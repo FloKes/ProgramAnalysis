@@ -66,10 +66,11 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
     public AbstractNode visitRecordDecl(MicroCParser.RecordDeclContext ctx) {
+        var id = ctx.IDENTIFIER();
         return new RecordDeclaration(
                 (VariableDeclaration) visit(ctx.varDecl(0)),
                 (VariableDeclaration) visit(ctx.varDecl(1)),
-                ctx.R().getText()
+                ctx.IDENTIFIER().getText()
         );
     }
 
@@ -115,6 +116,15 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
         return new LAssignNode(
                 (IdentifierExpressionNode) visit(ctx.identifierExpr()),
                 (ExpressionNode) visit(ctx.valueExpr())
+        );
+    }
+
+    @Override
+    public AbstractNode visitRecordAssign(MicroCParser.RecordAssignContext ctx) {
+        return new RecordAssignNode(
+                new RecordIdentifierExpressionNode(ctx.IDENTIFIER().getText()),
+                (ExpressionNode) visit(ctx.valueExpr().get(0)),
+                (ExpressionNode) visit(ctx.valueExpr().get(1))
         );
     }
 
@@ -167,7 +177,7 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
     public AbstractNode visitVarIdentifier(MicroCParser.VarIdentifierContext ctx) {
-        return new VariableIdentifierNode(ctx.IDENTIFIER().getText());
+        return new VariableIdentifierExpressionNode(ctx.IDENTIFIER().getText());
     }
 
     @Override
@@ -178,11 +188,11 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     @Override
     public AbstractNode visitArrayIndexId(MicroCParser.ArrayIndexIdContext ctx) {
         if (ctx.INTEGER() != null) {
-            return new ArrayIdentifierExpression(
+            return new ArrayIdentifierExpressionNode(
                     ctx.IDENTIFIER().get(0).getText(),
                     Integer.parseInt(ctx.INTEGER().getText()));
         }
-        return new ArrayIdentifierExpression(
+        return new ArrayIdentifierExpressionNode(
                 ctx.IDENTIFIER().get(0).getText(),
                 ctx.IDENTIFIER().get(1).getText());
 
@@ -190,17 +200,12 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
     public AbstractNode visitRecFst(MicroCParser.RecFstContext ctx) {
-        return new RecAccessNode(RecAccessEnum.FST, ctx.R().getText());
+        return new RecAccessNode(RecAccessEnum.FST, ctx.IDENTIFIER().getText());
     }
 
     @Override
     public AbstractNode visitRecSnd(MicroCParser.RecSndContext ctx) {
-        return new RecAccessNode(RecAccessEnum.SND, ctx.R().getText());
-    }
-
-    @Override
-    public AbstractNode visitRecordAssign(MicroCParser.RecordAssignContext ctx) {
-        return super.visitRecordAssign(ctx);
+        return new RecAccessNode(RecAccessEnum.SND, ctx.IDENTIFIER().getText());
     }
 
     @Override

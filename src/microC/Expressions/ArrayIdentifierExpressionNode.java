@@ -2,16 +2,16 @@ package microC.Expressions;
 
 import microC.ASTBaseVisitor;
 
-public class ArrayIdentifierExpression extends IdentifierExpressionNode {
+public class ArrayIdentifierExpressionNode extends IdentifierExpressionNode {
     private int index;
     private String indexIdentifier;
 
-    public ArrayIdentifierExpression(String identifier, int index) {
+    public ArrayIdentifierExpressionNode(String identifier, int index) {
         super(identifier);
         this.index = index;
     }
 
-    public ArrayIdentifierExpression(String indexIdentifier, String identifier) {
+    public ArrayIdentifierExpressionNode(String indexIdentifier, String identifier) {
         super(identifier);
         this.indexIdentifier = indexIdentifier;
     }

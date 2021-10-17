@@ -2,10 +2,10 @@ package microC.Expressions;
 
 import microC.ASTBaseVisitor;
 
-public class VariableIdentifierNode extends IdentifierExpressionNode {
+public class VariableIdentifierExpressionNode extends IdentifierExpressionNode {
 
 
-    public VariableIdentifierNode(String identifier) {
+    public VariableIdentifierExpressionNode(String identifier) {
         super(identifier);
     }
 

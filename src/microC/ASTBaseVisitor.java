@@ -1,7 +1,6 @@
 package microC;
 
 import microC.Declaration.ArrayDeclaration;
-import microC.Declaration.Declaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
@@ -26,11 +25,13 @@ public interface ASTBaseVisitor<T> {
     //EXPRESSIONS
     T visit (ValueExpressionNode n);
 
-    T visit (VariableIdentifierNode n);
+    T visit (VariableIdentifierExpressionNode n);
+
+    T visit (RecordIdentifierExpressionNode n);
+
+    T visit(ArrayIdentifierExpressionNode n);
 
     T visit (NumberExpressionNode n);
-
-    T visit(ArrayIdentifierExpression n);
 
     T visit(BooleanValueExpressionNode n);
 
@@ -45,6 +46,7 @@ public interface ASTBaseVisitor<T> {
 
 
     //STATEMENTS
+    T visit(RecordAssignNode n);
 
     T visit(LAssignNode n);
 

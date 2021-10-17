@@ -1,7 +1,6 @@
 package microC;
 
 import microC.Declaration.ArrayDeclaration;
-import microC.Declaration.Declaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
@@ -43,7 +42,6 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     //Expressions
 
-
     @Override
     public String visit(ValueExpressionNode n) {
         String s ="";
@@ -52,7 +50,12 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(VariableIdentifierNode n) {
+    public String visit(VariableIdentifierExpressionNode n) {
+        return n.getIdentifier();
+    }
+
+    @Override
+    public String visit(RecordIdentifierExpressionNode n) {
         return n.getIdentifier();
     }
 
@@ -62,7 +65,7 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(ArrayIdentifierExpression n) {
+    public String visit(ArrayIdentifierExpressionNode n) {
         return null;
     }
 
@@ -98,11 +101,18 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
         return null;
     }
 
+
     // Statements
 
     @Override
     public String visit(LAssignNode n) {
-        return n.getLeft().accept(this) + " = " + n.getRight().accept(this);
+        return n.getLeft().accept(this) + " := " + n.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(RecordAssignNode n) {
+        return n.getIdentifier().accept(this) + " := " + "(" + n.getFst().accept(this)
+                + ", " + n.getSnd().accept(this) + ")";
     }
 
     @Override

@@ -20,8 +20,8 @@ public class MicroCParser extends Parser {
 		LPAREN=1, RPAREN=2, LBRACE=3, RBRACE=4, SEMI=5, LBRACKET=6, RBRACKET=7, 
 		PLUS=8, MINUS=9, MULT=10, DIV=11, MOD=12, GT=13, GE=14, LT=15, LE=16, 
 		EQ=17, NEQ=18, NOT=19, AND=20, OR=21, COMMA=22, ELSE=23, FST=24, SND=25, 
-		INT=26, EQUAL=27, READ=28, WRITE=29, IF=30, WHILE=31, R=32, TRUE=33, FALSE=34, 
-		INTEGER=35, IDENTIFIER=36, COMMENT=37, WS=38;
+		INT=26, EQUAL=27, READ=28, WRITE=29, IF=30, WHILE=31, TRUE=32, FALSE=33, 
+		INTEGER=34, IDENTIFIER=35, COMMENT=36, WS=37;
 	public static final int
 		RULE_program = 0, RULE_blockStmnt = 1, RULE_statement = 2, RULE_ifElse = 3, 
 		RULE_elseStmnt = 4, RULE_lAssign = 5, RULE_recordAssign = 6, RULE_whileStmnt = 7, 
@@ -46,7 +46,7 @@ public class MicroCParser extends Parser {
 			null, "'('", "')'", "'{'", "'}'", "';'", "'['", "']'", "'+'", "'-'", 
 			"'*'", "'/'", "'%'", "'>'", "'>='", "'<'", "'<='", "'=='", "'!='", "'!'", 
 			"'&'", "'|'", "','", "'else'", "'.fst'", "'.snd'", "'int'", "':='", "'read'", 
-			"'write'", "'if'", "'while'", "'R'", "'true'", "'false'"
+			"'write'", "'if'", "'while'", "'true'", "'false'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -55,7 +55,7 @@ public class MicroCParser extends Parser {
 			null, "LPAREN", "RPAREN", "LBRACE", "RBRACE", "SEMI", "LBRACKET", "RBRACKET", 
 			"PLUS", "MINUS", "MULT", "DIV", "MOD", "GT", "GE", "LT", "LE", "EQ", 
 			"NEQ", "NOT", "AND", "OR", "COMMA", "ELSE", "FST", "SND", "INT", "EQUAL", 
-			"READ", "WRITE", "IF", "WHILE", "R", "TRUE", "FALSE", "INTEGER", "IDENTIFIER", 
+			"READ", "WRITE", "IF", "WHILE", "TRUE", "FALSE", "INTEGER", "IDENTIFIER", 
 			"COMMENT", "WS"
 		};
 	}
@@ -306,7 +306,7 @@ public class MicroCParser extends Parser {
 				setState(68); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << READ) | (1L << WRITE) | (1L << IF) | (1L << WHILE) | (1L << R) | (1L << IDENTIFIER))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << READ) | (1L << WRITE) | (1L << IF) | (1L << WHILE) | (1L << IDENTIFIER))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -471,7 +471,7 @@ public class MicroCParser extends Parser {
 	}
 
 	public static class RecordAssignContext extends ParserRuleContext {
-		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
 		public TerminalNode EQUAL() { return getToken(MicroCParser.EQUAL, 0); }
 		public TerminalNode LPAREN() { return getToken(MicroCParser.LPAREN, 0); }
 		public List<ValueExprContext> valueExpr() {
@@ -501,7 +501,7 @@ public class MicroCParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(86);
-			match(R);
+			match(IDENTIFIER);
 			setState(87);
 			match(EQUAL);
 			setState(88);
@@ -804,7 +804,6 @@ public class MicroCParser extends Parser {
 			setState(118);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case R:
 			case IDENTIFIER:
 				{
 				_localctx = new ValueIdentifierContext(_localctx);
@@ -867,7 +866,7 @@ public class MicroCParser extends Parser {
 
 	public static class RecFstContext extends ParserRuleContext {
 		public TerminalNode FST() { return getToken(MicroCParser.FST, 0); }
-		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
 		public RecFstContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -887,7 +886,7 @@ public class MicroCParser extends Parser {
 			{
 			{
 			setState(129);
-			match(R);
+			match(IDENTIFIER);
 			}
 			setState(130);
 			match(FST);
@@ -906,7 +905,7 @@ public class MicroCParser extends Parser {
 
 	public static class RecSndContext extends ParserRuleContext {
 		public TerminalNode SND() { return getToken(MicroCParser.SND, 0); }
-		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
 		public RecSndContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -926,7 +925,7 @@ public class MicroCParser extends Parser {
 			{
 			{
 			setState(132);
-			match(R);
+			match(IDENTIFIER);
 			}
 			setState(133);
 			match(SND);
@@ -1160,7 +1159,6 @@ public class MicroCParser extends Parser {
 			setState(153);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case R:
 			case INTEGER:
 			case IDENTIFIER:
 				{
@@ -1449,7 +1447,7 @@ public class MicroCParser extends Parser {
 			return getRuleContext(VarDeclContext.class,i);
 		}
 		public TerminalNode RBRACE() { return getToken(MicroCParser.RBRACE, 0); }
-		public TerminalNode R() { return getToken(MicroCParser.R, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
 		public TerminalNode SEMI() { return getToken(MicroCParser.SEMI, 0); }
 		public RecordDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1477,7 +1475,7 @@ public class MicroCParser extends Parser {
 			setState(191);
 			match(RBRACE);
 			setState(192);
-			match(R);
+			match(IDENTIFIER);
 			setState(193);
 			match(SEMI);
 			}
@@ -1657,7 +1655,7 @@ public class MicroCParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u00cc\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\u00cc\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -1672,7 +1670,7 @@ public class MicroCParser extends Parser {
 		"\7\24\u00aa\n\24\f\24\16\24\u00ad\13\24\3\25\3\25\3\25\3\25\5\25\u00b3"+
 		"\n\25\3\25\5\25\u00b6\n\25\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\27\3\27"+
 		"\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32\3\32\2\4\30$\33"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\6\3\2%&\3\2\n"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\6\3\2$%\3\2\n"+
 		"\16\3\2\17\24\3\2\26\27\2\u00c7\2\64\3\2\2\2\4:\3\2\2\2\6D\3\2\2\2\bH"+
 		"\3\2\2\2\nP\3\2\2\2\fS\3\2\2\2\16X\3\2\2\2\20a\3\2\2\2\22g\3\2\2\2\24"+
 		"k\3\2\2\2\26s\3\2\2\2\30x\3\2\2\2\32\u0083\3\2\2\2\34\u0086\3\2\2\2\36"+
@@ -1685,7 +1683,7 @@ public class MicroCParser extends Parser {
 		"\2FD\3\2\2\2FG\3\2\2\2G\7\3\2\2\2HI\7 \2\2IJ\7\3\2\2JK\5$\23\2KL\7\4\2"+
 		"\2LN\5\4\3\2MO\5\n\6\2NM\3\2\2\2NO\3\2\2\2O\t\3\2\2\2PQ\7\31\2\2QR\5\4"+
 		"\3\2R\13\3\2\2\2ST\5\26\f\2TU\7\35\2\2UV\5\30\r\2VW\7\7\2\2W\r\3\2\2\2"+
-		"XY\7\"\2\2YZ\7\35\2\2Z[\7\3\2\2[\\\5\30\r\2\\]\7\30\2\2]^\5\30\r\2^_\7"+
+		"XY\7%\2\2YZ\7\35\2\2Z[\7\3\2\2[\\\5\30\r\2\\]\7\30\2\2]^\5\30\r\2^_\7"+
 		"\4\2\2_`\7\7\2\2`\17\3\2\2\2ab\7!\2\2bc\7\3\2\2cd\5$\23\2de\7\4\2\2ef"+
 		"\5\4\3\2f\21\3\2\2\2gh\7\36\2\2hi\5\26\f\2ij\7\7\2\2j\23\3\2\2\2kl\7\37"+
 		"\2\2lm\5\30\r\2mn\7\7\2\2n\25\3\2\2\2ot\5 \21\2pt\5\36\20\2qt\5\32\16"+
@@ -1693,12 +1691,12 @@ public class MicroCParser extends Parser {
 		"\r\1\2vy\5\26\f\2wy\5\"\22\2xu\3\2\2\2xw\3\2\2\2y\u0080\3\2\2\2z{\f\3"+
 		"\2\2{|\5.\30\2|}\5\30\r\4}\177\3\2\2\2~z\3\2\2\2\177\u0082\3\2\2\2\u0080"+
 		"~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\31\3\2\2\2\u0082\u0080\3\2\2\2\u0083"+
-		"\u0084\7\"\2\2\u0084\u0085\7\32\2\2\u0085\33\3\2\2\2\u0086\u0087\7\"\2"+
-		"\2\u0087\u0088\7\33\2\2\u0088\35\3\2\2\2\u0089\u008a\7&\2\2\u008a\37\3"+
-		"\2\2\2\u008b\u008c\7&\2\2\u008c\u008d\7\b\2\2\u008d\u008e\t\2\2\2\u008e"+
-		"\u008f\7\t\2\2\u008f!\3\2\2\2\u0090\u0091\7%\2\2\u0091#\3\2\2\2\u0092"+
+		"\u0084\7%\2\2\u0084\u0085\7\32\2\2\u0085\33\3\2\2\2\u0086\u0087\7%\2\2"+
+		"\u0087\u0088\7\33\2\2\u0088\35\3\2\2\2\u0089\u008a\7%\2\2\u008a\37\3\2"+
+		"\2\2\u008b\u008c\7%\2\2\u008c\u008d\7\b\2\2\u008d\u008e\t\2\2\2\u008e"+
+		"\u008f\7\t\2\2\u008f!\3\2\2\2\u0090\u0091\7$\2\2\u0091#\3\2\2\2\u0092"+
 		"\u0093\b\23\1\2\u0093\u0094\5\30\r\2\u0094\u0095\5\60\31\2\u0095\u0096"+
-		"\5\30\r\2\u0096\u009c\3\2\2\2\u0097\u009c\7#\2\2\u0098\u009c\7$\2\2\u0099"+
+		"\5\30\r\2\u0096\u009c\3\2\2\2\u0097\u009c\7\"\2\2\u0098\u009c\7#\2\2\u0099"+
 		"\u009a\7\25\2\2\u009a\u009c\5$\23\3\u009b\u0092\3\2\2\2\u009b\u0097\3"+
 		"\2\2\2\u009b\u0098\3\2\2\2\u009b\u0099\3\2\2\2\u009c\u00a3\3\2\2\2\u009d"+
 		"\u009e\f\6\2\2\u009e\u009f\5\62\32\2\u009f\u00a0\5$\23\7\u00a0\u00a2\3"+
@@ -1707,12 +1705,12 @@ public class MicroCParser extends Parser {
 		"\u00a7\u00aa\5*\26\2\u00a8\u00aa\5,\27\2\u00a9\u00a6\3\2\2\2\u00a9\u00a7"+
 		"\3\2\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab\u00a9\3\2\2\2\u00ab"+
 		"\u00ac\3\2\2\2\u00ac\'\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ae\u00af\7\34\2"+
-		"\2\u00af\u00b2\7&\2\2\u00b0\u00b1\7\35\2\2\u00b1\u00b3\7%\2\2\u00b2\u00b0"+
+		"\2\u00af\u00b2\7%\2\2\u00b0\u00b1\7\35\2\2\u00b1\u00b3\7$\2\2\u00b2\u00b0"+
 		"\3\2\2\2\u00b2\u00b3\3\2\2\2\u00b3\u00b5\3\2\2\2\u00b4\u00b6\7\7\2\2\u00b5"+
 		"\u00b4\3\2\2\2\u00b5\u00b6\3\2\2\2\u00b6)\3\2\2\2\u00b7\u00b8\7\34\2\2"+
-		"\u00b8\u00b9\7\b\2\2\u00b9\u00ba\7%\2\2\u00ba\u00bb\7\t\2\2\u00bb\u00bc"+
-		"\7&\2\2\u00bc\u00bd\7\7\2\2\u00bd+\3\2\2\2\u00be\u00bf\7\5\2\2\u00bf\u00c0"+
-		"\5(\25\2\u00c0\u00c1\5(\25\2\u00c1\u00c2\7\6\2\2\u00c2\u00c3\7\"\2\2\u00c3"+
+		"\u00b8\u00b9\7\b\2\2\u00b9\u00ba\7$\2\2\u00ba\u00bb\7\t\2\2\u00bb\u00bc"+
+		"\7%\2\2\u00bc\u00bd\7\7\2\2\u00bd+\3\2\2\2\u00be\u00bf\7\5\2\2\u00bf\u00c0"+
+		"\5(\25\2\u00c0\u00c1\5(\25\2\u00c1\u00c2\7\6\2\2\u00c2\u00c3\7%\2\2\u00c3"+
 		"\u00c4\7\7\2\2\u00c4-\3\2\2\2\u00c5\u00c6\t\3\2\2\u00c6/\3\2\2\2\u00c7"+
 		"\u00c8\t\4\2\2\u00c8\61\3\2\2\2\u00c9\u00ca\t\5\2\2\u00ca\63\3\2\2\2\16"+
 		"DFNsx\u0080\u009b\u00a3\u00a9\u00ab\u00b2\u00b5";

@@ -98,7 +98,12 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     }
 
     @Override
-    public Boolean visit(VariableIdentifierNode n) {
+    public Boolean visit(VariableIdentifierExpressionNode n) {
+        return null;
+    }
+
+    @Override
+    public Boolean visit(RecordIdentifierExpressionNode n) {
         return null;
     }
 
@@ -108,7 +113,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     }
 
     @Override
-    public Boolean visit(ArrayIdentifierExpression n) {
+    public Boolean visit(ArrayIdentifierExpressionNode n) {
         return null;
     }
 
@@ -138,10 +143,20 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         return null;
     }
 
+
     // Statements
 
     @Override
     public Boolean visit(LAssignNode n) {
+        String s = n.accept(printVisitor);
+        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        programGraph.addNode(node);
+
+        return true;
+    }
+
+    @Override
+    public Boolean visit(RecordAssignNode n) {
         String s = n.accept(printVisitor);
         node = node.addEdgeOut(new ProgramGraphEdge(s));
         programGraph.addNode(node);

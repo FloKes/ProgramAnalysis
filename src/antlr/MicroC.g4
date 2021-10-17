@@ -31,7 +31,6 @@ READ : 'read';
 WRITE : 'write';
 IF : 'if';
 WHILE : 'while';
-R : 'R';
 TRUE : 'true';
 FALSE : 'false';
 
@@ -51,7 +50,7 @@ statement
 ifElse: IF LPAREN bexpr RPAREN blockStmnt (elseStmnt)?;
 elseStmnt: ELSE blockStmnt;
 lAssign: identifierExpr EQUAL valueExpr SEMI;
-recordAssign:  R EQUAL LPAREN valueExpr COMMA valueExpr RPAREN SEMI;
+recordAssign:  IDENTIFIER EQUAL LPAREN valueExpr COMMA valueExpr RPAREN SEMI;
 whileStmnt: WHILE LPAREN bexpr RPAREN blockStmnt;
 readStmnt:READ identifierExpr SEMI;
 writeStmnt:WRITE valueExpr SEMI;
@@ -66,8 +65,8 @@ valueExpr: identifierExpr #valueIdentifier
     | valueExpr opa valueExpr #vexprOpAvexpr
     ;
 
-recFst: (R)FST ;
-recSnd: (R)SND ;
+recFst: (IDENTIFIER)FST ;
+recSnd: (IDENTIFIER)SND ;
 varIdentifier: IDENTIFIER;
 arrayIndexId: IDENTIFIER LBRACKET (INTEGER|IDENTIFIER) RBRACKET;
 number: INTEGER;
@@ -88,7 +87,7 @@ decl: (varDecl
 
 varDecl: INT IDENTIFIER (EQUAL INTEGER)? (SEMI)?;
 arrayDecl: INT LBRACKET INTEGER RBRACKET IDENTIFIER SEMI;
-recordDecl: LBRACE varDecl varDecl RBRACE  R SEMI;
+recordDecl: LBRACE varDecl varDecl RBRACE IDENTIFIER SEMI;
 
 opa: PLUS
     | MINUS
