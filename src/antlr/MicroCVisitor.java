@@ -1,4 +1,4 @@
-// Generated from C:/Users/giaco/IdeaProjects/Program-Analysis/src/antlr\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/flori/Desktop/Autumn 21/Program Analysis/Parser/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -77,11 +77,26 @@ public interface MicroCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifierExpr(MicroCParser.IdentifierExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MicroCParser#valueExpr}.
+	 * Visit a parse tree produced by the {@code valueIdentifier}
+	 * labeled alternative in {@link MicroCParser#valueExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitValueExpr(MicroCParser.ValueExprContext ctx);
+	T visitValueIdentifier(MicroCParser.ValueIdentifierContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code valueNumber}
+	 * labeled alternative in {@link MicroCParser#valueExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValueNumber(MicroCParser.ValueNumberContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code vexprOpAvexpr}
+	 * labeled alternative in {@link MicroCParser#valueExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVexprOpAvexpr(MicroCParser.VexprOpAvexprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MicroCParser#recFst}.
 	 * @param ctx the parse tree

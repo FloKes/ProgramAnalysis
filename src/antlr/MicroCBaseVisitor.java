@@ -1,4 +1,4 @@
-// Generated from C:/Users/giaco/IdeaProjects/Program-Analysis/src/antlr\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/flori/Desktop/Autumn 21/Program Analysis/Parser/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -94,7 +94,21 @@ public class MicroCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitValueExpr(MicroCParser.ValueExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitValueIdentifier(MicroCParser.ValueIdentifierContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitValueNumber(MicroCParser.ValueNumberContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVexprOpAvexpr(MicroCParser.VexprOpAvexprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,4 +1,4 @@
-// Generated from C:/Users/giaco/IdeaProjects/Program-Analysis/src/antlr\MicroC.g4 by ANTLR 4.9.1
+// Generated from C:/Users/flori/Desktop/Autumn 21/Program Analysis/Parser/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -736,12 +736,39 @@ public class MicroCParser extends Parser {
 	}
 
 	public static class ValueExprContext extends ParserRuleContext {
+		public ValueExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_valueExpr; }
+	 
+		public ValueExprContext() { }
+		public void copyFrom(ValueExprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ValueIdentifierContext extends ValueExprContext {
 		public IdentifierExprContext identifierExpr() {
 			return getRuleContext(IdentifierExprContext.class,0);
 		}
+		public ValueIdentifierContext(ValueExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitValueIdentifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ValueNumberContext extends ValueExprContext {
 		public NumberContext number() {
 			return getRuleContext(NumberContext.class,0);
 		}
+		public ValueNumberContext(ValueExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitValueNumber(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class VexprOpAvexprContext extends ValueExprContext {
 		public List<ValueExprContext> valueExpr() {
 			return getRuleContexts(ValueExprContext.class);
 		}
@@ -751,13 +778,10 @@ public class MicroCParser extends Parser {
 		public OpaContext opa() {
 			return getRuleContext(OpaContext.class,0);
 		}
-		public ValueExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_valueExpr; }
+		public VexprOpAvexprContext(ValueExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitValueExpr(this);
+			if ( visitor instanceof MicroCVisitor ) return ((MicroCVisitor<? extends T>)visitor).visitVexprOpAvexpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -783,12 +807,19 @@ public class MicroCParser extends Parser {
 			case R:
 			case IDENTIFIER:
 				{
+				_localctx = new ValueIdentifierContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(116);
 				identifierExpr();
 				}
 				break;
 			case INTEGER:
 				{
+				_localctx = new ValueNumberContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(117);
 				number();
 				}
@@ -806,7 +837,7 @@ public class MicroCParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new ValueExprContext(_parentctx, _parentState);
+					_localctx = new VexprOpAvexprContext(new ValueExprContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_valueExpr);
 					setState(120);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");

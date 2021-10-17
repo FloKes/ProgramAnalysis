@@ -90,6 +90,13 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     //Expressions
 
+
+    @Override
+    public Boolean visit(ValueExpressionNode n) {
+        String s = n.accept(printVisitor);
+        return null;
+    }
+
     @Override
     public Boolean visit(VariableIdentifierNode n) {
         return null;

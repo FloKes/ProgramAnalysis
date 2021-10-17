@@ -1,8 +1,5 @@
 digraph ProgramGraph{
 "0" -> "1" [label="  int x := 5   "] 
 "1" -> "2" [label="  int y := 1   "] 
-"2" -> "3" [label="  {int r := 0; int z := 0}R   "] 
-"3" -> "4" [label="  int[6] A   "] 
-"4" -> "5" [label="  write x   "] 
-"5" -> "6" [label="  read y   "] 
+"2" -> "3" [label="  y = 5 + 2 * 3 + x * y   "] 
 }

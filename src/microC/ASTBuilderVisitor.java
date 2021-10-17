@@ -8,6 +8,7 @@ import microC.Statement.*;
 
 public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
+
     @Override
     public AbstractNode visitProgram(MicroCParser.ProgramContext ctx) {
         ProgramNode prog = new ProgramNode();
@@ -18,46 +19,18 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     }
 
     @Override
-    public AbstractNode visitStatement(MicroCParser.StatementContext ctx) {
-        var statements = new Statements();
-        for (var a : ctx.children) {
-            statements.addStatement((Statement) visit(a));
-        }
-        return statements;
-    }
-
-    @Override
-    public AbstractNode visitReadStmnt(MicroCParser.ReadStmntContext ctx) {
-        return new ReadStatement(
-                (IdentifierExpressionNode) visit(ctx.identifierExpr())
-                );
-    }
-
-    @Override
-    public AbstractNode visitWriteStmnt(MicroCParser.WriteStmntContext ctx) {
-        return new WriteStatement(
-                (ExpressionNode) visit(ctx.valueExpr())
-                );
-    }
-
-    @Override
-    public AbstractNode visitWhileStmnt(MicroCParser.WhileStmntContext ctx) {
-            return new WhileDeclaration(
-                    (BooleanExpressionNode) visit(ctx.bexpr()),
-                (BlockNode) visit(ctx.blockStmnt()));
-    }
-
-    @Override
     public AbstractNode visitBlockStmnt(MicroCParser.BlockStmntContext ctx) {
         var block = new BlockNode();
 
 
-            block.addStatement((Statements) visit(ctx.statement()));
+        block.addStatement((Statements) visit(ctx.statement()));
 
 
         return block;
     }
 
+
+    // Declarations
     @Override
     public AbstractNode visitDecl(MicroCParser.DeclContext ctx) {
         var decls = new Declarations();
@@ -100,6 +73,23 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
         );
     }
 
+    // Statements
+    @Override
+    public AbstractNode visitStatement(MicroCParser.StatementContext ctx) {
+        var statements = new Statements();
+        for (var a : ctx.children) {
+            statements.addStatement((Statement) visit(a));
+        }
+        return statements;
+    }
+
+    @Override
+    public AbstractNode visitWhileStmnt(MicroCParser.WhileStmntContext ctx) {
+            return new WhileDeclaration(
+                    (BooleanExpressionNode) visit(ctx.bexpr()),
+                (BlockNode) visit(ctx.blockStmnt()));
+    }
+
     @Override
     public AbstractNode visitIfElse(MicroCParser.IfElseContext ctx) {
         if(ctx.elseStmnt() != null){
@@ -116,39 +106,6 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     }
 
     @Override
-    public AbstractNode visitFalseTerm(MicroCParser.FalseTermContext ctx) {
-        return new BooleanValueExpressionNode(false);
-    }
-
-    @Override
-    public AbstractNode visitBexprOpBbexpr(MicroCParser.BexprOpBbexprContext ctx) {
-        return new BooleanOpBBooleanNode(
-                (BooleanExpressionNode) visit(ctx.bexpr(0)),
-                (BooleanExpressionNode) visit(ctx.bexpr(1)),
-                ctx.opb().getText()
-        );
-    }
-
-    @Override
-    public AbstractNode visitTrueTerm(MicroCParser.TrueTermContext ctx) {
-        return new BooleanValueExpressionNode(false);
-    }
-
-    @Override
-    public AbstractNode visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx) {
-        return new BooleanOpRBooleanNode(
-                (ExpressionNode) visit(ctx.valueExpr(0)),
-                (ExpressionNode) visit(ctx.valueExpr(1)),
-                ctx.opr().getText()
-        );
-    }
-
-    @Override
-    public AbstractNode visitNotBexpr(MicroCParser.NotBexprContext ctx) {
-        return new NegationBooleanExprNode((BooleanExpressionNode) visit(ctx.bexpr()));
-    }
-
-    @Override
     public AbstractNode visitElseStmnt(MicroCParser.ElseStmntContext ctx) {
         return new ElseNode((BlockNode) visit(ctx.blockStmnt()));
     }
@@ -161,9 +118,61 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
         );
     }
 
+
+    // Expressions
+
+    // Value expressions
+    @Override
+    public AbstractNode visitValueIdentifier(MicroCParser.ValueIdentifierContext ctx) {
+        return visit(ctx.identifierExpr());
+    }
+
+    @Override
+    public AbstractNode visitValueNumber(MicroCParser.ValueNumberContext ctx) {
+        return visit(ctx.number());
+    }
+
+    @Override
+    public AbstractNode visitVexprOpAvexpr(MicroCParser.VexprOpAvexprContext ctx) {
+        return new ValueExpressionNode(
+                (ExpressionNode) visit(ctx.valueExpr(0)),
+                (ExpressionNode) visit(ctx.valueExpr(1)),
+                ctx.opa().getText()
+        );
+    }
+
+    // Boolean expressions
+    @Override
+    public AbstractNode visitVexprOpRvexpr(MicroCParser.VexprOpRvexprContext ctx) {
+        return new BooleanOpRBooleanNode(
+                (ExpressionNode) visit(ctx.valueExpr(0)),
+                (ExpressionNode) visit(ctx.valueExpr(1)),
+                ctx.opr().getText()
+        );
+    }
+
+    @Override
+    public AbstractNode visitBexprOpBbexpr(MicroCParser.BexprOpBbexprContext ctx) {
+        return new BooleanOpBBooleanNode(
+                (BooleanExpressionNode) visit(ctx.bexpr(0)),
+                (BooleanExpressionNode) visit(ctx.bexpr(1)),
+                ctx.opb().getText()
+        );
+    }
+
+    @Override
+    public AbstractNode visitNotBexpr(MicroCParser.NotBexprContext ctx) {
+        return new NegationBooleanExprNode((BooleanExpressionNode) visit(ctx.bexpr()));
+    }
+
     @Override
     public AbstractNode visitVarIdentifier(MicroCParser.VarIdentifierContext ctx) {
         return new VariableIdentifierNode(ctx.IDENTIFIER().getText());
+    }
+
+    @Override
+    public AbstractNode visitNumber(MicroCParser.NumberContext ctx) {
+        return new NumberExpressionNode(Integer.parseInt(ctx.INTEGER().getText()));
     }
 
     @Override
@@ -195,7 +204,27 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     }
 
     @Override
-    public AbstractNode visitNumber(MicroCParser.NumberContext ctx) {
-        return new NumberExpressionNode(Integer.parseInt(ctx.INTEGER().getText()));
+    public AbstractNode visitTrueTerm(MicroCParser.TrueTermContext ctx) {
+        return new BooleanValueExpressionNode(true);
+    }
+
+    @Override
+    public AbstractNode visitFalseTerm(MicroCParser.FalseTermContext ctx) {
+        return new BooleanValueExpressionNode(false);
+    }
+
+
+    @Override
+    public AbstractNode visitReadStmnt(MicroCParser.ReadStmntContext ctx) {
+        return new ReadStatement(
+                (IdentifierExpressionNode) visit(ctx.identifierExpr())
+        );
+    }
+
+    @Override
+    public AbstractNode visitWriteStmnt(MicroCParser.WriteStmntContext ctx) {
+        return new WriteStatement(
+                (ExpressionNode) visit(ctx.valueExpr())
+        );
     }
 }

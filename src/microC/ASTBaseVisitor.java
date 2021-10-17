@@ -24,6 +24,8 @@ public interface ASTBaseVisitor<T> {
     T visit(ArrayDeclaration ad);
 
     //EXPRESSIONS
+    T visit (ValueExpressionNode n);
+
     T visit (VariableIdentifierNode n);
 
     T visit (NumberExpressionNode n);

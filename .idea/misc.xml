@@ -16,7 +16,7 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/antlr/MicroC.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\giaco\IdeaProjects\Program-Analysis\src" />
+          <option name="outputDir" value="C:\Users\flori\Desktop\Autumn 21\Program Analysis\Parser\Program-Analysis-DTU-Fall-21\src" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="" />

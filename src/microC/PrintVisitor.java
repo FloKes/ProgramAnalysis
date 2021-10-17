@@ -43,6 +43,14 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     //Expressions
 
+
+    @Override
+    public String visit(ValueExpressionNode n) {
+        String s ="";
+        s = s + n.getLeft().accept(this) + " " + n.getOperator() + " " + n.getRight().accept(this);
+        return s;
+    }
+
     @Override
     public String visit(VariableIdentifierNode n) {
         return n.getIdentifier();

@@ -1,8 +1,5 @@
 {
 int x := 5;
 int y := 1;
-{int r; int z;} R;
-int[6] A;
-write x;
-read y;
+y := 5 + 2 * 3 + x * y;
 }

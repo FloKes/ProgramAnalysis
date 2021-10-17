@@ -61,9 +61,10 @@ identifierExpr: arrayIndexId
     | recFst
     | recSnd
     ;
-valueExpr: identifierExpr
-    | number
-    | valueExpr opa valueExpr;
+valueExpr: identifierExpr #valueIdentifier
+    | number #valueNumber
+    | valueExpr opa valueExpr #vexprOpAvexpr
+    ;
 
 recFst: (R)FST ;
 recSnd: (R)SND ;
