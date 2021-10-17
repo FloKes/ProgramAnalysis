@@ -1,21 +1,7 @@
 {
-int i := 5;
-int b;
-b := 9;
-
-if ( b > i ) {
-    i := 0;
-    if ( i == 0){
-        b := 4;
-    }
-}
-
-i := 15;
-
-while ( i > b ) {
-    i := 2;
-    if ( i == 0){
-            b := 4;
-        }
-}
+int x := 5;
+int y := 1;
+{int r; int z;} R;
+int[6] A;
+write x;
 }

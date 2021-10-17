@@ -73,12 +73,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(RecordDeclaration rd) {
-        return null;
+        String s = rd.accept(printVisitor);
+        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        programGraph.addNode(node);
+        return true;
     }
 
     @Override
     public Boolean visit(ArrayDeclaration ad) {
-        return null;
+        String s = ad.accept(printVisitor);
+        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        programGraph.addNode(node);
+        return true;
     }
 
 

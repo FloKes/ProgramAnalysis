@@ -19,19 +19,25 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
         return null;
     }
 
+    // Declarations
     @Override
-    public String visit(RecordDeclaration rd) {
-        return null;
+    public String visit(VariableDeclaration vd) {
+        return (vd.getType() + " " + vd.getIdentifier() + " := " + vd.getInitVal());
     }
 
     @Override
-    public String visit(VariableDeclaration vd) {
-        return (vd.getIdentifier() + ": " + vd.getType() + " = " + vd.getInitVal());
+    public String visit(RecordDeclaration rd) {
+        String s = "";
+        s = s + "{" + rd.getFirst().accept(this) + "; " + rd.getSecond().accept(this) +"}" + rd.getIdentifier();
+        return s;
     }
+
 
     @Override
     public String visit(ArrayDeclaration ad) {
-        return null;
+        String s = "";
+        s = s + ad.getType() + "[" + ad.getSize() + "] " + ad.getIdentifier();
+        return s;
     }
 
 
