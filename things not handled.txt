@@ -1,5 +1,9 @@
 1. We can assign values to undeclared variables
 
+2. We cant redeclare variables?
+
+3. We MUST have a declaration andd statement otherwise it doesn't compile. We can't have just a declaration
+
 2. Ask teacher about for example Figure 1.1 in book. Variable "x" there is not initialized so it just existts from before. Should our parser therefore not require that a variable be initialized before being used in the code
 
-3. In the .g4 file the record has to have variable name R? that means we can only have one Record in the code at the time
+3. In the .g4 file the record has to have variable name R? that means we can only have one Record in the code at the time - Changed it to IDENTIFIER

@@ -1,4 +1,4 @@
 {
-    {int a; int b;}R;
-     R := ( 1 , 2 );
+   {int a; int b;}R;
+   R := ( 1 , 2 );
 }
