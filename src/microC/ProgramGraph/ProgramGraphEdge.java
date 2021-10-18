@@ -1,12 +1,14 @@
 package microC.ProgramGraph;
 
 public class ProgramGraphEdge {
-    String data;
+    String text;
+    EdgeInformation edgeInformation;
     ProgramGraphNode qs;
     ProgramGraphNode qe;
 
-    public ProgramGraphEdge(String data) {
-        this.data = data;
+    public ProgramGraphEdge(String text, EdgeInformation edgeInformation) {
+        this.text = text;
+        this.edgeInformation = edgeInformation;
     }
 
     public void setOriginNode(ProgramGraphNode qs){
@@ -23,9 +25,13 @@ public class ProgramGraphEdge {
         return this.qe;
     }
 
+    public EdgeInformation getEdgeInformation(){
+        return edgeInformation;
+    }
+
     @Override
     public String toString(){
-        return this.data.toString();
+        return this.text.toString();
     }
 
 }

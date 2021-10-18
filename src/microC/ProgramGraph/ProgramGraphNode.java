@@ -101,4 +101,14 @@ public class ProgramGraphNode {
     public void setNumber(Integer number){
         this.number = number;
     }
+
+    public String toString(){
+        if (number == 0){
+            return "qs";
+        }
+        if (outgoingEdges.isEmpty()){
+            return "qe";
+        }
+        return "q" + number;
+    }
 }

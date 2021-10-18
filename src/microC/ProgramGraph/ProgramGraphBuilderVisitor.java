@@ -66,7 +66,10 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(VariableDeclaration vd) {
         String s = vd.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        EdgeInformation edgeInformation = new EdgeInformation();
+        VariableIdentifierExpressionNode vi = new VariableIdentifierExpressionNode(vd.getIdentifier());
+        edgeInformation.setVariableModified(vi);
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         return true;
     }
@@ -74,7 +77,10 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(RecordDeclaration rd) {
         String s = rd.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        EdgeInformation edgeInformation = new EdgeInformation();
+        RecordIdentifierExpressionNode ri = new RecordIdentifierExpressionNode(rd.getIdentifier());
+        edgeInformation.setVariableModified(ri);
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         return true;
     }
@@ -82,7 +88,10 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(ArrayDeclaration ad) {
         String s = ad.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        EdgeInformation edgeInformation= new EdgeInformation();
+        ArrayIdentifierExpressionNode ai = new ArrayIdentifierExpressionNode(ad.getIdentifier());
+        edgeInformation.setVariableModified(ai);
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         return true;
     }
@@ -149,7 +158,12 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(LAssignNode n) {
         String s = n.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+
+        //TODO edge Expression LASSign
+        //EdgeExpression edgeExpression = new EdgeExpression();
+        EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setVariableModified(n.getLeft());
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
 
         return true;
@@ -158,7 +172,11 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(RecordAssignNode n) {
         String s = n.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        //TODO edge Expression RECASSIGN
+        //EdgeExpression edgeExpression = new EdgeExpression();
+        EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setVariableModified(n.getIdentifier());
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
 
         return true;
@@ -178,7 +196,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         int ifNodeNumber = node.getNumber();
 
         // Add node after boolean expression is evaluated true
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprString));
+        // TODO
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, null));
         programGraph.addNode(node);
 
         // Add nodes for the block statement where boolean expression is evaluated true
@@ -192,10 +211,12 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
         if (elseNode == null){
             // Add edge from if node where boolean statement is not true
-            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString), nodeAfterBlock);
+            // TODO
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null), nodeAfterBlock);
         }
         else {
-            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString));
+            // TODO
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null));
             programGraph.addNode(node);
 
             elseNode.accept(this);
@@ -237,7 +258,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         int evalNodeNumber = node.getNumber();
 
         // Add node after boolean expression is evaluated true
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprString));
+        // TODO
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, null));
         programGraph.addNode(node);
 
         // Add nodes for the block statement where boolean expression is evaluated true
@@ -260,7 +282,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
         // Add edge from if node where boolean statement is not true
         node = evalNode;
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString));
+        // TODO
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null));
         programGraph.addNode(node);
 
         return true;
@@ -269,7 +292,9 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(ReadStatement n) {
         String s = n.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        EdgeInformation edgeInformation= new EdgeInformation();
+        edgeInformation.setVariableModified(n.getLexpr());
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
 
         return true;
@@ -278,7 +303,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(WriteStatement n) {
         String s = n.accept(printVisitor);
-        node = node.addEdgeOut(new ProgramGraphEdge(s));
+        // TODO
+        node = node.addEdgeOut(new ProgramGraphEdge(s, null));
         programGraph.addNode(node);
 
         return true;

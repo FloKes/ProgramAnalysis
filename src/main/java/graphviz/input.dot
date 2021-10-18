@@ -1,4 +1,6 @@
 digraph ProgramGraph{
-"0" -> "1" [label="  {int a := 0; int b := 0}R   "] 
-"1" -> "2" [label="  R := (1, 2)   "] 
+"qs" -> "q1" [label="  int[5] A   "] 
+"q1" -> "q2" [label="  int x := 0   "] 
+"q2" -> "q3" [label="  x := y + 5   "] 
+"q3" -> "qe" [label="  A[i] := 5   "] 
 }

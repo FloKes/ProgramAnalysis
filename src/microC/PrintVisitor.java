@@ -66,7 +66,10 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(ArrayIdentifierExpressionNode n) {
-        return null;
+        if(n.getIndexIdentifier() == null){
+            return n.getIdentifier() + "["+ n.getIndex() + "]";
+        }
+        return n.getIdentifier() + "[" + n.getIndexIdentifier() + "]";
     }
 
 

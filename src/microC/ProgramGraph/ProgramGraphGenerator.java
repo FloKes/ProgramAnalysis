@@ -18,12 +18,10 @@ public class ProgramGraphGenerator {
         programGraphBuilderVisitor = new ProgramGraphBuilderVisitor(programGraph);
     }
 
-    public ArrayList<ProgramGraphNode> generateProgramGraph(AbstractNode node){
+    public ProgramGraph generateProgramGraph(AbstractNode node){
         ProgramNode programNodeAST = (ProgramNode) node;
         programGraphBuilderVisitor.visit(programNodeAST);
 
-        //programNode.accept(programGraphVisitor);
-
-        return programGraph.getProgramGraphNodes();
+        return programGraph;
     }
 }

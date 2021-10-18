@@ -56,8 +56,8 @@ public class DOTFileGenerator {
                 List<ProgramGraphEdge> outGoingEdges = programGraphNode.getOutGoing();
                 for (ProgramGraphEdge outGoingEdge: outGoingEdges){
                     String edgeValue = outGoingEdge.toString();
-                    int qs = outGoingEdge.getOriginNode().getNumber();
-                    int qe = outGoingEdge.getEndNode().getNumber();
+                    String qs = outGoingEdge.getOriginNode().toString();
+                    String qe = outGoingEdge.getEndNode().toString();
                     String string = String.format("\"%s\" -> \"%s\" [label=\"  %s   \"] \n",qs, qe, edgeValue);
                     writer.write(string);
                 }

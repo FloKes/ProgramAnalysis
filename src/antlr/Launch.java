@@ -2,6 +2,8 @@ package antlr;
 
 import graphviz.DOTFileGenerator;
 import microC.ASTBuilderVisitor;
+import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
+import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
 import microC.ProgramGraph.ProgramGraphNode;
 import org.antlr.v4.runtime.CharStream;
@@ -38,10 +40,17 @@ public class Launch {
 
 
             ProgramGraphGenerator programGraphGenerator = new ProgramGraphGenerator();
-            ArrayList<ProgramGraphNode> programGraphNodes = programGraphGenerator.generateProgramGraph(prog);
+            ProgramGraph programGraph = programGraphGenerator.generateProgramGraph(prog);
+            ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
             dotFileGenerator.GenerateFile(programGraphNodes);
+
+            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            ArrayList<String> constraints = reachingDefinitionsAnalysis.getConstraints(programGraph);
+            for (String constraint: constraints) {
+                System.out.println(constraint);
+            }
 
         } catch (IOException e) {
             throw e;

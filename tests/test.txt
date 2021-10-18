@@ -1,4 +1,6 @@
 {
-   {int a; int b;}R;
-   R := ( 1 , 2 );
+   int[5] A;
+   int x;
+   x := y + 5;
+   A[i] := 5;
 }
