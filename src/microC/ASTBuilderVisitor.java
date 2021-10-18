@@ -128,6 +128,16 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
         );
     }
 
+    @Override
+    public AbstractNode visitRecFst(MicroCParser.RecFstContext ctx) {
+        return new RecordIdentifierExpressionNode(ctx.IDENTIFIER().getText(), RecAccessEnum.FST);
+    }
+
+    @Override
+    public AbstractNode visitRecSnd(MicroCParser.RecSndContext ctx) {
+        return new RecordIdentifierExpressionNode(ctx.IDENTIFIER().getText(), RecAccessEnum.SND);
+    }
+
 
     // Expressions
 
@@ -198,15 +208,6 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     }
 
-    @Override
-    public AbstractNode visitRecFst(MicroCParser.RecFstContext ctx) {
-        return new RecAccessNode(RecAccessEnum.FST, ctx.IDENTIFIER().getText());
-    }
-
-    @Override
-    public AbstractNode visitRecSnd(MicroCParser.RecSndContext ctx) {
-        return new RecAccessNode(RecAccessEnum.SND, ctx.IDENTIFIER().getText());
-    }
 
     @Override
     public AbstractNode visitTrueTerm(MicroCParser.TrueTermContext ctx) {

@@ -55,11 +55,6 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     }
 
     @Override
-    public String visit(RecordIdentifierExpressionNode n) {
-        return n.getIdentifier();
-    }
-
-    @Override
     public String visit(NumberExpressionNode n) {
         return String.valueOf(n.getValue());
     }
@@ -72,7 +67,24 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
         return n.getIdentifier() + "[" + n.getIndexIdentifier() + "]";
     }
 
+    @Override
+    public String visit(RecordIdentifierExpressionNode n) {
+        if (n.getFst() == null && n.getSnd() == null){
+            return n.getIdentifier();
+        }
+        if (n.getFst() != null && n.getSnd() == null){
+            return n.getIdentifier() + ".fst";
+        }
+        if (n.getFst() == null && n.getSnd() != null){
+            return n.getIdentifier() + ".snd";
+        }
+        return "";
+    }
 
+    @Override
+    public String visit(RecAccessNode n) {
+        return null;
+    }
     @Override
     public String visit(BooleanValueExpressionNode n) {
         return null;
@@ -98,12 +110,6 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
         return leftString + operator + rightString;
     }
-
-    @Override
-    public String visit(RecAccessNode n) {
-        return null;
-    }
-
 
     // Statements
 

@@ -1,6 +1,7 @@
 {
-   int[5] A;
-   int x;
-   x := y + 5;
-   A[i] := 5;
+   {int fst; int snd}R;
+   R := (5, 7);
+   R.fst := 9;
+   R.snd := 4;
+   write x;
 }

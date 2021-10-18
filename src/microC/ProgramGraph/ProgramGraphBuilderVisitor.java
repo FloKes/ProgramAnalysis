@@ -117,6 +117,11 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     }
 
     @Override
+    public Boolean visit(RecAccessNode n) {
+        return null;
+    }
+
+    @Override
     public Boolean visit(NumberExpressionNode n) {
         return null;
     }
@@ -144,11 +149,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(BooleanOpRBooleanNode n) {
-        return null;
-    }
-
-    @Override
-    public Boolean visit(RecAccessNode n) {
         return null;
     }
 
@@ -296,7 +296,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         edgeInformation.setVariableModified(n.getLexpr());
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
-
         return true;
     }
 

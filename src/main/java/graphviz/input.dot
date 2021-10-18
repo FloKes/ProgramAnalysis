@@ -1,6 +1,7 @@
 digraph ProgramGraph{
-"qs" -> "q1" [label="  int[5] A   "] 
-"q1" -> "q2" [label="  int x := 0   "] 
-"q2" -> "q3" [label="  x := y + 5   "] 
-"q3" -> "qe" [label="  A[i] := 5   "] 
+"qs" -> "q1" [label="  {int fst := 0; int snd := 0}R   "] 
+"q1" -> "q2" [label="  R := (5, 7)   "] 
+"q2" -> "q3" [label="  R.fst := 9   "] 
+"q3" -> "q4" [label="  R.snd := 4   "] 
+"q4" -> "qe" [label="  write x   "] 
 }
