@@ -63,16 +63,26 @@ public class AnalysisAssignmentGenerator {
 
     public void solveAlgorithm2(ProgramGraph programGraph){
         var programGraphEdges = programGraph.getProgramGraphEdges();
-        for(ProgramGraphEdge programGraphEdge: programGraphEdges){
-            analyzeConstraint(programGraphEdge);
-        }
-        for(ProgramGraphEdge programGraphEdge: programGraphEdges){
-            analyzeConstraint(programGraphEdge);
-        }
 
+        int notSubsetCounter;
+        while (true) {
+            notSubsetCounter = 0;
+            for (ProgramGraphEdge programGraphEdge : programGraphEdges) {
+                analyzeConstraint(programGraphEdge);
+                if (!isSubset(analyzeConstraint(programGraphEdge)
+                        , constraintSolutions.get(programGraphEdge.getEndNode().getNumber()))) {
+                    addTriplesToSolution(analyzeConstraint(programGraphEdge)
+                            , constraintSolutions.get(programGraphEdge.getEndNode().getNumber()));
+                    notSubsetCounter++;
+                }
+            }
+            if(notSubsetCounter == 0){
+                break;
+            }
+        }
     }
 
-    public void analyzeConstraint (ProgramGraphEdge edge){
+    public ArrayList<ConstraintTriple> analyzeConstraint (ProgramGraphEdge edge){
         var originNode = edge.getOriginNode();
         var endNode = edge.getEndNode();
 
@@ -92,7 +102,8 @@ public class AnalysisAssignmentGenerator {
         if(edge.getKillGenSetRD().getGenSetRD() != null){
             addGenerated(triplesToAdd, edge.getKillGenSetRD().getGenSetRD());
         }
-        addTriplesToSolution(triplesToAdd, currentSolution);
+
+        return triplesToAdd;
     }
 
     public void addTriplesToSolution(ArrayList<ConstraintTriple> triples, ConstraintSolution solution){
