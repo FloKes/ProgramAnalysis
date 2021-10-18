@@ -1,4 +1,4 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.KillGen;
 
 import microC.ProgramGraph.ProgramGraphEdge;
 

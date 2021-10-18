@@ -1,6 +1,6 @@
 package microC.ProgramGraph;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraint;
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +50,7 @@ public class ProgramGraphNode {
 
         this.outgoingEdges.add(edge);
         newNode.addEdgeIn(edge);
+        programGraph.addProgramGraphEdge(edge);
 
         //New node or the next in line
         return newNode;
@@ -61,6 +62,7 @@ public class ProgramGraphNode {
 
         this.outgoingEdges.add(edge);
         node.addEdgeIn(edge);
+        programGraph.addProgramGraphEdge(edge);
 
         //New node or the next in line
         return node;
@@ -94,6 +96,10 @@ public class ProgramGraphNode {
 
     public void setParentProgramGraph(ProgramGraph programGraph){
         this.programGraph = programGraph;
+    }
+
+    public ProgramGraph getProgramGraph() {
+        return programGraph;
     }
 
     public boolean isFinalNode(){

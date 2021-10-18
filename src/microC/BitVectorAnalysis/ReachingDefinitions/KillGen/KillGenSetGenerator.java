@@ -1,6 +1,5 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.KillGen;
 
-import MathOp.UniOp;
 import microC.Expressions.ArrayIdentifierExpressionNode;
 import microC.Expressions.RecordIdentifierExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
@@ -75,8 +74,8 @@ public class KillGenSetGenerator {
         if(edgeInformation != null) {
             if (edgeInformation.getVariableModified() != null) {
                 var modified = edgeInformation.getVariableModified();
-                GenSetRD genSetRD = new GenSetRD(modified.getIdentifier(), edge.getOriginNode().toString(),
-                        edge.getEndNode().toString());
+                GenSetRD genSetRD = new GenSetRD(modified.getIdentifier(), edge.getOriginNode(),
+                        edge.getEndNode());
 
                 genSetRD.setText(killGenSetPrinter.printGenSet(genSetRD));
                 return genSetRD;

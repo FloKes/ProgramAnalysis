@@ -1,10 +1,9 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.Constraints;
 
 
-import microC.ProgramGraph.ProgramGraphEdge;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
 import microC.ProgramGraph.ProgramGraphNode;
-
-import java.util.ArrayList;
 
 public class Constraint {
     private ProgramGraphNode node;

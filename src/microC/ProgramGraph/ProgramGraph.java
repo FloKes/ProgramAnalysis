@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 public class ProgramGraph {
     private ArrayList<ProgramGraphNode> programGraphNodes;
+    private ArrayList<ProgramGraphEdge> programGraphEdges;
+    private ArrayList<String> declaredObjects;
 
     public ProgramGraph() {
         this.programGraphNodes = new ArrayList<>();
+        this.programGraphEdges = new ArrayList<>();
+        this.declaredObjects = new ArrayList<>();
     }
 
     public void addNode(ProgramGraphNode node){
@@ -14,10 +18,6 @@ public class ProgramGraph {
 
         // Each gets has a reference of the program graph it belongs to
         node.setParentProgramGraph(this);
-    }
-
-    public ArrayList<ProgramGraphNode> getProgramGraphNodes(){
-        return this.programGraphNodes;
     }
 
     public ProgramGraphNode getProgramGraphNode(int index){
@@ -54,5 +54,24 @@ public class ProgramGraph {
     public Boolean removeProgramGraphNode(ProgramGraphNode programGraphNode){
         this.programGraphNodes.remove(programGraphNode);
         return true;
+    }
+
+    public void addDeclaredObjects(String object){
+        this.declaredObjects.add(object);
+    }
+
+    public ArrayList<String> getDeclaredObjects() {
+        return declaredObjects;
+    }
+
+    public ArrayList<ProgramGraphNode> getProgramGraphNodes(){
+        return this.programGraphNodes;
+    }
+
+    public void addProgramGraphEdge (ProgramGraphEdge programGraphEdge){
+        programGraphEdges.add(programGraphEdge);
+    }
+    public ArrayList<ProgramGraphEdge> getProgramGraphEdges() {
+        return programGraphEdges;
     }
 }

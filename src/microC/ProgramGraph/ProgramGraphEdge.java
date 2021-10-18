@@ -1,6 +1,6 @@
 package microC.ProgramGraph;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGenSetRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetRD;
 
 public class ProgramGraphEdge {
     private String text;

@@ -1,16 +1,18 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.KillGen;
+
+import microC.ProgramGraph.ProgramGraphNode;
 
 public class GenSetRD {
     public String text;
     public String generated;
-    public String originNode;
-    public String endNode;
+    public ProgramGraphNode originNode;
+    public ProgramGraphNode endNode;
 
     public GenSetRD(String generated) {
         this.generated = generated;
     }
 
-    public GenSetRD(String generated, String originNode, String endNode) {
+    public GenSetRD(String generated, ProgramGraphNode originNode, ProgramGraphNode endNode) {
         this.generated = generated;
         this.originNode = originNode;
         this.endNode = endNode;

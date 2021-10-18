@@ -71,6 +71,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         edgeInformation.setVariableModified(vi);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
+        programGraph.addDeclaredObjects(vd.getIdentifier());
         return true;
     }
 
@@ -82,6 +83,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         edgeInformation.setVariableModified(ri);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
+        programGraph.addDeclaredObjects(rd.getIdentifier());
         return true;
     }
 
@@ -93,12 +95,12 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         edgeInformation.setVariableModified(ai);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
+        programGraph.addDeclaredObjects(ad.getIdentifier());
         return true;
     }
 
 
     //Expressions
-
 
     @Override
     public Boolean visit(ValueExpressionNode n) {

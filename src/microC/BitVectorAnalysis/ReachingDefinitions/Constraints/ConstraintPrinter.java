@@ -1,8 +1,7 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.Constraints;
 
 import MathOp.UniOp;
-import microC.ProgramGraph.ProgramGraphEdge;
-import microC.ProgramGraph.ProgramGraphNode;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGenerator;
 
 import java.util.ArrayList;
 
@@ -14,13 +13,22 @@ public class ConstraintPrinter {
         this.constraintsStrings = new ArrayList<>();
     }
 
-    public ArrayList<String> getConstraints(ArrayList<Constraint> constraints) {
+    public ArrayList<String> getConstraintStrings(ArrayList<Constraint> constraints) {
         String s = "";
         for (Constraint constraint : constraints) {
-
             if(constraint.getOriginNode() == null){
+                var programGraph = constraint.getNode().getProgramGraph();
                 s = "RD(" + constraint.getNode().toString() + ") "
-                + UniOp.supseteq + " {(x, ?, qs),(y, ?, qs)}";
+                + UniOp.supseteq + " {";
+
+                for (int i = 0; i < programGraph.getDeclaredObjects().size(); i++) {
+                    if ( i != programGraph.getDeclaredObjects().size()-1) {
+                        s = s + "(" + programGraph.getDeclaredObjects().get(i) + ", ?, qs),";
+                    }
+                    else {
+                        s = s + "(" + programGraph.getDeclaredObjects().get(i) + ", ?, qs)}";
+                    }
+                }
                 constraintsStrings.add(s);
             }
             else {

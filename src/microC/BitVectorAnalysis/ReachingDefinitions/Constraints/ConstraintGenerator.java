@@ -1,6 +1,6 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.Constraints;
 
-import MathOp.UniOp;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGenerator;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;

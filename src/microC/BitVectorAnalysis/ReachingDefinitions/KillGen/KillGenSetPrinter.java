@@ -1,12 +1,6 @@
-package microC.BitVectorAnalysis.ReachingDefinitions;
+package microC.BitVectorAnalysis.ReachingDefinitions.KillGen;
 
 import MathOp.UniOp;
-import microC.Expressions.ArrayIdentifierExpressionNode;
-import microC.Expressions.RecordIdentifierExpressionNode;
-import microC.Expressions.VariableIdentifierExpressionNode;
-import microC.ProgramGraph.ProgramGraph;
-import microC.ProgramGraph.ProgramGraphEdge;
-import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
 
