@@ -8,30 +8,34 @@ import microC.ProgramGraph.ProgramGraphNode;
 import java.util.ArrayList;
 
 public class ConstraintGenerator {
-    private ArrayList<String> constraints;
+    private ArrayList<Constraint> constraints;
     private KillGenSetGenerator generator;
 
     public ConstraintGenerator() {
         this.constraints = new ArrayList<>();
     }
 
-    public ArrayList<String> getConstraints(ProgramGraph programGraph){
-        String s = "";
+    public ArrayList<Constraint> getConstraints(ProgramGraph programGraph){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()) {
             if(programGraphNode.getNumber() == 0){
-                s = "RD(" + programGraphNode.toString() + ") " + UniOp.supseteq
-                        + " ({x, ?, " + programGraphNode.toString() + "),(" + "{y, ?, " + programGraphNode.toString() + ")}";
-                constraints.add(s);
+                Constraint constraint = new Constraint(programGraphNode, null);
+                constraint.setGenerated(null);
+                constraints.add(constraint);
+                programGraphNode.addConstraint(constraint);
             }
             else {
                 for (ProgramGraphEdge edge : programGraphNode.getInGoing()) {
-                    s = "RD(" + programGraphNode.toString() + ") " + UniOp.supseteq
-                            + " (RD(" + edge.getOriginNode().toString() + ")\\("
-                    + edge.getKillGenSetRD().getKillSetRD().toString() + "))"
-                    + UniOp.union + edge.getKillGenSetRD().getGenSetRD().toString()
-                    ;
-                    constraints.add(s);
-
+                    Constraint constraint = new Constraint(programGraphNode, edge.getOriginNode());
+                    var killed = edge.getKillGenSetRD().getKillSetRD();
+                    var generated = edge.getKillGenSetRD().getGenSetRD();
+                    if(killed != null){
+                        constraint.setKilled(killed);
+                    }
+                    if(generated != null){
+                        constraint.setGenerated(generated);
+                    }
+                    constraints.add(constraint);
+                    programGraphNode.addConstraint(constraint);
                 }
             }
         }

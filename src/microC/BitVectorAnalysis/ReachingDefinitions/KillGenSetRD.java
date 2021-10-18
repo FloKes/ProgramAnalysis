@@ -7,6 +7,10 @@ public class KillGenSetRD {
     private GenSetRD genSetRD;
     private ProgramGraphEdge programGraphEdge;
 
+    public KillGenSetRD(ProgramGraphEdge programGraphEdge) {
+        this.programGraphEdge = programGraphEdge;
+    }
+
     public KillGenSetRD(KillSetRD killSetRD, GenSetRD genSetRD, ProgramGraphEdge programGraphEdge){
         this.killSetRD = killSetRD;
         this.genSetRD = genSetRD;

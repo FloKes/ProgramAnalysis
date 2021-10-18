@@ -1,5 +1,6 @@
 package microC.BitVectorAnalysis.ReachingDefinitions;
 
+import MathOp.UniOp;
 import microC.Expressions.ArrayIdentifierExpressionNode;
 import microC.Expressions.RecordIdentifierExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
@@ -21,17 +22,16 @@ public class KillGenSetGenerator {
     public ArrayList<KillGenSetRD> getKillGenSets(ProgramGraph programGraph){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()) {
             for (ProgramGraphEdge edge: programGraphNode.getOutGoing()){
-                KillSetRD killSet = new KillSetRD(killGenSetPrinter.getKillSet(edge));
-                GenSetRD genSet = new GenSetRD(killGenSetPrinter.getGenSet(edge));
-                KillGenSetRD killGenSet = new KillGenSetRD(killSet,genSet,edge);
-                edge.setKillGenSetRD(killGenSet);
+                var killGenSet = edge.getKillGenSetRD();
+                killGenSet.setKillSetRD(getKillSet(edge));
+                killGenSet.setGenSetRD(getGenSet(edge));
                 killGenSets.add(killGenSet);
             }
         }
         return killGenSets;
     }
 
-    public String getKillSet(ProgramGraphEdge edge){
+    public KillSetRD getKillSet(ProgramGraphEdge edge){
         var edgeInformation = edge.getEdgeInformation();
         if(edgeInformation != null) {
             if (edgeInformation.getVariableModified() != null) {
@@ -42,8 +42,8 @@ public class KillGenSetGenerator {
                 if (modified instanceof VariableIdentifierExpressionNode){
                     var variableModified = (VariableIdentifierExpressionNode) modified;
                     KillSetRD killSetRD = new KillSetRD(variableModified.getIdentifier());
-                    String s = "{" + killSetRD.text + "}" + " x {?, qs, q1, ..., qe} x {qs, q1, ..., qe}";
-                    return s;
+                    killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
+                    return killSetRD;
                 }
 
                 //object is of type ArrayIdentifier
@@ -51,8 +51,8 @@ public class KillGenSetGenerator {
                     var arrayModified = (ArrayIdentifierExpressionNode) modified;
                     if (arrayModified.getIndex() == null && arrayModified.getIndexIdentifier() == null){
                         KillSetRD killSetRD = new KillSetRD(arrayModified.getIdentifier());
-                        String s = "{" + killSetRD.text + "}" + " x {?, qs, q1, ..., qe} x {qs, q1, ..., qe}";
-                        return s;
+                        killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
+                        return killSetRD;
                     }
                 }
 
@@ -61,27 +61,27 @@ public class KillGenSetGenerator {
                     var recordModified = (RecordIdentifierExpressionNode) modified;
                     if (recordModified.getFst() == null && recordModified.getSnd() == null){
                         KillSetRD killSetRD = new KillSetRD(recordModified.getIdentifier());
-                        String s = "{" + killSetRD.text + "}" + " x {?, qs, q1, ..., qe} x {qs, q1, ..., qe}";
-                        return s;
+                        killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
+                        return killSetRD;
                     }
                 }
             }
         }
-        return "{ }";
+        return null;
     }
 
-    public String getGenSet(ProgramGraphEdge edge){
+    public GenSetRD getGenSet(ProgramGraphEdge edge){
         var edgeInformation = edge.getEdgeInformation();
         if(edgeInformation != null) {
             if (edgeInformation.getVariableModified() != null) {
                 var modified = edgeInformation.getVariableModified();
-
                 GenSetRD genSetRD = new GenSetRD(modified.getIdentifier(), edge.getOriginNode().toString(),
                         edge.getEndNode().toString());
-                String s = "{(" + genSetRD.identifier + ", " + genSetRD.originNode + ", " + genSetRD.endNode + ")}";
-                return s;
+
+                genSetRD.setText(killGenSetPrinter.printGenSet(genSetRD));
+                return genSetRD;
             }
         }
-        return "{ }";
+        return null;
     }
 }

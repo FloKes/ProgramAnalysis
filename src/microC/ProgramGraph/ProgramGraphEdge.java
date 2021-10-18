@@ -12,6 +12,7 @@ public class ProgramGraphEdge {
     public ProgramGraphEdge(String text, EdgeInformation edgeInformation) {
         this.text = text;
         this.edgeInformation = edgeInformation;
+        this.killGenSetRD = new KillGenSetRD(this);
     }
 
     public void setOriginNode(ProgramGraphNode qs){

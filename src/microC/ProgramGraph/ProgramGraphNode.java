@@ -1,5 +1,8 @@
 package microC.ProgramGraph;
 
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraint;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.LinkedList;
@@ -9,17 +12,20 @@ public class ProgramGraphNode {
     private ProgramGraph programGraph;
     private List<ProgramGraphEdge> ingoingEdges;
     private List<ProgramGraphEdge> outgoingEdges;
+    private ArrayList<Constraint> constraints;
 
     public ProgramGraphNode(){
         //initial node
         this.number = 0;
         this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
+        this.constraints = new ArrayList<>();
     }
 
     public ProgramGraphNode(int number) {
         this.number = number;
         this.ingoingEdges = new LinkedList<ProgramGraphEdge>();
         this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
+        this.constraints = new ArrayList<>();
     }
 
     public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge) {
@@ -100,6 +106,13 @@ public class ProgramGraphNode {
 
     public void setNumber(Integer number){
         this.number = number;
+    }
+
+    public void addConstraint (Constraint constraint){
+        this.constraints.add(constraint);
+    }
+    public ArrayList<Constraint> getConstraints() {
+        return constraints;
     }
 
     public String toString(){

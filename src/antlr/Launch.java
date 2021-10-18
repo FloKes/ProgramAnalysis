@@ -47,14 +47,17 @@ public class Launch {
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
             dotFileGenerator.GenerateFile(programGraphNodes);
 
+
             ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-            ArrayList<String> killGenSets = reachingDefinitionsAnalysis.getKillGenSets(programGraph);
-            for (String killGenSet: killGenSets) {
-                System.out.println(killGenSet);
-            }
+            //reachingDefinitionsAnalysis.doAnalysis(programGraph);
+//            ArrayList<String> killGenSets = reachingDefinitionsAnalysis.getKillGenSets(programGraph);
+//            for (String killGenSet: killGenSets) {
+//                System.out.println(killGenSet);
+//            }
+            reachingDefinitionsAnalysis.getKillGenSets(programGraph);
             System.out.println("\n --------------------- \n");
-            ArrayList<String> constraints = reachingDefinitionsAnalysis.getConstraints(programGraph);
-            for (String constraint: constraints) {
+            var constraints = reachingDefinitionsAnalysis.getConstraints(programGraph);
+            for (String constraint: reachingDefinitionsAnalysis.getConstraintsStrings(constraints)) {
                 System.out.println(constraint);
             }
 
