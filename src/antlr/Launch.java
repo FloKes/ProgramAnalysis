@@ -2,6 +2,7 @@ package antlr;
 
 import graphviz.DOTFileGenerator;
 import microC.ASTBuilderVisitor;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGenSetGenerator;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
@@ -47,6 +48,11 @@ public class Launch {
             dotFileGenerator.GenerateFile(programGraphNodes);
 
             ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            ArrayList<String> killGenSets = reachingDefinitionsAnalysis.getKillGenSets(programGraph);
+            for (String killGenSet: killGenSets) {
+                System.out.println(killGenSet);
+            }
+            System.out.println("\n --------------------- \n");
             ArrayList<String> constraints = reachingDefinitionsAnalysis.getConstraints(programGraph);
             for (String constraint: constraints) {
                 System.out.println(constraint);

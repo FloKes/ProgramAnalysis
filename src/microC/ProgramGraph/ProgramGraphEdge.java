@@ -1,10 +1,13 @@
 package microC.ProgramGraph;
 
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGenSetRD;
+
 public class ProgramGraphEdge {
-    String text;
-    EdgeInformation edgeInformation;
-    ProgramGraphNode qs;
-    ProgramGraphNode qe;
+    private String text;
+    private EdgeInformation edgeInformation;
+    private ProgramGraphNode qs;
+    private ProgramGraphNode qe;
+    private KillGenSetRD killGenSetRD;
 
     public ProgramGraphEdge(String text, EdgeInformation edgeInformation) {
         this.text = text;
@@ -27,6 +30,14 @@ public class ProgramGraphEdge {
 
     public EdgeInformation getEdgeInformation(){
         return edgeInformation;
+    }
+
+    public KillGenSetRD getKillGenSetRD() {
+        return killGenSetRD;
+    }
+
+    public void setKillGenSetRD(KillGenSetRD killGenSetRD) {
+        this.killGenSetRD = killGenSetRD;
     }
 
     @Override

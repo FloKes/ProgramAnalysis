@@ -1,7 +1,9 @@
 {
-   {int fst; int snd}R;
-   R := (5, 7);
-   R.fst := 9;
-   R.snd := 4;
-   write x;
+   int x;
+   int y;
+   y := 1;
+   while ( x > 0 ){
+        y := x * y;
+        x := x - 1;
+   }
 }
