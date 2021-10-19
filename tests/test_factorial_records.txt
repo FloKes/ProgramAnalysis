@@ -1,0 +1,9 @@
+{
+   {int fst; int snd;} R;
+   int y;
+   y := 1;
+   while (x > 0){
+        R.snd := R.fst * y;
+        y := R.fst - 1;
+   }
+}
