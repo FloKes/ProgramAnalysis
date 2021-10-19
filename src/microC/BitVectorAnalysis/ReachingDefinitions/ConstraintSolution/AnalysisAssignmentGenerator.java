@@ -24,42 +24,6 @@ public class AnalysisAssignmentGenerator {
         return constraintSolutions;
     }
 
-    public void solveAlgorithm1(ProgramGraph programGraph){
-        var programGraphNodes = programGraph.getProgramGraphNodes();
-        for (int i = 1; i < programGraphNodes.size(); i++){
-            var node = programGraphNodes.get(i);
-            var previousSolution = constraintSolutions.get(i-1);
-            var previousTriples = previousSolution.getConstraintTriples();
-            var constraintSolution = constraintSolutions.get(i);
-
-            for(ConstraintTriple previousTriple: previousTriples){
-                boolean killedFlag = false;
-                var previousDefinition = previousTriple.getValue();
-                for (Constraint constraint: node.getConstraints()) {
-                    if(constraint.getKilled() != null) {
-                        var killedDefinition = constraint.getKilled().getKilled();
-                        if (previousDefinition.equals(killedDefinition)) {
-                            killedFlag = true;
-                        }
-                    }
-                }
-                if(!killedFlag) {
-                    constraintSolution.addTriple(previousTriple);
-                }
-            }
-            for (Constraint constraint: node.getConstraints()) {
-                if(constraint.getGenerated() != null) {
-                    var generatedDefinition = constraint.getGenerated().getGenerated();
-                    var triple = new ConstraintTriple(generatedDefinition, constraint.getOriginNode(), node);
-
-                    // Union genRD(qs, a, qe)
-                    if(!constraintSolution.getConstraintTriples().contains(triple)){
-                        constraintSolution.addTriple(triple);
-                    }
-                }
-            }
-        }
-    }
 
     public void solveAlgorithm2(ProgramGraph programGraph){
         var programGraphEdges = programGraph.getProgramGraphEdges();
@@ -113,6 +77,7 @@ public class AnalysisAssignmentGenerator {
                 currentSolutionTriples.add(triple);
             }
         }
+        sortByIdentifier(solution.getConstraintTriples());
     }
 
     public boolean isSubset(ArrayList<ConstraintTriple> triples, ConstraintSolution solution){
@@ -169,4 +134,7 @@ public class AnalysisAssignmentGenerator {
         }
     }
 
+    public void sortByIdentifier(ArrayList<ConstraintTriple> triples){
+        triples.sort(new tripleComparator());
+    }
 }
