@@ -3,7 +3,6 @@ package microC.Statement;
 import microC.ASTBaseVisitor;
 import microC.Expressions.ExpressionNode;
 import microC.Expressions.IdentifierExpressionNode;
-import microC.Expressions.RecAccessNode;
 import microC.Expressions.RecordIdentifierExpressionNode;
 
 public class RecordAssignNode extends Statement{

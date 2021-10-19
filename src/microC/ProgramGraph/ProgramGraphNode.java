@@ -3,9 +3,8 @@ package microC.ProgramGraph;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.LinkedList;
+import java.util.List;
 
 public class ProgramGraphNode {
     private int number;

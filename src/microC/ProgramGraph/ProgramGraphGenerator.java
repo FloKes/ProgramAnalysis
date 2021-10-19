@@ -1,12 +1,8 @@
 package microC.ProgramGraph;
 
 import microC.AbstractNode;
-import microC.Declaration.Declaration;
 import microC.PrintVisitor;
 import microC.ProgramNode;
-import microC.Statement.Statement;
-
-import java.util.ArrayList;
 
 public class ProgramGraphGenerator {
     private PrintVisitor printVisitor = new PrintVisitor();

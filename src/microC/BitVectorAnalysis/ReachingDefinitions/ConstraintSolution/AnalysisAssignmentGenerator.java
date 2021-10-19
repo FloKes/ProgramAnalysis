@@ -1,12 +1,9 @@
 package microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution;
 
-import com.kitfox.svg.A;
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
-import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
 

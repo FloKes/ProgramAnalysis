@@ -1,9 +1,10 @@
 {
-   int x;
+   {int fst; int snd;} R;
    int y;
    y := 1;
    while (x > 0){
-        y := x * y;
-        x := x - 1;
+        R.snd := R.fst * y;
+        y := R.fst - 1;
    }
+   R := (5, 7);
 }

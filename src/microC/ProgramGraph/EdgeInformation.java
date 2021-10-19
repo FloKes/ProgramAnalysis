@@ -1,9 +1,6 @@
 package microC.ProgramGraph;
 
 import microC.Expressions.IdentifierExpressionNode;
-import microC.PrintVisitor;
-
-import java.util.ArrayList;
 
 public class EdgeInformation {
     private IdentifierExpressionNode variableModified;

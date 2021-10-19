@@ -2,8 +2,6 @@ package microC.Statement;
 
 import microC.ASTBaseVisitor;
 import microC.AbstractNode;
-import microC.Declaration.Declaration;
-import microC.Declaration.Declarations;
 import microC.Visitable;
 
 import java.util.ArrayList;
