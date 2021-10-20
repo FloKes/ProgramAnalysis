@@ -10,3 +10,5 @@ add your code in "test/test.txt" file
 Basically this is a compiler but it has to be done faster :'(
 
 
+If you want to generate antlr stuff for a change in the .g4 file you need to set up the output direcetory like this: Right click on MicroC.g4 file --> Configure ANTLR --> Output directory --> Change to your "project_location\src"
+
