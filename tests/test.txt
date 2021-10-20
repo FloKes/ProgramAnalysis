@@ -1,10 +1,16 @@
 {
-   {int fst; int snd;} R;
+   int x;
    int y;
-   y := 1;
-   while (x > 0){
-        R.snd := R.fst * y;
-        y := R.fst - 1;
+   int r;
+   int q;
+
+   if (x >= 0 ) {
+        q := 0;
+        r := x;
+        while ( r >= y ){
+            r := r - y;
+            q := q + 1;
+        }
+        write r;
    }
-   R := (5, 7);
 }

@@ -24,7 +24,6 @@ public class AnalysisAssignmentGenerator {
 
     public void solveAlgorithm2(ProgramGraph programGraph){
         var programGraphEdges = programGraph.getProgramGraphEdges();
-
         int notSubsetCounter;
         while (true) {
             notSubsetCounter = 0;
@@ -32,6 +31,7 @@ public class AnalysisAssignmentGenerator {
                 analyzeConstraint(programGraphEdge);
                 if (!isSubset(analyzeConstraint(programGraphEdge)
                         , constraintSolutions.get(programGraphEdge.getEndNode().getNumber()))) {
+
                     addTriplesToSolution(analyzeConstraint(programGraphEdge)
                             , constraintSolutions.get(programGraphEdge.getEndNode().getNumber()));
                     notSubsetCounter++;
@@ -123,7 +123,7 @@ public class AnalysisAssignmentGenerator {
             intialTriple.setValue(declaration);
             initialNodeSolution.addTriple(intialTriple);
         }
-
+        sortByIdentifier(initialNodeSolution.getConstraintTriples());
         constraintSolutions.add(initialNodeSolution);
 
         for (int i = 1; i < programGraphNodes.size(); i++){
