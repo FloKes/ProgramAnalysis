@@ -151,10 +151,10 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(VariableIdentifierExpressionNode n) {
-        System.out.println("Variable identifier accesed: " + n.getIdentifier());
         if(identifierVisitFlag){
             expressionElementsList.add(n);
         }
+        identifierVisitFlag = false;
         return true;
     }
 
@@ -170,10 +170,10 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(NumberExpressionNode n) {
-        System.out.println("Number expression accessed : " + n.getValue());
         if(numberVisitFlag){
             expressionElementsList.add(n);
         }
+        numberVisitFlag = false;
         return true;
     }
 
@@ -214,16 +214,29 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         //EdgeExpression edgeExpression = new EdgeExpression();
         EdgeInformation edgeInformation = new EdgeInformation();
         edgeInformation.setVariableModified(n.getLeft());
+
         var right = n.getRight();
         var rightText = right.accept(printVisitor);
         System.out.println(right.accept(printVisitor));
-        right.accept(this);
+        if(right instanceof ValueExpressionNode){
+            right.accept(this);
+        }
+        else if(right instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            right.accept(this);
+        }
+        else if(right instanceof NumberExpressionNode){
+            numberVisitFlag = true;
+            right.accept(this);
+        }
         ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        String expressionElementsString = "";
         for (ExpressionNode expressionNode: expressionElementsList){
             expressionElementsListClone.add(expressionNode);
+            expressionElementsString += expressionNode.accept(printVisitor) + "; ";
         }
-
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
+        System.out.println(expressionElementsString +"\n");
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         expressionElementsList.clear();

@@ -2,5 +2,9 @@ digraph ProgramGraph{
 "qs" -> "q1" [label="  int x := 0   "] 
 "q1" -> "q2" [label="  int y := 0   "] 
 "q2" -> "q3" [label="  x := x + 1 + 5 + y   "] 
-"q3" -> "qe" [label="  y := y + x   "] 
+"q3" -> "q4" [label="  y := y + x   "] 
+"q4" -> "q5" [label="  y := x   "] 
+"q5" -> "q6" [label="  y := 2   "] 
+"q6" -> "q7" [label="  x := 5   "] 
+"q7" -> "qe" [label="  x := 5 + 5   "] 
 }
