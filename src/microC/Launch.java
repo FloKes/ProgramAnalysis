@@ -1,5 +1,7 @@
-package antlr;
+package microC;
 
+import antlr.MicroCLexer;
+import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.ASTBuilderVisitor;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
@@ -38,7 +40,6 @@ public class Launch {
 //            var n = pg.visit((ProgramNode) prog);
 //            int i = 0;
 
-
             ProgramGraphGenerator programGraphGenerator = new ProgramGraphGenerator();
             ProgramGraph programGraph = programGraphGenerator.generateProgramGraph(prog);
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
@@ -48,10 +49,8 @@ public class Launch {
 
 
             // Reach definitions analysis module
-            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-            reachingDefinitionsAnalysis.doAnalysis(programGraph);
-
-
+           // ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            //reachingDefinitionsAnalysis.doAnalysis(programGraph);
         } catch (IOException e) {
             throw e;
 

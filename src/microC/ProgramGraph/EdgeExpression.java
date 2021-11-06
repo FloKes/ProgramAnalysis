@@ -1,21 +1,23 @@
 package microC.ProgramGraph;
 
+import microC.Expressions.ExpressionNode;
+
 import java.util.ArrayList;
 
 public class EdgeExpression {
-    private ArrayList<String> variablesUsed;
+    private ArrayList<ExpressionNode> variablesUsed;
     private String expression;
 
-    public EdgeExpression(ArrayList<String> variablesUsed, String expression) {
+    public EdgeExpression(ArrayList<ExpressionNode> variablesUsed, String expression) {
         this.variablesUsed = variablesUsed;
         this.expression = expression;
     }
 
-    public ArrayList<String> getVariablesUsed() {
+    public ArrayList<ExpressionNode> getVariablesUsed() {
         return variablesUsed;
     }
 
-    public void setVariablesUsed(ArrayList<String> variablesUsed) {
+    public void setVariablesUsed(ArrayList<ExpressionNode> variablesUsed) {
         this.variablesUsed = variablesUsed;
     }
 

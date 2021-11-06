@@ -16,14 +16,21 @@ import microC.ProgramNode;
 import microC.Statement.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     private PrintVisitor printVisitor;
     ProgramGraph programGraph;
     ProgramGraphNode node;
+    private ArrayList<ExpressionNode> expressionElementsList;
+    private ArrayList<String> expressionOperators;
+    boolean identifierVisitFlag = false;
+    boolean numberVisitFlag = false;
 
     public ProgramGraphBuilderVisitor(ProgramGraph programGraph) {
         printVisitor = new PrintVisitor();
+        expressionElementsList = new ArrayList<>();
+        expressionOperators = new ArrayList<>();
         this.programGraph = programGraph;
     }
 
@@ -104,13 +111,51 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(ValueExpressionNode n) {
-        String s = n.accept(printVisitor);
-        return null;
+        var left = n.getLeft();
+        var right = n.getRight();
+        if(left instanceof ValueExpressionNode){
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) left).getIdentifier());
+        }
+        if(right instanceof  ValueExpressionNode){
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) left).getValue());
+        }
+
+        if(left instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(left instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        if(right instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(right instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        var operator = n.getOperator();
+        expressionOperators.add(operator);
+        return true;
     }
 
     @Override
     public Boolean visit(VariableIdentifierExpressionNode n) {
-        return null;
+        System.out.println("Variable identifier accesed: " + n.getIdentifier());
+        if(identifierVisitFlag){
+            expressionElementsList.add(n);
+        }
+        return true;
     }
 
     @Override
@@ -125,7 +170,11 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(NumberExpressionNode n) {
-        return null;
+        System.out.println("Number expression accessed : " + n.getValue());
+        if(numberVisitFlag){
+            expressionElementsList.add(n);
+        }
+        return true;
     }
 
     @Override
@@ -165,9 +214,20 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         //EdgeExpression edgeExpression = new EdgeExpression();
         EdgeInformation edgeInformation = new EdgeInformation();
         edgeInformation.setVariableModified(n.getLeft());
+        var right = n.getRight();
+        var rightText = right.accept(printVisitor);
+        System.out.println(right.accept(printVisitor));
+        right.accept(this);
+        ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        for (ExpressionNode expressionNode: expressionElementsList){
+            expressionElementsListClone.add(expressionNode);
+        }
+
+        edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
-
+        expressionElementsList.clear();
+        expressionOperators.clear();
         return true;
     }
 
