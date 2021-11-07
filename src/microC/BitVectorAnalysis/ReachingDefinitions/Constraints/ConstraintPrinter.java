@@ -1,13 +1,13 @@
 package microC.BitVectorAnalysis.ReachingDefinitions.Constraints;
 
 import MathOp.UniOp;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGenerator;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGeneratorRD;
 
 import java.util.ArrayList;
 
 public class ConstraintPrinter {
     private ArrayList<String> constraintsStrings;
-    private KillGenSetGenerator generator;
+    private KillGenSetGeneratorRD generator;
 
     public ConstraintPrinter() {
         this.constraintsStrings = new ArrayList<>();

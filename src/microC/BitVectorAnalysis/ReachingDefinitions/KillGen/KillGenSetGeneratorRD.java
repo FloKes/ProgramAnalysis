@@ -9,13 +9,13 @@ import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
 
-public class KillGenSetGenerator {
-    private KillGenSetPrinter killGenSetPrinter;
+public class KillGenSetGeneratorRD {
+    private KillGenSetPrinterRD killGenSetPrinter;
     private ArrayList<KillGenSetRD> killGenSets;
 
-    public KillGenSetGenerator() {
+    public KillGenSetGeneratorRD() {
         this.killGenSets = new ArrayList<>();
-        this.killGenSetPrinter = new KillGenSetPrinter();
+        this.killGenSetPrinter = new KillGenSetPrinterRD();
     }
 
     public ArrayList<KillGenSetRD> getKillGenSets(ProgramGraph programGraph){

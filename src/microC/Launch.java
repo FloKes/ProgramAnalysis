@@ -4,6 +4,7 @@ import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.ASTBuilderVisitor;
+import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
@@ -48,9 +49,27 @@ public class Launch {
             dotFileGenerator.GenerateFile(programGraphNodes);
 
 
-            // Reach definitions analysis module
-           // ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-            //reachingDefinitionsAnalysis.doAnalysis(programGraph);
+            // Reach definitions analysis
+            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            var killGenSetsRD = reachingDefinitionsAnalysis.getKillGenSets(programGraph);
+            var killGenSetsRDstr  = reachingDefinitionsAnalysis.getKillGenSetsStrings(killGenSetsRD);
+            System.out.println("Kill Gen Sets for RD: \n ");
+            for (String str: killGenSetsRDstr){
+                System.out.println(str);
+            }
+            reachingDefinitionsAnalysis.doAnalysis(programGraph);
+
+
+            // Live variable analysis
+            System.out.println("\n \n ------------\nLIVE VARIABLE ANALYSIS \n---------------");
+            LiveVariablesAnalysis liveVariablesAnalysis = new LiveVariablesAnalysis();
+            var killGenSetsLV = liveVariablesAnalysis.getKillGenSets(programGraph);
+            var killGenSetsLVstr  = liveVariablesAnalysis.getKillGenSetsStrings(killGenSetsLV);
+            System.out.println("Kill Gen Sets for LV: \n ");
+            for (String str: killGenSetsLVstr){
+                System.out.println(str);
+            }
+
         } catch (IOException e) {
             throw e;
 

@@ -1,6 +1,6 @@
 package microC.BitVectorAnalysis.ReachingDefinitions.Constraints;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGenerator;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGeneratorRD;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ConstraintGenerator {
     private ArrayList<Constraint> constraints;
-    private KillGenSetGenerator generator;
+    private KillGenSetGeneratorRD generator;
 
     public ConstraintGenerator() {
         this.constraints = new ArrayList<>();

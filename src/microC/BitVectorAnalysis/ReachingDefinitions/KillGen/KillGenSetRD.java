@@ -32,4 +32,17 @@ public class KillGenSetRD {
     public void setGenSetRD(GenSetRD genSetRD) {
         this.genSetRD = genSetRD;
     }
+
+    public ProgramGraphEdge getProgramGraphEdge(){
+        return programGraphEdge;
+    }
+
+    @Override
+    public String toString(){
+        String srd = "KillRD(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
+        srd += killSetRD.toString() + "\n";
+        srd += "GenRD(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
+        srd += genSetRD.toString() + "\n";
+        return srd;
+    }
 }

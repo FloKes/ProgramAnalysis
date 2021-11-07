@@ -1,10 +1,10 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.KillGen;
+package microC.BitVectorAnalysis.LiveVariables.KillGen;
 
-public class KillSetRD {
-    private String text;
+public class KillSetLV {
     private String killed;
+    private String text;
 
-    public KillSetRD(String killed) {
+    public KillSetLV(String killed) {
         this.killed = killed;
     }
 

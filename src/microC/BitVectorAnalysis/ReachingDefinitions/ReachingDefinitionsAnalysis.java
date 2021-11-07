@@ -6,24 +6,24 @@ import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.Constrain
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintGenerator;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintPrinter;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGenerator;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetPrinter;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGeneratorRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetPrinterRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetRD;
 import microC.ProgramGraph.ProgramGraph;
 
 import java.util.ArrayList;
 
 public class ReachingDefinitionsAnalysis {
-    private KillGenSetGenerator killGenSetGenerator;
-    private KillGenSetPrinter killGenSetPrinter;
+    private KillGenSetGeneratorRD killGenSetGeneratorRD;
+    private KillGenSetPrinterRD killGenSetPrinter;
     private ConstraintGenerator constraintGenerator;
     private ConstraintPrinter constraintPrinter;
     private AnalysisAssignmentGenerator analysisAssignmentGenerator;
 
 
     public ReachingDefinitionsAnalysis() {
-        this.killGenSetGenerator = new KillGenSetGenerator();
-        this.killGenSetPrinter = new KillGenSetPrinter();
+        this.killGenSetGeneratorRD = new KillGenSetGeneratorRD();
+        this.killGenSetPrinter = new KillGenSetPrinterRD();
         this.constraintGenerator = new ConstraintGenerator();
         this.constraintPrinter = new ConstraintPrinter();
         this.analysisAssignmentGenerator = new AnalysisAssignmentGenerator();
@@ -31,7 +31,7 @@ public class ReachingDefinitionsAnalysis {
 
     public void doAnalysis(ProgramGraph programGraph){
         // Create KillGen sets for edges
-        var killGenSets = killGenSetGenerator.getKillGenSets(programGraph);
+        var killGenSets = killGenSetGeneratorRD.getKillGenSets(programGraph);
 
         System.out.println("\n --------------------- \n");
 
@@ -75,7 +75,7 @@ public class ReachingDefinitionsAnalysis {
     }
 
     public ArrayList<KillGenSetRD> getKillGenSets(ProgramGraph programGraph){
-        return killGenSetGenerator.getKillGenSets(programGraph);
+        return killGenSetGeneratorRD.getKillGenSets(programGraph);
     }
 
     public ArrayList<String> getKillGenSetsStrings(ArrayList<KillGenSetRD> killGenSets){

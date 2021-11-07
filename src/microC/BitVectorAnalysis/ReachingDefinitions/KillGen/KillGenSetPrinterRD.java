@@ -4,10 +4,10 @@ import MathOp.UniOp;
 
 import java.util.ArrayList;
 
-public class KillGenSetPrinter {
+public class KillGenSetPrinterRD {
     private ArrayList<String> killGenSets;
 
-    public KillGenSetPrinter() {
+    public KillGenSetPrinterRD() {
         this.killGenSets = new ArrayList<>();
     }
 
@@ -25,7 +25,12 @@ public class KillGenSetPrinter {
 //    }
 
     public ArrayList<String> getKillGenSetStrings(ArrayList<KillGenSetRD> killGenSets){
-        return null;
+        ArrayList<String> strings = new ArrayList<>();
+        for (KillGenSetRD killGenSetRD: killGenSets) {
+            String s = killGenSetRD.toString();
+            strings.add(s);
+        }
+        return strings;
     }
     public String printKillSet(KillSetRD killSetRD){
         String s = "{" + killSetRD.getKilled() + "}" + " " + UniOp.multi + " " + "{?, qs, q1, ..., qe} "
