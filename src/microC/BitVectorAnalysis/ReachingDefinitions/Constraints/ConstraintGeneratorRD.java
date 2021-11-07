@@ -7,35 +7,35 @@ import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
 
-public class ConstraintGenerator {
-    private ArrayList<Constraint> constraints;
+public class ConstraintGeneratorRD {
+    private ArrayList<ConstraintRD> constraints;
     private KillGenSetGeneratorRD generator;
 
-    public ConstraintGenerator() {
+    public ConstraintGeneratorRD() {
         this.constraints = new ArrayList<>();
     }
 
-    public ArrayList<Constraint> getConstraints(ProgramGraph programGraph){
+    public ArrayList<ConstraintRD> getConstraints(ProgramGraph programGraph){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()) {
             if(programGraphNode.getNumber() == 0){
-                Constraint constraint = new Constraint(programGraphNode, null);
-                constraint.setGenerated(null);
-                constraints.add(constraint);
-                programGraphNode.addConstraint(constraint);
+                ConstraintRD constraintRD = new ConstraintRD(programGraphNode, null);
+                constraintRD.setGenerated(null);
+                constraints.add(constraintRD);
+                programGraphNode.addConstraintRD(constraintRD);
             }
             else {
                 for (ProgramGraphEdge edge : programGraphNode.getInGoing()) {
-                    Constraint constraint = new Constraint(programGraphNode, edge.getOriginNode());
+                    ConstraintRD constraintRD = new ConstraintRD(programGraphNode, edge.getOriginNode());
                     var killed = edge.getKillGenSetRD().getKillSetRD();
                     var generated = edge.getKillGenSetRD().getGenSetRD();
                     if(killed != null){
-                        constraint.setKilled(killed);
+                        constraintRD.setKilled(killed);
                     }
                     if(generated != null){
-                        constraint.setGenerated(generated);
+                        constraintRD.setGenerated(generated);
                     }
-                    constraints.add(constraint);
-                    programGraphNode.addConstraint(constraint);
+                    constraints.add(constraintRD);
+                    programGraphNode.addConstraintRD(constraintRD);
                 }
             }
         }

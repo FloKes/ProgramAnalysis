@@ -5,20 +5,20 @@ import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGeneratorR
 
 import java.util.ArrayList;
 
-public class ConstraintPrinter {
+public class ConstraintPrinterRD {
     private ArrayList<String> constraintsStrings;
     private KillGenSetGeneratorRD generator;
 
-    public ConstraintPrinter() {
+    public ConstraintPrinterRD() {
         this.constraintsStrings = new ArrayList<>();
     }
 
-    public ArrayList<String> getConstraintStrings(ArrayList<Constraint> constraints) {
+    public ArrayList<String> getConstraintStrings(ArrayList<ConstraintRD> constraintRDS) {
         String s = "";
-        for (Constraint constraint : constraints) {
-            if(constraint.getOriginNode() == null){
-                var programGraph = constraint.getNode().getProgramGraph();
-                s = "RD(" + constraint.getNode().toString() + ") "
+        for (ConstraintRD constraintRD : constraintRDS) {
+            if(constraintRD.getOriginNode() == null){
+                var programGraph = constraintRD.getNode().getProgramGraph();
+                s = "RD(" + constraintRD.getNode().toString() + ") "
                 + UniOp.supseteq + " {";
 
                 for (int i = 0; i < programGraph.getDeclaredObjects().size(); i++) {
@@ -32,10 +32,10 @@ public class ConstraintPrinter {
                 constraintsStrings.add(s);
             }
             else {
-                s = "RD(" + constraint.getNode().toString() + ") " + UniOp.supseteq
-                        + " (RD(" + constraint.getOriginNode().toString() + ")\\("
-                        + constraint.getKilledString() + ")) "
-                        + UniOp.union + " " + constraint.getGeneratedString()
+                s = "RD(" + constraintRD.getNode().toString() + ") " + UniOp.supseteq
+                        + " (RD(" + constraintRD.getOriginNode().toString() + ")\\("
+                        + constraintRD.getKilledString() + ")) "
+                        + UniOp.union + " " + constraintRD.getGeneratedString()
                 ;
                 constraintsStrings.add(s);
             }

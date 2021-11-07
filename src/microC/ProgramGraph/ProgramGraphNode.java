@@ -1,6 +1,7 @@
 package microC.ProgramGraph;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
+import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,20 +12,23 @@ public class ProgramGraphNode {
     private ProgramGraph programGraph;
     private List<ProgramGraphEdge> ingoingEdges;
     private List<ProgramGraphEdge> outgoingEdges;
-    private ArrayList<Constraint> constraints;
+    private ArrayList<ConstraintRD> constraintRDS;
+    private ArrayList<ConstraintLV> constraintLVS;
 
     public ProgramGraphNode(){
         //initial node
         this.number = 0;
         this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
-        this.constraints = new ArrayList<>();
+        this.constraintRDS = new ArrayList<>();
+        this.constraintLVS = new ArrayList<>();
     }
 
     public ProgramGraphNode(int number) {
         this.number = number;
         this.ingoingEdges = new LinkedList<ProgramGraphEdge>();
         this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
-        this.constraints = new ArrayList<>();
+        this.constraintRDS = new ArrayList<>();
+        this.constraintLVS = new ArrayList<>();
     }
 
     public ProgramGraphNode addEdgeOut(ProgramGraphEdge edge) {
@@ -113,11 +117,19 @@ public class ProgramGraphNode {
         this.number = number;
     }
 
-    public void addConstraint (Constraint constraint){
-        this.constraints.add(constraint);
+    public void addConstraintRD(ConstraintRD constraintRD){
+        this.constraintRDS.add(constraintRD);
     }
-    public ArrayList<Constraint> getConstraints() {
-        return constraints;
+    public ArrayList<ConstraintRD> getConstraintsRD() {
+        return constraintRDS;
+    }
+
+    public void addConstraintLV(ConstraintLV constraintLV){
+        this.constraintLVS.add(constraintLV);
+    }
+
+    public ArrayList<ConstraintLV> getConstraintsLV() {
+        return constraintLVS;
     }
 
     public String toString(){

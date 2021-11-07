@@ -3,7 +3,6 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
-import microC.ASTBuilderVisitor;
 import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
@@ -41,34 +40,24 @@ public class Launch {
 //            var n = pg.visit((ProgramNode) prog);
 //            int i = 0;
 
+            // Generate program graph
             ProgramGraphGenerator programGraphGenerator = new ProgramGraphGenerator();
             ProgramGraph programGraph = programGraphGenerator.generateProgramGraph(prog);
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
+            // Output program graph to .dot file
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
             dotFileGenerator.GenerateFile(programGraphNodes);
 
 
             // Reach definitions analysis
             ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-            var killGenSetsRD = reachingDefinitionsAnalysis.getKillGenSets(programGraph);
-            var killGenSetsRDstr  = reachingDefinitionsAnalysis.getKillGenSetsStrings(killGenSetsRD);
-            System.out.println("Kill Gen Sets for RD: \n ");
-            for (String str: killGenSetsRDstr){
-                System.out.println(str);
-            }
             reachingDefinitionsAnalysis.doAnalysis(programGraph);
 
 
             // Live variable analysis
-            System.out.println("\n \n ------------\nLIVE VARIABLE ANALYSIS \n---------------");
             LiveVariablesAnalysis liveVariablesAnalysis = new LiveVariablesAnalysis();
-            var killGenSetsLV = liveVariablesAnalysis.getKillGenSets(programGraph);
-            var killGenSetsLVstr  = liveVariablesAnalysis.getKillGenSetsStrings(killGenSetsLV);
-            System.out.println("Kill Gen Sets for LV: \n ");
-            for (String str: killGenSetsLVstr){
-                System.out.println(str);
-            }
+            liveVariablesAnalysis.doAnalysis(programGraph);
 
         } catch (IOException e) {
             throw e;

@@ -1,7 +1,5 @@
 package microC.BitVectorAnalysis.LiveVariables.KillGen;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
 import microC.ProgramGraph.ProgramGraphEdge;
 
 public class KillGenSetLV {

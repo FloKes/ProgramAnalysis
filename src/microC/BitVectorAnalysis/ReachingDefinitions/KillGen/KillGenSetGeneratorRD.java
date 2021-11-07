@@ -18,7 +18,7 @@ public class KillGenSetGeneratorRD {
         this.killGenSetPrinter = new KillGenSetPrinterRD();
     }
 
-    public ArrayList<KillGenSetRD> getKillGenSets(ProgramGraph programGraph){
+    public ArrayList<KillGenSetRD> generateKillGenSets(ProgramGraph programGraph){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()) {
             for (ProgramGraphEdge edge: programGraphNode.getOutGoing()){
                 var killGenSet = edge.getKillGenSetRD();

@@ -1,10 +1,6 @@
 package microC.BitVectorAnalysis.LiveVariables.KillGen;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
-import microC.Expressions.ArrayIdentifierExpressionNode;
 import microC.Expressions.ExpressionNode;
-import microC.Expressions.RecordIdentifierExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
 import microC.PrintVisitor;
 import microC.ProgramGraph.ProgramGraph;
@@ -24,7 +20,7 @@ public class KillGenSetGeneratorLV {
         printVisitor = new PrintVisitor();
     }
 
-    public ArrayList<KillGenSetLV> getKillGenSets(ProgramGraph programGraph){
+    public ArrayList<KillGenSetLV> generateKillGenSets(ProgramGraph programGraph){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()) {
             for (ProgramGraphEdge edge: programGraphNode.getOutGoing()){
                 var killGenSet = edge.getKillGenSetLV();

@@ -5,13 +5,13 @@ import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
 import microC.ProgramGraph.ProgramGraphNode;
 
-public class Constraint {
+public class ConstraintRD {
     private ProgramGraphNode node;
     private ProgramGraphNode originNode;
     private KillSetRD objKilled;
     private GenSetRD objGenerated;
 
-    public Constraint(ProgramGraphNode node, ProgramGraphNode originNode) {
+    public ConstraintRD(ProgramGraphNode node, ProgramGraphNode originNode) {
         this.node = node;
         this.originNode = originNode;
     }

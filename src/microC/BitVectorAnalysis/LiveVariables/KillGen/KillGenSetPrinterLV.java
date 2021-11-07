@@ -1,10 +1,5 @@
 package microC.BitVectorAnalysis.LiveVariables.KillGen;
 
-import MathOp.UniOp;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.GenSetRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillSetRD;
-
 import java.util.ArrayList;
 
 public class KillGenSetPrinterLV {

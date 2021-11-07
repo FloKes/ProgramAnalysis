@@ -3,9 +3,9 @@ package microC.BitVectorAnalysis.ReachingDefinitions;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.AnalysisAssignmentGenerator;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolution;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionPrinter;
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.Constraint;
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintGenerator;
-import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintPrinter;
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintGeneratorRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintPrinterRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetGeneratorRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetPrinterRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.KillGen.KillGenSetRD;
@@ -16,39 +16,34 @@ import java.util.ArrayList;
 public class ReachingDefinitionsAnalysis {
     private KillGenSetGeneratorRD killGenSetGeneratorRD;
     private KillGenSetPrinterRD killGenSetPrinter;
-    private ConstraintGenerator constraintGenerator;
-    private ConstraintPrinter constraintPrinter;
+    private ConstraintGeneratorRD constraintGenerator;
+    private ConstraintPrinterRD constraintPrinterRD;
     private AnalysisAssignmentGenerator analysisAssignmentGenerator;
 
 
     public ReachingDefinitionsAnalysis() {
         this.killGenSetGeneratorRD = new KillGenSetGeneratorRD();
         this.killGenSetPrinter = new KillGenSetPrinterRD();
-        this.constraintGenerator = new ConstraintGenerator();
-        this.constraintPrinter = new ConstraintPrinter();
+        this.constraintGenerator = new ConstraintGeneratorRD();
+        this.constraintPrinterRD = new ConstraintPrinterRD();
         this.analysisAssignmentGenerator = new AnalysisAssignmentGenerator();
     }
 
     public void doAnalysis(ProgramGraph programGraph){
-        // Create KillGen sets for edges
-        var killGenSets = killGenSetGeneratorRD.getKillGenSets(programGraph);
+        System.out.println("\n \n -----------------\n REACHING DEFINITIONS ANALYSIS " +
+                "\n---------------------");
 
-        System.out.println("\n --------------------- \n");
+        // Generate and print KilLGenSets
+        var killGenSets = killGenSetGeneratorRD.generateKillGenSets(programGraph);
+        printKillGenSets(killGenSets);
 
-        // Generate and print constraints
+        // Generate and print Constraints
         var constraints = getConstraints(programGraph);
-        for (String constraint: getConstraintsStrings(constraints)) {
-            System.out.println(constraint);
-        }
+        printConstraints(constraints);
 
-        System.out.println("\n --------------------- \n");
-
-        // Print RD analysis assignment
+        // Generate and print Analysis
         var constraintSolutions = getConstraintSolutions(programGraph);
-        var constraintSolutionStrings = getConstraintSolutionStrings(constraintSolutions);
-        for (String constraintSolutionString: constraintSolutionStrings) {
-            System.out.println(constraintSolutionString);
-        }
+        printAnalysis(constraintSolutions);
 
         int i = 0;
     }
@@ -65,17 +60,40 @@ public class ReachingDefinitionsAnalysis {
         return constraintSolutionStrings;
     }
 
-    public ArrayList<Constraint> getConstraints(ProgramGraph programGraph){
+    public ArrayList<ConstraintRD> getConstraints(ProgramGraph programGraph){
         return constraintGenerator.getConstraints(programGraph);
     }
 
-    public ArrayList<String> getConstraintsStrings(ArrayList<Constraint> constraints){
-        var constraintsStrings = constraintPrinter.getConstraintStrings(constraints);
+    public ArrayList<String> getConstraintsStrings(ArrayList<ConstraintRD> constraintRDS){
+        var constraintsStrings = constraintPrinterRD.getConstraintStrings(constraintRDS);
         return constraintsStrings;
     }
 
+    public void printKillGenSets(ArrayList<KillGenSetRD> killGenSets){
+        var strings = getKillGenSetsStrings(killGenSets);
+        System.out.println("Kill Gen Sets for RD: \n ");
+        for (String str: strings){
+            System.out.println(str);
+        }
+    }
+
+    public void printConstraints(ArrayList<ConstraintRD> constraints){
+        System.out.println("\n --------------------- \n");
+        System.out.println("Constraints for RD: \n");
+        for (String constraint: getConstraintsStrings(constraints)) {
+            System.out.println(constraint);
+        }
+    }
+
+    public void printAnalysis(ArrayList<ConstraintSolution> constraintSolutions){
+        System.out.println("\n --------------------- \n");
+        System.out.println("Analysis assignment for RD: \n");
+        for (String constraintSolutionString: getConstraintSolutionStrings(constraintSolutions)) {
+            System.out.println(constraintSolutionString);
+        }
+    }
     public ArrayList<KillGenSetRD> getKillGenSets(ProgramGraph programGraph){
-        return killGenSetGeneratorRD.getKillGenSets(programGraph);
+        return killGenSetGeneratorRD.generateKillGenSets(programGraph);
     }
 
     public ArrayList<String> getKillGenSetsStrings(ArrayList<KillGenSetRD> killGenSets){
