@@ -1,6 +1,6 @@
 package microC.BitVectorAnalysis.ReachingDefinitions;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.AnalysisAssignmentGenerator;
+import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.AnalysisAssignmentGeneratorRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolution;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionPrinter;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintGeneratorRD;
@@ -18,7 +18,7 @@ public class ReachingDefinitionsAnalysis {
     private KillGenSetPrinterRD killGenSetPrinter;
     private ConstraintGeneratorRD constraintGenerator;
     private ConstraintPrinterRD constraintPrinterRD;
-    private AnalysisAssignmentGenerator analysisAssignmentGenerator;
+    private AnalysisAssignmentGeneratorRD analysisAssignmentGeneratorRD;
 
 
     public ReachingDefinitionsAnalysis() {
@@ -26,7 +26,7 @@ public class ReachingDefinitionsAnalysis {
         this.killGenSetPrinter = new KillGenSetPrinterRD();
         this.constraintGenerator = new ConstraintGeneratorRD();
         this.constraintPrinterRD = new ConstraintPrinterRD();
-        this.analysisAssignmentGenerator = new AnalysisAssignmentGenerator();
+        this.analysisAssignmentGeneratorRD = new AnalysisAssignmentGeneratorRD();
     }
 
     public void doAnalysis(ProgramGraph programGraph){
@@ -49,7 +49,7 @@ public class ReachingDefinitionsAnalysis {
     }
 
     public ArrayList<ConstraintSolution> getConstraintSolutions(ProgramGraph programGraph){
-        return analysisAssignmentGenerator.solveConstraints(programGraph);
+        return analysisAssignmentGeneratorRD.solveConstraints(programGraph);
     }
 
     public ArrayList<String> getConstraintSolutionStrings (ArrayList<ConstraintSolution> constraintSolutions){

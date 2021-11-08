@@ -72,7 +72,12 @@ public class KillGenSetGeneratorLV {
     }
 
     public GenSetLV getGenSet(ProgramGraphEdge edge){
-        var edgeExpression = edge.getEdgeInformation().getEdgeExpression();
+        // TODO Generate killgen for boolOpB and other boolean and read, write, Records, arrrays
+        var edgeInformation = edge.getEdgeInformation();
+        if(edgeInformation == null){
+            return null;
+        }
+        var edgeExpression = edgeInformation.getEdgeExpression();
         if(edgeExpression != null) {
             ArrayList<String> variableStrings = new ArrayList<>();
             var variablesUsed = edgeExpression.getVariablesUsed();

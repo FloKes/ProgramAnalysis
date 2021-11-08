@@ -1,5 +1,6 @@
 package microC.BitVectorAnalysis.LiveVariables;
 
+import microC.BitVectorAnalysis.LiveVariables.ConstraintSolver.AnalysisAssignmentGeneratorLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintGeneratorLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintPrinterLV;
@@ -15,12 +16,14 @@ public class LiveVariablesAnalysis {
     private KillGenSetPrinterLV killGenSetPrinter;
     private ConstraintGeneratorLV constraintGenerator;
     private ConstraintPrinterLV constraintPrinter;
+    private AnalysisAssignmentGeneratorLV analysisGenerator;
 
     public LiveVariablesAnalysis() {
         killGenSetGenerator = new KillGenSetGeneratorLV();
         killGenSetPrinter = new KillGenSetPrinterLV();
         constraintGenerator = new ConstraintGeneratorLV();
         constraintPrinter = new ConstraintPrinterLV();
+        analysisGenerator = new AnalysisAssignmentGeneratorLV();
     }
 
     public void doAnalysis(ProgramGraph programGraph){
@@ -35,6 +38,9 @@ public class LiveVariablesAnalysis {
         // Generate and print Constraints
         var constraints = getConstraints(programGraph);
         printConstraints(constraints);
+
+        var constraintSolutions = analysisGenerator.solveConstraints(programGraph);
+        int i;
     }
 
     public void printKillGenSets(ArrayList<KillGenSetLV> killGenSets){

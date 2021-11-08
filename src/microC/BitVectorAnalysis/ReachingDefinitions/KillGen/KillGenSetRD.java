@@ -40,9 +40,19 @@ public class KillGenSetRD {
     @Override
     public String toString(){
         String srd = "KillRD(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
-        srd += killSetRD.toString() + "\n";
+        if(killSetRD != null){
+            srd += killSetRD.toString() + "\n";
+        }
+        else {
+            srd += "{ } \n";
+        }
         srd += "GenRD(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
-        srd += genSetRD.toString() + "\n";
+        if(genSetRD != null){
+            srd += genSetRD.toString() + "\n";
+        }
+        else {
+            srd += "{ } \n";
+        }
         return srd;
     }
 }

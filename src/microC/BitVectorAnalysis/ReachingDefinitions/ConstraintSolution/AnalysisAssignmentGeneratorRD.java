@@ -7,11 +7,11 @@ import microC.ProgramGraph.ProgramGraphEdge;
 
 import java.util.ArrayList;
 
-public class AnalysisAssignmentGenerator {
+public class AnalysisAssignmentGeneratorRD {
     //private ArrayList<Constraint> constraints;
     private ArrayList<ConstraintSolution> constraintSolutions;
 
-    public AnalysisAssignmentGenerator() {
+    public AnalysisAssignmentGeneratorRD() {
         this.constraintSolutions = new ArrayList<>();
     }
 

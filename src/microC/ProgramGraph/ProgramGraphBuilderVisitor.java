@@ -109,46 +109,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     //Expressions
 
     @Override
-    public Boolean visit(ValueExpressionNode n) {
-        var left = n.getLeft();
-        var right = n.getRight();
-        if(left instanceof ValueExpressionNode){
-            left.accept(this);
-            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) left).getIdentifier());
-        }
-        if(right instanceof  ValueExpressionNode){
-            right.accept(this);
-            //System.out.println("Is number expression: " + ((NumberExpressionNode) left).getValue());
-        }
-
-        if(left instanceof IdentifierExpressionNode){
-            identifierVisitFlag = true;
-            left.accept(this);
-            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
-        }
-        else if(left instanceof  NumberExpressionNode){
-            numberVisitFlag = true;
-            left.accept(this);
-            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
-        }
-
-        if(right instanceof IdentifierExpressionNode){
-            identifierVisitFlag = true;
-            right.accept(this);
-            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
-        }
-        else if(right instanceof  NumberExpressionNode){
-            numberVisitFlag = true;
-            right.accept(this);
-            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
-        }
-
-        var operator = n.getOperator();
-        expressionOperators.add(operator);
-        return true;
-    }
-
-    @Override
     public Boolean visit(VariableIdentifierExpressionNode n) {
         if(identifierVisitFlag){
             expressionElementsList.add(n);
@@ -194,12 +154,89 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(BooleanOpBBooleanNode n) {
-        return null;
+        System.out.println("OpB");
+        return true;
     }
 
     @Override
     public Boolean visit(BooleanOpRBooleanNode n) {
-        return null;
+        var left = n.getLeft();
+        var right = n.getRight();
+
+        if(left instanceof ValueExpressionNode){
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) left).getIdentifier());
+        }
+        else if(right instanceof  ValueExpressionNode){
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) left).getValue());
+        }
+
+        if(left instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(left instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        if(right instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(right instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        var operator = n.getOperator();
+        expressionOperators.add(operator);
+        return true;
+    }
+
+    @Override
+    public Boolean visit(ValueExpressionNode n) {
+        var left = n.getLeft();
+        var right = n.getRight();
+        if(left instanceof ValueExpressionNode){
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) left).getIdentifier());
+        }
+        if(right instanceof  ValueExpressionNode){
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) left).getValue());
+        }
+
+        if(left instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(left instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            left.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        if(right instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+        }
+        else if(right instanceof  NumberExpressionNode){
+            numberVisitFlag = true;
+            right.accept(this);
+            //System.out.println("Is number expression: " + ((NumberExpressionNode) right).getValue());
+        }
+
+        var operator = n.getOperator();
+        expressionOperators.add(operator);
+        return true;
     }
 
 
@@ -209,8 +246,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     public Boolean visit(LAssignNode n) {
         String s = n.accept(printVisitor);
 
-        //TODO edge Expression LASSign
-        //EdgeExpression edgeExpression = new EdgeExpression();
         EdgeInformation edgeInformation = new EdgeInformation();
         edgeInformation.setVariableModified(n.getLeft());
 
@@ -325,6 +360,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         var block = n.getBlock();
 
         // Get string for boolean expression and not boolean expression
+        bexpr.accept(this);
         var bexprString = bexpr.accept(printVisitor);
         var bexprNotString = "!(" + bexprString + ")";
 
@@ -333,7 +369,21 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
         // Add node after boolean expression is evaluated true
         // TODO
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, null));
+        ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        String expressionElementsString = "";
+        for (ExpressionNode expressionNode: expressionElementsList){
+            expressionElementsListClone.add(expressionNode);
+            expressionElementsString += expressionNode.accept(printVisitor) + "; ";
+        }
+
+
+        EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprString));
+        System.out.println(expressionElementsString +"\n");
+        expressionElementsList.clear();
+        expressionOperators.clear();
+
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, edgeInformation));
         programGraph.addNode(node);
 
         // Add nodes for the block statement where boolean expression is evaluated true

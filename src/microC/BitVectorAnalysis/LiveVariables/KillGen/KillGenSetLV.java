@@ -38,7 +38,13 @@ public class KillGenSetLV {
     @Override
     public String toString(){
         String slv = "KillLV(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
-        slv += killSetLV.toString() + "\n";
+
+        if(killSetLV != null){
+            slv += killSetLV.toString() + "\n";
+        }
+        else {
+            slv += "{ } \n";
+        }
         slv += "GenLV(" + programGraphEdge.getOriginNode().toString() +", " + programGraphEdge.toString() + ", " + programGraphEdge.getEndNode().toString() +") = ";
 
         if(genSetLV != null){
