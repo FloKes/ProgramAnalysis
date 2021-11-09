@@ -66,7 +66,7 @@ public class LiveVariablesAnalysis {
         System.out.println("\n --------------------- \n");
         System.out.println("Analysis assignment for LV: \n");
         for (ConstraintSolutionLV constraintSolution : constraintSolutions) {
-            System.out.println(ConstraintSolutionPrinterLV.getConstraintSolutionString(constraintSolution) + "\n");
+            System.out.println(ConstraintSolutionPrinterLV.getConstraintSolutionString(constraintSolution));
         }
     }
 
