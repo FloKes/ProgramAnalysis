@@ -297,6 +297,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         var block = n.getBlock();
         var elseNode = n.getElseNode();
 
+        // Visit the boolean expression to get the variables used
+        bexpr.accept(this);
         // Get string for boolean expression and not boolean expression
         var bexprString = bexpr.accept(printVisitor);
         var bexprNotString = "!(" + bexprString + ")";
@@ -306,7 +308,20 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
         // Add node after boolean expression is evaluated true
         // TODO
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, null));
+        ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        String expressionElementsString = "";
+        for (ExpressionNode expressionNode: expressionElementsList){
+            expressionElementsListClone.add(expressionNode);
+            expressionElementsString += expressionNode.accept(printVisitor) + "; ";
+        }
+
+        EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprString));
+        System.out.println(expressionElementsString +"\n");
+        expressionElementsList.clear();
+        expressionOperators.clear();
+
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprString, edgeInformation));
         programGraph.addNode(node);
 
         // Add nodes for the block statement where boolean expression is evaluated true
@@ -318,14 +333,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         // There are two cases, if statement and if-else statement
         node = programGraph.getProgramGraphNode(ifNodeNumber);
 
+        EdgeInformation edgeInformationNot = new EdgeInformation();
+        edgeInformationNot.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprNotString));
+        System.out.println(expressionElementsString +"\n");
+
         if (elseNode == null){
             // Add edge from if node where boolean statement is not true
             // TODO
-            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null), nodeAfterBlock);
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, edgeInformationNot), nodeAfterBlock);
         }
         else {
             // TODO
-            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null));
+            node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, edgeInformationNot));
             programGraph.addNode(node);
 
             elseNode.accept(this);
@@ -359,8 +378,9 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         var bexpr = n.getBexpr();
         var block = n.getBlock();
 
-        // Get string for boolean expression and not boolean expression
+        // Visit the boolean expression to get the variables used
         bexpr.accept(this);
+        // Get string for boolean expression and not boolean expression
         var bexprString = bexpr.accept(printVisitor);
         var bexprNotString = "!(" + bexprString + ")";
 
@@ -407,7 +427,9 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         // Add edge from if node where boolean statement is not true
         node = evalNode;
         // TODO
-        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, null));
+        EdgeInformation edgeInformationNot = new EdgeInformation();
+        edgeInformationNot.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprNotString));
+        node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, edgeInformationNot));
         programGraph.addNode(node);
 
         return true;

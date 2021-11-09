@@ -1,16 +1,19 @@
 {
-   int x;
-   int y;
-   int r;
-   int q;
-
-   if (x >= 0 ) {
-        q := 0;
-        r := x;
-        while ( r >= y ){
-            r := r - y;
-            q := q + 1;
-        }
-        write r;
-   }
+    int x;
+    int y;
+    int r;
+    int z;
+    x:= 2;
+    y:= 15;
+    r:= 4;
+    z:= 5;
+    if(y <= x){
+    	y:= y + x;
+    	z:= x + r;
+    }
+    while(y>x){
+    	y:=y-x;
+    	x:=x+1;
+    }
+    y:= z - 1;
 }

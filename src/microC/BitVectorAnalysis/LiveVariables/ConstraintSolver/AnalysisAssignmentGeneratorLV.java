@@ -7,8 +7,7 @@ import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class AnalysisAssignmentGeneratorLV {
     private ArrayList<ConstraintSolutionLV> constraintSolutions;
@@ -40,7 +39,7 @@ public class AnalysisAssignmentGeneratorLV {
         int notSubsetCounter;
         while (true) {
             notSubsetCounter = 0;
-            for (ProgramGraphEdge programGraphEdge : reverseProgramGraphEdges) {
+            for (ProgramGraphEdge programGraphEdge : programGraphEdges) {
                 var solutionSet = analyzeConstraint(programGraphEdge);
                 var constraintSolution = constraintSolutions.get(programGraphEdge.getOriginNode().getNumber());
 
@@ -81,10 +80,19 @@ public class AnalysisAssignmentGeneratorLV {
 
         addGenerated(solutionSet, edge.getKillGenSetLV());
 
+        var newList = union(solutionSet.getSolutionSet(), currentSolution.getSolutionSet().getSolutionSet());
+        solutionSet.setSolutionSet((ArrayList<String>) newList);
         return solutionSet;
     }
 
+    public <T> List<T> union(List<T> list1, List<T> list2) {
+        Set<T> set = new HashSet<T>();
 
+        set.addAll(list1);
+        set.addAll(list2);
+
+        return new ArrayList<T>(set);
+    }
 
     public void excludeKilled (SolutionSet solutionSet, KillGenSetLV killGenSet){
         if(killGenSet == null || killGenSet.getKillSetLV() == null){
