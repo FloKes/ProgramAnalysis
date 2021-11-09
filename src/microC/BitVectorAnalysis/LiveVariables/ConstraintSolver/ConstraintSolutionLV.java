@@ -4,6 +4,7 @@ import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.Constrain
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ConstraintSolutionLV {
     private ProgramGraphNode programGraphNode;
@@ -19,6 +20,10 @@ public class ConstraintSolutionLV {
 
     public void setSolutionSet(SolutionSet solutionSet) {
         this.solutionSet = solutionSet;
+    }
+
+    public void sortSolutionSet(){
+        Collections.sort(solutionSet.getSolutionSet());
     }
 
     public ProgramGraphNode getProgramGraphNode() {

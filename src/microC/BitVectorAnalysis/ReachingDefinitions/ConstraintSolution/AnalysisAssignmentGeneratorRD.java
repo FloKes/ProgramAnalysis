@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class AnalysisAssignmentGeneratorRD {
     //private ArrayList<Constraint> constraints;
-    private ArrayList<ConstraintSolution> constraintSolutions;
+    private ArrayList<ConstraintSolutionRD> constraintSolutions;
 
     public AnalysisAssignmentGeneratorRD() {
         this.constraintSolutions = new ArrayList<>();
     }
 
-    public ArrayList<ConstraintSolution> solveConstraints(ProgramGraph programGraph){
+    public ArrayList<ConstraintSolutionRD> solveConstraints(ProgramGraph programGraph){
         initializeSolutions(programGraph);
         solveAlgorithm2(programGraph);
         return constraintSolutions;
@@ -67,7 +67,7 @@ public class AnalysisAssignmentGeneratorRD {
         return triplesToAdd;
     }
 
-    public void addTriplesToSolution(ArrayList<ConstraintTriple> triples, ConstraintSolution solution){
+    public void addTriplesToSolution(ArrayList<ConstraintTriple> triples, ConstraintSolutionRD solution){
         var currentSolutionTriples = solution.getConstraintTriples();
         for (ConstraintTriple triple: triples){
             if(!currentSolutionTriples.contains(triple)){
@@ -77,7 +77,7 @@ public class AnalysisAssignmentGeneratorRD {
         sortByIdentifier(solution.getConstraintTriples());
     }
 
-    public boolean isSubset(ArrayList<ConstraintTriple> triples, ConstraintSolution solution){
+    public boolean isSubset(ArrayList<ConstraintTriple> triples, ConstraintSolutionRD solution){
         for (ConstraintTriple triple: triples){
             if(!solution.getConstraintTriples().contains(triple)){
                 return false;
@@ -116,7 +116,7 @@ public class AnalysisAssignmentGeneratorRD {
     public void initializeSolutions (ProgramGraph programGraph){
         var programGraphNodes = programGraph.getProgramGraphNodes();
         var initialNode = programGraphNodes.get(0);
-        var initialNodeSolution = new ConstraintSolution(initialNode);
+        var initialNodeSolution = new ConstraintSolutionRD(initialNode);
         for (String declaration: programGraph.getDeclaredObjects()){
             var intialTriple = new ConstraintTriple(initialNode);
             intialTriple.setOriginNode(null);
@@ -127,7 +127,7 @@ public class AnalysisAssignmentGeneratorRD {
         constraintSolutions.add(initialNodeSolution);
 
         for (int i = 1; i < programGraphNodes.size(); i++){
-            constraintSolutions.add(new ConstraintSolution(programGraphNodes.get(i)));
+            constraintSolutions.add(new ConstraintSolutionRD(programGraphNodes.get(i)));
         }
     }
 

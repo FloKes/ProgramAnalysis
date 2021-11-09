@@ -1,6 +1,8 @@
 package microC.BitVectorAnalysis.LiveVariables;
 
 import microC.BitVectorAnalysis.LiveVariables.ConstraintSolver.AnalysisAssignmentGeneratorLV;
+import microC.BitVectorAnalysis.LiveVariables.ConstraintSolver.ConstraintSolutionLV;
+import microC.BitVectorAnalysis.LiveVariables.ConstraintSolver.ConstraintSolutionPrinterLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintGeneratorLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintPrinterLV;
@@ -40,7 +42,7 @@ public class LiveVariablesAnalysis {
         printConstraints(constraints);
 
         var constraintSolutions = analysisGenerator.solveConstraints(programGraph);
-        int i;
+        printAnalysis(constraintSolutions);
     }
 
     public void printKillGenSets(ArrayList<KillGenSetLV> killGenSets){
@@ -57,6 +59,14 @@ public class LiveVariablesAnalysis {
         System.out.println("Constraints for LV: \n ");
         for (String str: strings){
             System.out.println(str);
+        }
+    }
+
+    public void printAnalysis(ArrayList<ConstraintSolutionLV> constraintSolutions) {
+        System.out.println("\n --------------------- \n");
+        System.out.println("Analysis assignment for LV: \n");
+        for (ConstraintSolutionLV constraintSolution : constraintSolutions) {
+            System.out.println(ConstraintSolutionPrinterLV.getConstraintSolutionString(constraintSolution) + "\n");
         }
     }
 

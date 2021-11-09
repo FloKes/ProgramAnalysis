@@ -1,10 +1,10 @@
 package microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution;
 
-public final class ConstraintSolutionPrinter {
+public final class ConstraintSolutionPrinterRD {
 
-    private ConstraintSolutionPrinter() {}
+    private ConstraintSolutionPrinterRD() {}
 
-    public static String getConstraintSolutionString (ConstraintSolution constraintSolution){
+    public static String getConstraintSolutionString (ConstraintSolutionRD constraintSolution){
         String s = "RD(" + constraintSolution.getProgramGraphNode().toString() + ") = ";
         if(!constraintSolution.getConstraintTriples().isEmpty()) {
             s = s+ "{";

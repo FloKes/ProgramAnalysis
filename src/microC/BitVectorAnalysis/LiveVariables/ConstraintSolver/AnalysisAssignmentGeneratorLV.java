@@ -1,9 +1,7 @@
 package microC.BitVectorAnalysis.LiveVariables.ConstraintSolver;
 
-import microC.BitVectorAnalysis.LiveVariables.KillGen.GenSetLV;
 import microC.BitVectorAnalysis.LiveVariables.KillGen.KillGenSetLV;
-import microC.BitVectorAnalysis.LiveVariables.KillGen.KillSetLV;
-import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolution;
+import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintTriple;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
@@ -22,25 +20,49 @@ public class AnalysisAssignmentGeneratorLV {
     public ArrayList<ConstraintSolutionLV> solveConstraints(ProgramGraph programGraph){
         initializeSolutions(programGraph);
         solveAlgorithm(programGraph);
+
+        for (ConstraintSolutionLV constraintSolution: constraintSolutions){
+            constraintSolution.sortSolutionSet();
+        }
         return constraintSolutions;
     }
 
 
     public void solveAlgorithm(ProgramGraph programGraph) {
-    var programGraphEdges = programGraph.getProgramGraphEdges();
-    var reverseProgramGraphEdges = new ArrayList<ProgramGraphEdge>();
-    for (ProgramGraphEdge edge: programGraphEdges){
-        reverseProgramGraphEdges.add(edge);
-    }
+        var programGraphEdges = programGraph.getProgramGraphEdges();
+        var reverseProgramGraphEdges = new ArrayList<ProgramGraphEdge>();
+        for (ProgramGraphEdge edge: programGraphEdges){
+            reverseProgramGraphEdges.add(edge);
+        }
 
-    Collections.reverse(reverseProgramGraphEdges);
-        for (ProgramGraphEdge programGraphEdge : reverseProgramGraphEdges) {
-            if(programGraphEdge.getOriginNode() != null) {
-                var constraintSolution = constraintSolutions.get(programGraphEdge.getOriginNode().getNumber());
+        Collections.reverse(reverseProgramGraphEdges);
+
+        int notSubsetCounter;
+        while (true) {
+            notSubsetCounter = 0;
+            for (ProgramGraphEdge programGraphEdge : reverseProgramGraphEdges) {
                 var solutionSet = analyzeConstraint(programGraphEdge);
-                constraintSolution.setSolutionSet(solutionSet);
+                var constraintSolution = constraintSolutions.get(programGraphEdge.getOriginNode().getNumber());
+
+                if(!isSubset(solutionSet, constraintSolution)){
+                    constraintSolution.setSolutionSet(solutionSet);
+                    notSubsetCounter ++;
+                }
+
+            }
+            if (notSubsetCounter == 0){
+                break;
             }
         }
+    }
+
+    public boolean isSubset(SolutionSet solutionSet, ConstraintSolutionLV constraintSolution){
+        for (String solution: solutionSet.getSolutionSet()){
+            if(!constraintSolution.getSolutionSet().getSolutionSet().contains(solution)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public SolutionSet analyzeConstraint (ProgramGraphEdge edge){

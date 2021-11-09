@@ -1,8 +1,8 @@
 package microC.BitVectorAnalysis.ReachingDefinitions;
 
 import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.AnalysisAssignmentGeneratorRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolution;
-import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionPrinter;
+import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.ConstraintSolution.ConstraintSolutionPrinterRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintGeneratorRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintPrinterRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
@@ -48,14 +48,14 @@ public class ReachingDefinitionsAnalysis {
         int i = 0;
     }
 
-    public ArrayList<ConstraintSolution> getConstraintSolutions(ProgramGraph programGraph){
+    public ArrayList<ConstraintSolutionRD> getConstraintSolutions(ProgramGraph programGraph){
         return analysisAssignmentGeneratorRD.solveConstraints(programGraph);
     }
 
-    public ArrayList<String> getConstraintSolutionStrings (ArrayList<ConstraintSolution> constraintSolutions){
+    public ArrayList<String> getConstraintSolutionStrings (ArrayList<ConstraintSolutionRD> constraintSolutions){
         ArrayList<String> constraintSolutionStrings = new ArrayList<>();
-        for (ConstraintSolution constraintSolution: constraintSolutions){
-            constraintSolutionStrings.add(ConstraintSolutionPrinter.getConstraintSolutionString(constraintSolution));
+        for (ConstraintSolutionRD constraintSolution: constraintSolutions){
+            constraintSolutionStrings.add(ConstraintSolutionPrinterRD.getConstraintSolutionString(constraintSolution));
         }
         return constraintSolutionStrings;
     }
@@ -85,7 +85,7 @@ public class ReachingDefinitionsAnalysis {
         }
     }
 
-    public void printAnalysis(ArrayList<ConstraintSolution> constraintSolutions){
+    public void printAnalysis(ArrayList<ConstraintSolutionRD> constraintSolutions){
         System.out.println("\n --------------------- \n");
         System.out.println("Analysis assignment for RD: \n");
         for (String constraintSolutionString: getConstraintSolutionStrings(constraintSolutions)) {

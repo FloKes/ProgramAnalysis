@@ -4,11 +4,11 @@ import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
 
-public class ConstraintSolution {
+public class ConstraintSolutionRD {
     private ProgramGraphNode programGraphNode;
     private ArrayList<ConstraintTriple> constraintTriples;
 
-    public ConstraintSolution(ProgramGraphNode programGraphNode) {
+    public ConstraintSolutionRD(ProgramGraphNode programGraphNode) {
         this.programGraphNode = programGraphNode;
         this.constraintTriples = new ArrayList<>();
     }
