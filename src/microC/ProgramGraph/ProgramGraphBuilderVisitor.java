@@ -75,6 +75,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation = new EdgeInformation();
         VariableIdentifierExpressionNode vi = new VariableIdentifierExpressionNode(vd.getIdentifier());
         edgeInformation.setVariableModified(vi);
+        edgeInformation.setDeclarationNode(vd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         programGraph.addDeclaredObjects(vd.getIdentifier());
@@ -87,6 +88,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation = new EdgeInformation();
         RecordIdentifierExpressionNode ri = new RecordIdentifierExpressionNode(rd.getIdentifier());
         edgeInformation.setVariableModified(ri);
+        edgeInformation.setDeclarationNode(rd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         programGraph.addDeclaredObjects(rd.getIdentifier());
@@ -99,6 +101,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation= new EdgeInformation();
         ArrayIdentifierExpressionNode ai = new ArrayIdentifierExpressionNode(ad.getIdentifier());
         edgeInformation.setVariableModified(ai);
+        edgeInformation.setDeclarationNode(ad);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         programGraph.addDeclaredObjects(ad.getIdentifier());
@@ -270,6 +273,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             expressionElementsString += expressionNode.accept(printVisitor) + "; ";
         }
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
+        edgeInformation.setExpressionNode(n.getRight());
         System.out.println(expressionElementsString +"\n");
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -316,6 +320,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         }
 
         EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setBooleanExpressionNode(bexpr);
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprString));
         System.out.println(expressionElementsString +"\n");
         expressionElementsList.clear();
@@ -334,6 +339,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         node = programGraph.getProgramGraphNode(ifNodeNumber);
 
         EdgeInformation edgeInformationNot = new EdgeInformation();
+        edgeInformation.setBooleanExpressionNode(bexpr);
+        edgeInformation.setNot(true);
         edgeInformationNot.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprNotString));
         System.out.println(expressionElementsString +"\n");
 
@@ -398,6 +405,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
 
         EdgeInformation edgeInformation = new EdgeInformation();
+        edgeInformation.setBooleanExpressionNode(bexpr);
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprString));
         System.out.println(expressionElementsString +"\n");
         expressionElementsList.clear();
@@ -428,6 +436,8 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         node = evalNode;
         // TODO
         EdgeInformation edgeInformationNot = new EdgeInformation();
+        edgeInformationNot.setBooleanExpressionNode(bexpr);
+        edgeInformationNot.setNot(true);
         edgeInformationNot.setEdgeExpression(new EdgeExpression(expressionElementsListClone, bexprNotString));
         node = node.addEdgeOut(new ProgramGraphEdge(bexprNotString, edgeInformationNot));
         programGraph.addNode(node);

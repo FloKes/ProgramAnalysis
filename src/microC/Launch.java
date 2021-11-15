@@ -8,6 +8,7 @@ import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
 import microC.ProgramGraph.ProgramGraphNode;
+import microC.WorklistAlgos.DetectionOfSignsChaotic;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -25,7 +26,7 @@ public class Launch {
     public static void main(String[] arg) throws IOException {
         try {
             //String source = "micro_c.txt";
-            String source = "tests/test.txt";
+            String source = "tests/test_factorial.txt";
             CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
@@ -45,6 +46,9 @@ public class Launch {
             ProgramGraph programGraph = programGraphGenerator.generateProgramGraph(prog);
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
+            DetectionOfSignsChaotic dsc = new DetectionOfSignsChaotic();
+            dsc.run(programGraph);
+            /*
             // Output program graph to .dot file
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
             dotFileGenerator.GenerateFile(programGraphNodes);
@@ -57,7 +61,7 @@ public class Launch {
 
             // Live variable analysis
             LiveVariablesAnalysis liveVariablesAnalysis = new LiveVariablesAnalysis();
-            liveVariablesAnalysis.doAnalysis(programGraph);
+            liveVariablesAnalysis.doAnalysis(programGraph);*/
 
         } catch (IOException e) {
             throw e;
