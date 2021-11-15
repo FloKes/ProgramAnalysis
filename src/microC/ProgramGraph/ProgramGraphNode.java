@@ -3,9 +3,7 @@ package microC.ProgramGraph;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ProgramGraphNode {
     private int number;
@@ -14,6 +12,15 @@ public class ProgramGraphNode {
     private List<ProgramGraphEdge> outgoingEdges;
     private ArrayList<ConstraintRD> constraintRDS;
     private ArrayList<ConstraintLV> constraintLVS;
+    private HashMap<String, HashSet<Character>> DSMemory = new HashMap<>();
+
+    public HashMap<String, HashSet<Character>> getDSMemory() {
+        return DSMemory;
+    }
+
+    public void setDSMemory(HashMap<String, HashSet<Character>> DSMemory) {
+        this.DSMemory = DSMemory;
+    }
 
     public ProgramGraphNode(){
         //initial node

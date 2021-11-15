@@ -3,11 +3,50 @@ package microC.WorklistAlgos;
 import microC.AnalysisAlgorithms.DetectionOfSigns;
 import microC.ProgramGraph.ProgramGraph;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class DetectionOfSignsChaotic {
     private DetectionOfSigns DS = new DetectionOfSigns();
 
-    public void run(ProgramGraph pg){
-        DS.GenerateConstraints(pg.getProgramGraphNodes());
+    private boolean isContained(HashSet<Character> small, HashSet<Character> big){
+        if(big == null || big.isEmpty()) return false;
+        return big.containsAll(small);
+    }
+
+    public void run(ProgramGraph pg, HashMap<String, HashSet<Character>> initMemory){
+        boolean isFirst = true;
+        for (var node: pg.getProgramGraphNodes()) {
+            if(isFirst){
+                pg.getProgramGraphNode(0).setDSMemory(initMemory);
+                isFirst = false;
+            }else{
+                var mem = node.getDSMemory();
+                for (var s: initMemory.keySet()) {
+                    mem.put(s, new HashSet<Character>());
+                }
+            }
+        }
+
+        int i =0;
+        while(i < 3){
+            for (var node: pg.getProgramGraphNodes()) {
+                for (var edge: node.getOutGoing()) {
+                    if(node.isFinalNode()){
+                        continue;
+                    }
+                    var memory =  DS.generateConstraints(node.getDSMemory(), edge.getEdgeInformation());
+                    var nextMem = edge.getEndNode().getDSMemory();
+                    for (var s : memory.keySet()) {
+                        if(!isContained(memory.get(s), nextMem.get(s))){
+                            nextMem.get(s).addAll(memory.get(s));
+                        }
+                    }
+                }
+            }
+            i++;
+        }
+        int a = 0;
 
         // Initialize start node with input constraints for all vars
         // Generate the for all nodes/edges

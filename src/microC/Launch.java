@@ -16,6 +16,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 
 //based on tutorial: https://www.youtube.com/watch?v=dPWWcH5uM0g
@@ -47,7 +49,17 @@ public class Launch {
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
             DetectionOfSignsChaotic dsc = new DetectionOfSignsChaotic();
-            dsc.run(programGraph);
+            var initMem = new HashMap<String, HashSet<Character>>();
+            var xMem = new HashSet<Character>();
+            var yMem = new HashSet<Character>();
+            xMem.add('-');
+            xMem.add('0');
+            xMem.add('+');
+            yMem.add('0');
+            //x = {-,0,+}, y = {-,0,+}
+            initMem.put("x",xMem);
+            initMem.put("y", yMem);
+            dsc.run(programGraph, initMem);
             /*
             // Output program graph to .dot file
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();

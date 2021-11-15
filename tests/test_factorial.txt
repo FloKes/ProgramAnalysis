@@ -1,5 +1,4 @@
 {
-   int x;
    int y;
    y := 1;
    while (x > 0){
