@@ -74,7 +74,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = vd.accept(printVisitor);
         EdgeInformation edgeInformation = new EdgeInformation();
         VariableIdentifierExpressionNode vi = new VariableIdentifierExpressionNode(vd.getIdentifier());
-        edgeInformation.setVariableModified(vi);
+        edgeInformation.setDefined(vi);
         edgeInformation.setDeclarationNode(vd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -87,7 +87,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = rd.accept(printVisitor);
         EdgeInformation edgeInformation = new EdgeInformation();
         RecordIdentifierExpressionNode ri = new RecordIdentifierExpressionNode(rd.getIdentifier());
-        edgeInformation.setVariableModified(ri);
+        edgeInformation.setDefined(ri);
         edgeInformation.setDeclarationNode(rd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -100,7 +100,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = ad.accept(printVisitor);
         EdgeInformation edgeInformation= new EdgeInformation();
         ArrayIdentifierExpressionNode ai = new ArrayIdentifierExpressionNode(ad.getIdentifier());
-        edgeInformation.setVariableModified(ai);
+        edgeInformation.setDefined(ai);
         edgeInformation.setDeclarationNode(ad);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -250,7 +250,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = n.accept(printVisitor);
 
         EdgeInformation edgeInformation = new EdgeInformation();
-        edgeInformation.setVariableModified(n.getLeft());
+        edgeInformation.setDefined(n.getLeft());
 
         var right = n.getRight();
         var rightText = right.accept(printVisitor);
@@ -288,7 +288,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         //TODO edge Expression RECASSIGN
         //EdgeExpression edgeExpression = new EdgeExpression();
         EdgeInformation edgeInformation = new EdgeInformation();
-        edgeInformation.setVariableModified(n.getIdentifier());
+        edgeInformation.setDefined(n.getIdentifier());
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
 
@@ -449,7 +449,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     public Boolean visit(ReadStatement n) {
         String s = n.accept(printVisitor);
         EdgeInformation edgeInformation= new EdgeInformation();
-        edgeInformation.setVariableModified(n.getLexpr());
+        edgeInformation.setDefined(n.getLexpr());
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         return true;

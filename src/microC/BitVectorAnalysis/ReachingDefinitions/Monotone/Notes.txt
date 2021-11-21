@@ -1,0 +1,4 @@
+1. Complete lattice data structure
+2. Maybe needs function for least upper bound of and element or pairs of elements dunno or arbitrarily large number of sets
+3. Greates element
+4. Least element

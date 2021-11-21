@@ -3,7 +3,8 @@ package microC.Expressions;
 public abstract class IdentifierExpressionNode extends ExpressionNode {
     private String identifier;
 
-    public String getIdentifier() {
+    @Override
+    public String toString() {
         return identifier;
     }
 

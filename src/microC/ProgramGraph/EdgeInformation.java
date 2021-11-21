@@ -7,12 +7,16 @@ import microC.Expressions.IdentifierExpressionNode;
 
 
 public class EdgeInformation {
-    private IdentifierExpressionNode variableModified;
+    private IdentifierExpressionNode defined;
     private BooleanExpressionNode booleanExpressionNode;
     private boolean isNot = false;
     private Declaration declarationNode;
     private ExpressionNode expressionNode;
     private EdgeExpression edgeExpression;
+
+    public EdgeInformation() {
+        edgeExpression = new EdgeExpression();
+    }
 
     public boolean isNot() {
         return isNot;
@@ -46,12 +50,12 @@ public class EdgeInformation {
         this.expressionNode = expressionNode;
     }
 
-    public IdentifierExpressionNode getVariableModified() {
-        return variableModified;
+    public IdentifierExpressionNode getDefined() {
+        return defined;
     }
 
-    public void setVariableModified(IdentifierExpressionNode variableModified) {
-        this.variableModified = variableModified;
+    public void setDefined(IdentifierExpressionNode defined) {
+        this.defined = defined;
     }
 
     public EdgeExpression getEdgeExpression() {

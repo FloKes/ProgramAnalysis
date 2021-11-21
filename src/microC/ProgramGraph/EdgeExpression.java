@@ -10,6 +10,10 @@ public class EdgeExpression {
     private ArrayList<ExpressionNode> objectsUsed;
     private String expression;
 
+    public EdgeExpression() {
+        objectsUsed = new ArrayList<>();
+    }
+
     public EdgeExpression(ArrayList<ExpressionNode> objectsUsed, String expression) {
         this.objectsUsed = objectsUsed;
         this.expression = expression;
