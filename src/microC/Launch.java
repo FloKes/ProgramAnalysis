@@ -3,7 +3,7 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.ChaoticAlgorithm;
+import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Algorithms.ChaoticAlgorithm;
 import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.AnalysisSpecificationRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;

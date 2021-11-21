@@ -1,4 +1,4 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone;
+package microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Algorithms;
 
 import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisSpecification;
 import microC.Expressions.ExpressionNode;
@@ -8,11 +8,13 @@ import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
+import java.util.Random;
 
 public class ChaoticAlgorithm {
 
     private ProgramGraph programGraph;
     private AnalysisSpecification analysisSpecification;
+    private int numberOfSteps = 0;
 
     public ChaoticAlgorithm() {
     }
@@ -23,6 +25,7 @@ public class ChaoticAlgorithm {
         initialize();
         doLoop();
         printSolution();
+        System.out.println("Algorithm finished with " + numberOfSteps + " steps.");
     }
 
 
@@ -43,9 +46,15 @@ public class ChaoticAlgorithm {
 
     public void doLoop(){
         int counter = 0;
+        Random rnd = new Random();
         while (true) {
             counter = 0;
-            for (ProgramGraphEdge programGraphEdge : programGraph.getProgramGraphEdges()) {
+            var numberOfEdges = programGraph.getProgramGraphEdges().size();
+
+            for (int i = 0; i< numberOfEdges; i++){
+                var randomIndex = rnd.nextInt(numberOfEdges);
+                numberOfSteps ++;
+                var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
                 var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                 var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
@@ -55,8 +64,20 @@ public class ChaoticAlgorithm {
                     analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
                     counter ++;
                 }
-
             }
+
+//            for (ProgramGraphEdge programGraphEdge : programGraph.getProgramGraphEdges()) {
+//                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
+//                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
+//
+//                if (!analysisSpecification.isSubset(aqs, aqe))
+//                {
+//                    aqe = analysisSpecification.join(aqe, aqs);
+//                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
+//                    counter ++;
+//                }
+//
+//            }
             if (counter == 0)
             {
                 break;
