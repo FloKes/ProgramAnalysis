@@ -5,6 +5,7 @@ import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.ChaoticAlgorithm;
 import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.AnalysisSpecificationRD;
+import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
 import microC.ProgramGraph.ProgramGraphNode;
@@ -63,15 +64,16 @@ public class Launch {
             dotFileGenerator.GenerateFile(programGraphNodes);
 
 
-//            // Reach definitions analysis
-//            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-//            reachingDefinitionsAnalysis.doAnalysis(programGraph);
+            // Reach definitions analysis
+            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            reachingDefinitionsAnalysis.doAnalysis(programGraph);
 //
 //
 //            // Live variable analysis
 //            LiveVariablesAnalysis liveVariablesAnalysis = new LiveVariablesAnalysis();
 //            liveVariablesAnalysis.doAnalysis(programGraph);
 
+            System.out.println("\n\n--------------\n CHAOTIC ALG FOR REACHING DEFINITIONS \n---------------\n");
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
             chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);

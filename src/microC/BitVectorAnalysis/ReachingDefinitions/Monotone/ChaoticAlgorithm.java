@@ -18,66 +18,54 @@ public class ChaoticAlgorithm {
     }
 
     public void execute(ProgramGraph programGraph, AnalysisSpecification analysisSpecification){
-        this.analysisSpecification = analysisSpecification;
         this.programGraph = programGraph;
         this.analysisSpecification = analysisSpecification;
         initialize();
-       // doLoop();
+        doLoop();
+        printSolution();
     }
 
 
     public void initialize(){
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes())
         {
-            if (programGraphNode.isOriginNode())
+            if (!programGraphNode.isOriginNode())
             {
-                var aa = analysisSpecification.getInitialElement();
-                aa.setProgramGraphNode(programGraphNode);
-                programGraphNode.setAnalysisAssignmentRD(aa);
+                var aa = analysisSpecification.getBottom();
+                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
             }
             else {
-                var aa = analysisSpecification.getBottom();
-                aa.setProgramGraphNode(programGraphNode);
-                programGraphNode.setAnalysisAssignmentRD(aa);
+                var aa = analysisSpecification.getInitialElement();
+                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
             }
         }
     }
 
-//    public void initialize()
-//    {
-//        var bottom = analysisSpecification.getBottom(programGraph);
-//        HashSet<String> identifiers = new HashSet<>();
-//        for (ProgramGraphEdge edge: programGraph.getProgramGraphEdges()){
-//            if (edge.getEdgeInformation().getDefined() != null) {
-//                identifiers.add(edge.getEdgeInformation().getDefined().toString());
-//            }
-//            var expression = edge.getEdgeInformation().getEdgeExpression().getVariablesUsed();
-//            for (ExpressionNode expressionNode: expression){
-//                if (expressionNode instanceof IdentifierExpressionNode){
-//                    identifiers.add(((IdentifierExpressionNode) expressionNode).toString());
-//                }
-//            }
-//        }
-//
-//        for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes())
-//        {
-//            if (programGraphNode.isOriginNode())
-//            {
-//                var rd = new AnalysisAssignmentRD(programGraphNode, identifiers);
-//                for (String identifier: identifiers){
-//                    rd.setEdgeSet(identifier, "?", "qs");
-//                }
-//                programGraphNode.setAnalysisAssignmentRD(rd);
-//            }
-//            else {
-//                programGraphNode.setAnalysisAssignmentRD(new AnalysisAssignmentRD(identifiers));
-//            }
-//        }
-//    }
+    public void doLoop(){
+        int counter = 0;
+        while (true) {
+            counter = 0;
+            for (ProgramGraphEdge programGraphEdge : programGraph.getProgramGraphEdges()) {
+                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
+                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-//    public void doLoop(){
-//        for (ProgramGraphEdge programGraphEdge: programGraph.getProgramGraphEdges()){
-//            analysisFunction.function(programGraphEdge, programGraphEdge.getOriginNode().getAnalysisAssignmentRD());
-//        }
-//    }
+                if (!analysisSpecification.isSubset(aqs, aqe))
+                {
+                    aqe = analysisSpecification.join(aqe, aqs);
+                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
+                    counter ++;
+                }
+
+            }
+            if (counter == 0)
+            {
+                break;
+            }
+        }
+    }
+
+    public void printSolution()
+    {
+        analysisSpecification.printSolution(programGraph);
+    }
 }

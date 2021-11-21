@@ -1,11 +1,8 @@
 digraph ProgramGraph{
-"qs" -> "q1" [label="  int i := 5   "] 
-"q1" -> "q2" [label="  int b := 0   "] 
-"q2" -> "q3" [label="  b := 9   "] 
-"q3" -> "q4" [label="  b>i   "] 
-"q3" -> "qe" [label="  !(b>i)   "] 
-"q4" -> "q5" [label="  i := 0   "] 
-"q5" -> "q6" [label="  b>i   "] 
-"q5" -> "qe" [label="  !(b>i)   "] 
-"q6" -> "qe" [label="  i := z   "] 
+"qs" -> "q1" [label="  int y := 0   "] 
+"q1" -> "q2" [label="  y := 1   "] 
+"q2" -> "q3" [label="  x>0   "] 
+"q2" -> "qe" [label="  !(x>0)   "] 
+"q3" -> "q4" [label="  y := x * y   "] 
+"q4" -> "q2" [label="  x := x - 1   "] 
 }

@@ -153,11 +153,19 @@ public class ProgramGraphNode {
         }
         return "q" + number;
     }
-    public AnalysisAssignmentRD getAnalysisAssignmentRD() {
-        return analysisAssignmentRD;
-    }
 
     public void setAnalysisAssignmentRD(AnalysisAssignment analysisAssignmentRD) {
         this.analysisAssignmentRD = (AnalysisAssignmentRD) analysisAssignmentRD;
+    }
+
+    public void setAnalysisAssignment(AnalysisAssignment analysisAssignment){
+        if (analysisAssignment instanceof AnalysisAssignmentRD)
+        {
+            this.analysisAssignmentRD = (AnalysisAssignmentRD) analysisAssignment;
+        }
+    }
+
+    public AnalysisAssignmentRD getAnalysisAssignmentRD() {
+        return analysisAssignmentRD;
     }
 }

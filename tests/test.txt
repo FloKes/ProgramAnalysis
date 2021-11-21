@@ -1,12 +1,8 @@
 {
-int i := 5;
-int b;
-b := 9;
-
-if ( b > i ) {
-    i := 0;
-    if ( b > i ) {
-            i := z;
-    }
-}
+   int y;
+   y := 1;
+   while (x > 0){
+        y := x * y;
+        x := x - 1;
+   }
 }

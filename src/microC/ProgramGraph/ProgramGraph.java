@@ -1,6 +1,10 @@
 package microC.ProgramGraph;
 
+import microC.Expressions.ExpressionNode;
+import microC.Expressions.IdentifierExpressionNode;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ProgramGraph {
     private ArrayList<ProgramGraphNode> programGraphNodes;
@@ -73,5 +77,22 @@ public class ProgramGraph {
     }
     public ArrayList<ProgramGraphEdge> getProgramGraphEdges() {
         return programGraphEdges;
+    }
+
+    public HashSet<String> getUsedObjects()
+    {
+        HashSet<String> identifiers = new HashSet<>();
+        for (ProgramGraphEdge edge: this.getProgramGraphEdges()){
+            if (edge.getEdgeInformation().getDefined() != null) {
+                identifiers.add(edge.getEdgeInformation().getDefined().toString());
+            }
+            var expression = edge.getEdgeInformation().getEdgeExpression().getVariablesUsed();
+            for (ExpressionNode expressionNode: expression){
+                if (expressionNode instanceof IdentifierExpressionNode){
+                    identifiers.add(((IdentifierExpressionNode) expressionNode).toString());
+                }
+            }
+        }
+        return identifiers;
     }
 }
