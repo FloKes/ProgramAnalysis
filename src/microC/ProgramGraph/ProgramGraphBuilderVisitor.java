@@ -75,6 +75,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation = new EdgeInformation();
         VariableIdentifierExpressionNode vi = new VariableIdentifierExpressionNode(vd.getIdentifier());
         edgeInformation.setDefined(vi);
+        edgeInformation.setDeclared(vi);
         edgeInformation.setDeclarationNode(vd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -88,6 +89,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation = new EdgeInformation();
         RecordIdentifierExpressionNode ri = new RecordIdentifierExpressionNode(rd.getIdentifier());
         edgeInformation.setDefined(ri);
+        edgeInformation.setDeclared(ri);
         edgeInformation.setDeclarationNode(rd);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
@@ -101,6 +103,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         EdgeInformation edgeInformation= new EdgeInformation();
         ArrayIdentifierExpressionNode ai = new ArrayIdentifierExpressionNode(ad.getIdentifier());
         edgeInformation.setDefined(ai);
+        edgeInformation.setDeclared(ai);
         edgeInformation.setDeclarationNode(ad);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);

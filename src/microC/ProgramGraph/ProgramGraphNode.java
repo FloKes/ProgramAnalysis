@@ -2,8 +2,9 @@ package microC.ProgramGraph;
 
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.AnalysisAssignmentRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisAssignment;
+import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
+import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisAssignmentRD;
+import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class ProgramGraphNode {
     private ArrayList<ConstraintRD> constraintRDS;
     private ArrayList<ConstraintLV> constraintLVS;
     private AnalysisAssignmentRD analysisAssignmentRD;
+    private AnalysisAssignmentDV analysisAssignmentDV;
     private HashMap<String, HashSet<Character>> DSMemory = new HashMap<>();
 
     public HashMap<String, HashSet<Character>> getDSMemory() {
@@ -163,9 +165,16 @@ public class ProgramGraphNode {
         {
             this.analysisAssignmentRD = (AnalysisAssignmentRD) analysisAssignment;
         }
+        else if(analysisAssignment instanceof AnalysisAssignmentDV){
+            this.analysisAssignmentDV = (AnalysisAssignmentDV) analysisAssignment;
+        }
     }
 
     public AnalysisAssignmentRD getAnalysisAssignmentRD() {
         return analysisAssignmentRD;
+    }
+
+    public AnalysisAssignmentDV getAnalysisAssignmentDV() {
+        return analysisAssignmentDV;
     }
 }

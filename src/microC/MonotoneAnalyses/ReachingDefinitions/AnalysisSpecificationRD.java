@@ -1,9 +1,7 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone;
+package microC.MonotoneAnalyses.ReachingDefinitions;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisAssignment;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisSpecification;
-import microC.Expressions.ExpressionNode;
-import microC.Expressions.IdentifierExpressionNode;
+import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
+import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.Expressions.VariableIdentifierExpressionNode;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
@@ -19,6 +17,23 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
     }
 
     @Override
+    public AnalysisAssignment getInitialElement() {
+        var aa = new AnalysisAssignmentRD(identifiers);
+        for (String identifier: identifiers){
+            aa.setEdgeSet(identifier, "?", "qs");
+        }
+        return aa;
+    }
+
+
+    @Override
+    public AnalysisAssignment getBottom()
+    {
+        return new AnalysisAssignmentRD(identifiers);
+    }
+
+
+    @Override
     public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment) {
         var newaa = (AnalysisAssignmentRD) analysisAssignment.clone();
         var mappings = newaa.getMappings();
@@ -29,7 +44,7 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
             defined = (VariableIdentifierExpressionNode) defined;
             var edgesets = mappings.get(defined.toString());
             edgesets.clear();
-            edgesets.add(new EdgeSet(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+            edgesets.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
         }
 
         return newaa;
@@ -37,8 +52,6 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
 
     @Override
     public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
-        var b = true;
-
         var rd1 = (AnalysisAssignmentRD) analysisAssignment1;
         var rd2 = (AnalysisAssignmentRD) analysisAssignment2;
 
@@ -49,8 +62,8 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
             var edgesets1 = mappings1.get(identifier);
             var edgesets2 = mappings2.get(identifier);
 
-            for (EdgeSet edgeSet: edgesets1){
-                for (EdgeSet edgeSet2: edgesets2){
+            for (EdgeSetRD edgeSet: edgesets1){
+                for (EdgeSetRD edgeSet2: edgesets2){
                     var z = edgeSet.equals(edgeSet2);
                     int bz = 0;
                 }
@@ -60,7 +73,7 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
             }
         }
 
-        return b;
+        return true;
     }
 
     @Override
@@ -71,27 +84,14 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
         var mappings2 = clone2.getMappings();
         for (String identifier: mappings1.keySet()){
             var edgeSets = mappings1.get(identifier);
-            for (EdgeSet edgeSet: mappings2.get(identifier)){
+            for (EdgeSetRD edgeSet: mappings2.get(identifier)){
                 edgeSets.add(edgeSet);
             }
         }
         return joined;
     }
 
-    @Override
-    public AnalysisAssignment getBottom()
-    {
-        return new AnalysisAssignmentRD(identifiers);
-    }
 
-    @Override
-    public AnalysisAssignment getInitialElement() {
-        var aa = new AnalysisAssignmentRD(identifiers);
-        for (String identifier: identifiers){
-            aa.setEdgeSet(identifier, "?", "qs");
-        }
-        return aa;
-    }
 
     @Override
     public void setAnalysisAssignment(ProgramGraphNode programGraphNode, AnalysisAssignment analysisAssignment) {

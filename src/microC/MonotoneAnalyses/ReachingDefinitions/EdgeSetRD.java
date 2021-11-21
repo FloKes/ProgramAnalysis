@@ -1,14 +1,10 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone;
+package microC.MonotoneAnalyses.ReachingDefinitions;
 
-import microC.ProgramGraph.ProgramGraphNode;
-
-import java.util.Objects;
-
-public class EdgeSet {
+public class EdgeSetRD {
     private String originNode;
     private String endNode;
 
-    public EdgeSet(String originNode, String endNode) {
+    public EdgeSetRD(String originNode, String endNode) {
         this.originNode = originNode;
         this.endNode = endNode;
     }
@@ -37,7 +33,7 @@ public class EdgeSet {
             return false;
         }
 
-        final EdgeSet other = (EdgeSet) obj;
+        final EdgeSetRD other = (EdgeSetRD) obj;
         if (!this.originNode.equals(other.getOriginNode())) {
             return false;
         }
@@ -57,7 +53,7 @@ public class EdgeSet {
         return result;
     }
 
-    public EdgeSet clone(){
-        return new EdgeSet(originNode, endNode);
+    public EdgeSetRD clone(){
+        return new EdgeSetRD(originNode, endNode);
     }
 }

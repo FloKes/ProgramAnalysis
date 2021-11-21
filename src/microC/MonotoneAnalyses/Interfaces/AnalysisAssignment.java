@@ -1,4 +1,4 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces;
+package microC.MonotoneAnalyses.Interfaces;
 
 import microC.ProgramGraph.ProgramGraphNode;
 

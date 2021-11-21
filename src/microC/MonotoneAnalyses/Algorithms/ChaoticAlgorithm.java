@@ -1,10 +1,7 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Algorithms;
+package microC.MonotoneAnalyses.Algorithms;
 
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisSpecification;
-import microC.Expressions.ExpressionNode;
-import microC.Expressions.IdentifierExpressionNode;
+import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
-import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
@@ -47,12 +44,19 @@ public class ChaoticAlgorithm {
     public void doLoop(){
         int counter = 0;
         Random rnd = new Random();
+        HashSet<Integer> usedIndexes = new HashSet<>();
         while (true) {
             counter = 0;
+            usedIndexes.clear();
             var numberOfEdges = programGraph.getProgramGraphEdges().size();
 
             for (int i = 0; i< numberOfEdges; i++){
                 var randomIndex = rnd.nextInt(numberOfEdges);
+                while (usedIndexes.contains(randomIndex))
+                {
+                    randomIndex = rnd.nextInt(numberOfEdges);
+                }
+                usedIndexes.add(randomIndex);
                 numberOfSteps ++;
                 var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
                 var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));

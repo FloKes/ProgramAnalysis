@@ -3,8 +3,10 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Algorithms.ChaoticAlgorithm;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.AnalysisSpecificationRD;
+import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
+import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
+import microC.MonotoneAnalyses.DangerousVariables.AnalysisSpecificationDV;
+import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisSpecificationRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
@@ -65,8 +67,8 @@ public class Launch {
 
 
             // Reach definitions analysis
-            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-            reachingDefinitionsAnalysis.doAnalysis(programGraph);
+            //ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            //reachingDefinitionsAnalysis.doAnalysis(programGraph);
 //
 //
 //            // Live variable analysis
@@ -76,7 +78,16 @@ public class Launch {
             System.out.println("\n\n--------------\n CHAOTIC ALG FOR REACHING DEFINITIONS \n---------------\n");
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
-            chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
+            //chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
+
+            System.out.println("\n\n--------------\n CHAOTIC ALG FOR Dangerous variables \n---------------\n");
+            DevelopmentAlgorithm developmentAlgorithm = new DevelopmentAlgorithm();
+            AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
+            chaoticAlgorithm = new ChaoticAlgorithm();
+            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
+
+            System.out.println("\n\n--------------\n DEV ALG Dangerous variables \n---------------\n");
+            developmentAlgorithm.execute(programGraph, analysisSpecificationDV);
 
             int i = 0;
         } catch (IOException e) {

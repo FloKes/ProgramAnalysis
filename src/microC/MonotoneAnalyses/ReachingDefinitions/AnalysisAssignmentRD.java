@@ -1,16 +1,14 @@
-package microC.BitVectorAnalysis.ReachingDefinitions.Monotone;
+package microC.MonotoneAnalyses.ReachingDefinitions;
 
 import MathOp.UniOp;
-import microC.BitVectorAnalysis.ReachingDefinitions.Monotone.Interfaces.AnalysisAssignment;
-import microC.ProgramGraph.ProgramGraphEdge;
+import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.ProgramGraph.ProgramGraphNode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class AnalysisAssignmentRD implements AnalysisAssignment {
-    private HashMap<String, HashSet<EdgeSet>> mappings;
+    private HashMap<String, HashSet<EdgeSetRD>> mappings;
     private ProgramGraphNode programGraphNode;
 
     public AnalysisAssignmentRD(ProgramGraphNode programGraphNode) {
@@ -26,14 +24,14 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
         }
     }
 
-    public AnalysisAssignmentRD(HashMap<String, HashSet<EdgeSet>> mappings)
+    public AnalysisAssignmentRD(HashMap<String, HashSet<EdgeSetRD>> mappings)
     {
-        HashMap<String, HashSet<EdgeSet>> newMappings = new HashMap<>();
+        HashMap<String, HashSet<EdgeSetRD>> newMappings = new HashMap<>();
         for (String identifier: mappings.keySet()){
             var oldHashEdgeSet = mappings.get(identifier);
-            HashSet<EdgeSet> newHashEdgeSet = new HashSet<>();
+            HashSet<EdgeSetRD> newHashEdgeSet = new HashSet<>();
 
-            for (EdgeSet edgeSet: oldHashEdgeSet){
+            for (EdgeSetRD edgeSet: oldHashEdgeSet){
                 newHashEdgeSet.add(edgeSet.clone());
             }
 
@@ -56,14 +54,13 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
 
     public void setEdgeSet(String identifier, String originNode, String endNode){
         var hashSet = mappings.get(identifier);
-        var edgeSet = new EdgeSet(originNode, endNode);
+        var edgeSet = new EdgeSetRD(originNode, endNode);
         hashSet.clear();
         hashSet.add(edgeSet);
     }
 
 
-
-    public HashMap<String, HashSet<EdgeSet>> getMappings() {
+    public HashMap<String, HashSet<EdgeSetRD>> getMappings() {
         return mappings;
     }
 
@@ -74,7 +71,7 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
         for (String identifer: mappings.keySet()) {
             s += "| " + identifer + " " + UniOp.function + " ";
             s += "{";
-            for (EdgeSet edgeSet : mappings.get(identifer)) {
+            for (EdgeSetRD edgeSet : mappings.get(identifer)) {
                 s += edgeSet.toString() + ", ";
             }
             if (!mappings.get(identifer).isEmpty()){
@@ -90,16 +87,4 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
         var clone = new AnalysisAssignmentRD(this.getMappings());
         return clone;
     }
-
-    //    public HashMap<String, HashSet<EdgeSet>> getHashMap() {
-//        return hashMap;
-//    }
-//
-//    public void addPowerset(String identifier, EdgeSet edgeSet){
-//        hashMap.get(identifier);
-//    }
-//
-//    public HashSet<EdgeSet> getEdgeSets(String identifier){
-//        return hashMap.get(identifier);
-//    }
 }
