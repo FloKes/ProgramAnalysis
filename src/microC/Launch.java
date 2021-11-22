@@ -34,7 +34,7 @@ public class Launch {
     public static void main(String[] arg) throws IOException {
         try {
             //String source = "micro_c.txt";
-            String source = "tests/test.txt";
+            String source = "tests/test_factorial.txt";
             CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
@@ -90,7 +90,7 @@ public class Launch {
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
 
-            /* REACHING DEFINITIONS
+            // REACHING DEFINITIONS
             System.out.println("\n\n--------------\n Reaching definition \n---------------");
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
 
@@ -123,7 +123,7 @@ public class Launch {
             System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
 
-            */System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
+            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
             worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
 
             int i = 0;

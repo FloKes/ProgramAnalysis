@@ -397,14 +397,15 @@ public class DetectionOfSigns  implements AnalysisSpecification {
     @Override
     public void printSolution(ProgramGraph programGraph) {
         for (var n : programGraph.getProgramGraphNodes()) {
-            System.out.println("Node: " + n.toString());
+            System.out.print(n.toString() +" = ");
             for (var s : n.getAnalysisAssignmentDoS().getMemory().keySet()) {
-                System.out.print(s + ": ");
+                System.out.print(s + " -> {");
                 for (var k: n.getAnalysisAssignmentDoS().getMemory().get(s)) {
                     System.out.print(k + ",");
                 }
-                System.out.println("");
+                System.out.print("} ");
             }
+            System.out.print("\n");
         }
     }
 }
