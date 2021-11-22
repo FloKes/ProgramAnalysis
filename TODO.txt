@@ -1,0 +1,2 @@
+Implement stuff for records and arrays and write and read
+and baybe for boolean values dunno

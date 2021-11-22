@@ -5,5 +5,6 @@ public final class UniOp {
     public static char supseteq = '\u2287';
     public static char union = '\u222A';
     public static char multi = '\u2A09';
+    public static char function = '\u21A6';
     private UniOp(){}
 }

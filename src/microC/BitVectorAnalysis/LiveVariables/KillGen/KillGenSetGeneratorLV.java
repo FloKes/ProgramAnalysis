@@ -35,14 +35,14 @@ public class KillGenSetGeneratorLV {
     public KillSetLV getKillSet(ProgramGraphEdge edge){
         var edgeInformation = edge.getEdgeInformation();
         if(edgeInformation != null) {
-            if (edgeInformation.getVariableModified() != null) {
+            if (edgeInformation.getDefined() != null) {
                 // get modified object
-                var modified = edgeInformation.getVariableModified();
+                var modified = edgeInformation.getDefined();
 
                 //object is of type Variable
                 if (modified instanceof VariableIdentifierExpressionNode){
                     var variableModified = (VariableIdentifierExpressionNode) modified;
-                    KillSetLV killSetLV = new KillSetLV(variableModified.getIdentifier());
+                    KillSetLV killSetLV = new KillSetLV(variableModified.toString());
                     killSetLV.setText(killGenSetPrinter.printKillSet(killSetLV));
                     return killSetLV;
                 }

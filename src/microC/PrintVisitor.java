@@ -51,7 +51,7 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(VariableIdentifierExpressionNode n) {
-        return n.getIdentifier();
+        return n.toString();
     }
 
     @Override
@@ -62,21 +62,21 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
     @Override
     public String visit(ArrayIdentifierExpressionNode n) {
         if(n.getIndexIdentifier() == null){
-            return n.getIdentifier() + "["+ n.getIndex() + "]";
+            return n.toString() + "["+ n.getIndex() + "]";
         }
-        return n.getIdentifier() + "[" + n.getIndexIdentifier() + "]";
+        return n.toString() + "[" + n.getIndexIdentifier() + "]";
     }
 
     @Override
     public String visit(RecordIdentifierExpressionNode n) {
         if (n.getFst() == null && n.getSnd() == null){
-            return n.getIdentifier();
+            return n.toString();
         }
         if (n.getFst() != null && n.getSnd() == null){
-            return n.getIdentifier() + ".fst";
+            return n.toString() + ".fst";
         }
         if (n.getFst() == null && n.getSnd() != null){
-            return n.getIdentifier() + ".snd";
+            return n.toString() + ".snd";
         }
         return "";
     }

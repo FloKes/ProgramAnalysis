@@ -33,14 +33,14 @@ public class KillGenSetGeneratorRD {
     public KillSetRD getKillSet(ProgramGraphEdge edge){
         var edgeInformation = edge.getEdgeInformation();
         if(edgeInformation != null) {
-            if (edgeInformation.getVariableModified() != null) {
+            if (edgeInformation.getDefined() != null) {
                 // get modified object
-                var modified = edgeInformation.getVariableModified();
+                var modified = edgeInformation.getDefined();
 
                 //object is of type Variable
                 if (modified instanceof VariableIdentifierExpressionNode){
                     var variableModified = (VariableIdentifierExpressionNode) modified;
-                    KillSetRD killSetRD = new KillSetRD(variableModified.getIdentifier());
+                    KillSetRD killSetRD = new KillSetRD(variableModified.toString());
                     killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
                     return killSetRD;
                 }
@@ -49,7 +49,7 @@ public class KillGenSetGeneratorRD {
                 if (modified instanceof ArrayIdentifierExpressionNode){
                     var arrayModified = (ArrayIdentifierExpressionNode) modified;
                     if (arrayModified.getIndex() == null && arrayModified.getIndexIdentifier() == null){
-                        KillSetRD killSetRD = new KillSetRD(arrayModified.getIdentifier());
+                        KillSetRD killSetRD = new KillSetRD(arrayModified.toString());
                         killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
                         return killSetRD;
                     }
@@ -59,7 +59,7 @@ public class KillGenSetGeneratorRD {
                 if (modified instanceof RecordIdentifierExpressionNode){
                     var recordModified = (RecordIdentifierExpressionNode) modified;
                     if (recordModified.getFst() == null && recordModified.getSnd() == null){
-                        KillSetRD killSetRD = new KillSetRD(recordModified.getIdentifier());
+                        KillSetRD killSetRD = new KillSetRD(recordModified.toString());
                         killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
                         return killSetRD;
                     }
@@ -72,9 +72,9 @@ public class KillGenSetGeneratorRD {
     public GenSetRD getGenSet(ProgramGraphEdge edge){
         var edgeInformation = edge.getEdgeInformation();
         if(edgeInformation != null) {
-            if (edgeInformation.getVariableModified() != null) {
-                var modified = edgeInformation.getVariableModified();
-                GenSetRD genSetRD = new GenSetRD(modified.getIdentifier(), edge.getOriginNode(),
+            if (edgeInformation.getDefined() != null) {
+                var modified = edgeInformation.getDefined();
+                GenSetRD genSetRD = new GenSetRD(modified.toString(), edge.getOriginNode(),
                         edge.getEndNode());
 
                 genSetRD.setText(killGenSetPrinter.printGenSet(genSetRD));

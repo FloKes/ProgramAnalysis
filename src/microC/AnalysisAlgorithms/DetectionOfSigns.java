@@ -5,11 +5,7 @@ import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
 import microC.ProgramGraph.EdgeInformation;
-import microC.ProgramGraph.ProgramGraphEdge;
-import microC.ProgramGraph.ProgramGraphNode;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -38,7 +34,7 @@ public class DetectionOfSigns {
             return this.applyOp(leftMem, cast.getOperator(), rightMem);
         }
         if(n instanceof IdentifierExpressionNode){
-            return this.initMem.get(((IdentifierExpressionNode) n).getIdentifier());
+            return this.initMem.get(((IdentifierExpressionNode) n).toString());
         }
         else return null;
 
@@ -260,12 +256,12 @@ public class DetectionOfSigns {
             }
 
         } else if (info.getExpressionNode() != null) {
-            if (info.getVariableModified() == null) {
+            if (info.getDefined() == null) {
                 throw new RuntimeException("no bueno");
             }
             //LAssign
             var exprNode = info.getExpressionNode();
-            var identifier = info.getVariableModified();
+            var identifier = info.getDefined();
             var set = this.getMemory(exprNode);
             newMem.put(identifier.getIdentifier(), set);
 
@@ -313,7 +309,7 @@ public class DetectionOfSigns {
     }
     private String getId(ExpressionNode e){
         if(e instanceof IdentifierExpressionNode){
-            return ((IdentifierExpressionNode) e).getIdentifier();
+            return ((IdentifierExpressionNode) e).toString();
         }
         else if(e instanceof ValueExpressionNode){
             var left = this.getId(((ValueExpressionNode) e).getLeft());
