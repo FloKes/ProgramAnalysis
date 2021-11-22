@@ -1,6 +1,7 @@
 package microC.MonotoneAnalyses.Algorithms;
 
 import com.kitfox.svg.A;
+import microC.MonotoneAnalyses.Algorithms.Worklists.Worklist;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
@@ -67,6 +68,13 @@ public class ChaoticWorklistAlgorithm{
 
     public void printSolution(){
         analysisSpecification.printSolution(programGraph);
+    }
+
+    public void clearCache(){
+        this.programGraph = null;
+        this.analysisSpecification = null;
+        this.worklist = null;
+        numberOfSteps = 0;
     }
 
     public ArrayList<ProgramGraphNode> empty(){

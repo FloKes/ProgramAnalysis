@@ -23,6 +23,7 @@ public class ChaoticAlgorithm {
         doLoop();
         printSolution();
         System.out.println("Algorithm finished with " + numberOfSteps + " steps.");
+        clearCache();
     }
 
 
@@ -89,6 +90,12 @@ public class ChaoticAlgorithm {
                 break;
             }
         }
+    }
+
+    public void clearCache(){
+        this.programGraph = null;
+        this.analysisSpecification = null;
+        numberOfSteps = 0;
     }
 
     public void printSolution()

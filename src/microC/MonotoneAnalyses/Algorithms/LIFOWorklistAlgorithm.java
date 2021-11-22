@@ -69,6 +69,13 @@ public class LIFOWorklistAlgorithm{
     }
 
 
+    public void clearCache(){
+        this.programGraph = null;
+        this.analysisSpecification = null;
+        this.worklist = null;
+        numberOfSteps = 0;
+    }
+
     public Stack<ProgramGraphNode> empty() {
         worklist.clear();
         return worklist;

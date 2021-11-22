@@ -3,10 +3,10 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
-import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
-import microC.MonotoneAnalyses.Algorithms.ChaoticWorklistAlgorithm;
-import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
-import microC.MonotoneAnalyses.Algorithms.LIFOWorklistAlgorithm;
+import microC.MonotoneAnalyses.Algorithms.*;
+import microC.MonotoneAnalyses.Algorithms.Worklists.ChaoticWorklist;
+import microC.MonotoneAnalyses.Algorithms.Worklists.FIFOWorklist;
+import microC.MonotoneAnalyses.Algorithms.Worklists.LIFOWorklist;
 import microC.MonotoneAnalyses.DangerousVariables.AnalysisSpecificationDV;
 import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisSpecificationRD;
 import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
@@ -78,31 +78,42 @@ public class Launch {
 //            liveVariablesAnalysis.doAnalysis(programGraph);
 
 
+
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
-            ChaoticWorklistAlgorithm chaoticWorklistAlgorithm = new ChaoticWorklistAlgorithm();
-            LIFOWorklistAlgorithm lifoWorklistAlgorithm = new LIFOWorklistAlgorithm();
+            WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
 
-            System.out.println("\n\n--------------\n Reaching definition \n---------------\n");
-            AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
-            System.out.println("\n\n--------------\n CHAOTIC ALG FOR REACHING DEFINITIONS \n---------------\n");
-            chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
+            // REACHING DEFINITIONS
+//            System.out.println("\n\n--------------\n Reaching definition \n---------------");
+//            AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
+//
+//            System.out.println("\n\n--------------\n CHAOTIC ALG for Reaching definitions \n---------------\n");
+//            chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
+//
+//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+  //          worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
 
-            System.out.println("\n\n--------------\n CHAOTIC WORKLIST ALGORITHM REACHING DEFINITIONS \n---------------\n");
-            chaoticWorklistAlgorithm.execute(programGraph, analysisSpecificationRD);
+//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
+//
+//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 
 
-            System.out.println("\n\n--------------\n Dangerous variables \n---------------\n");
-            DevelopmentAlgorithm developmentAlgorithm = new DevelopmentAlgorithm();
+            // DANGEROUS VARIABLES
+            System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
             AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
+//
+//            System.out.println("\n\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
+//            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
 
-            System.out.println("\n\n--------------\n CHAOTIC ALG FOR Dangerous variables \n---------------\n");
-            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
+            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
 
-            System.out.println("\n\n--------------\n CHAOTIC WORKLIST ALG FOR Dangerous variables \n---------------\n");
-            chaoticWorklistAlgorithm.execute(programGraph, analysisSpecificationDV);
-
-            System.out.println("\n\n--------------\n LIFO WORKLIST ALG FOR Dangerous variables \n---------------\n");
-            lifoWorklistAlgorithm.execute(programGraph, analysisSpecificationDV);
+//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
+//
+//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
 
 
             int i = 0;
