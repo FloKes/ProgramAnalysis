@@ -79,7 +79,7 @@ public class ProgramGraph {
         return programGraphEdges;
     }
 
-    public HashSet<String> getUsedObjects()
+    public HashSet<String> getUsedIdentifiers()
     {
         HashSet<String> identifiers = new HashSet<>();
         for (ProgramGraphEdge edge: this.getProgramGraphEdges()){

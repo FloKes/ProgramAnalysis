@@ -13,7 +13,7 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
     private HashSet<String> identifiers;
 
     public AnalysisSpecificationRD(ProgramGraph programGraph) {
-        identifiers = programGraph.getUsedObjects();
+        identifiers = programGraph.getUsedIdentifiers();
     }
 
     @Override
@@ -109,5 +109,10 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
             System.out.println(programGraphNode.toString() + "\n" + programGraphNode.getAnalysisAssignmentRD().toString());
         }
+    }
+
+    @Override
+    public boolean isForwardAnalysis() {
+        return true;
     }
 }

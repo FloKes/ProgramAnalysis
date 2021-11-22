@@ -3,6 +3,7 @@ package microC.ProgramGraph;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
+import microC.MonotoneAnalyses.LiveVariables.AnalysisAssignmentLV;
 import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisAssignmentRD;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 
@@ -17,6 +18,7 @@ public class ProgramGraphNode {
     private ArrayList<ConstraintLV> constraintLVS;
     private AnalysisAssignmentRD analysisAssignmentRD;
     private AnalysisAssignmentDV analysisAssignmentDV;
+    private AnalysisAssignmentLV analysisAssignmentLV;
     private HashMap<String, HashSet<Character>> DSMemory = new HashMap<>();
 
     public HashMap<String, HashSet<Character>> getDSMemory() {
@@ -168,6 +170,9 @@ public class ProgramGraphNode {
         else if(analysisAssignment instanceof AnalysisAssignmentDV){
             this.analysisAssignmentDV = (AnalysisAssignmentDV) analysisAssignment;
         }
+        else if(analysisAssignment instanceof AnalysisAssignmentLV){
+            this.analysisAssignmentLV = (AnalysisAssignmentLV) analysisAssignment;
+        }
     }
 
     public AnalysisAssignmentRD getAnalysisAssignmentRD() {
@@ -176,5 +181,9 @@ public class ProgramGraphNode {
 
     public AnalysisAssignmentDV getAnalysisAssignmentDV() {
         return analysisAssignmentDV;
+    }
+
+    public AnalysisAssignmentLV getAnalysisAssignmentLV() {
+        return analysisAssignmentLV;
     }
 }
