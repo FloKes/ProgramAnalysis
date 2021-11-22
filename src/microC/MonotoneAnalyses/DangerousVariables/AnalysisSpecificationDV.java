@@ -5,8 +5,6 @@ import microC.Expressions.NumberExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
-import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisAssignmentRD;
-import microC.MonotoneAnalyses.ReachingDefinitions.EdgeSetRD;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
@@ -18,7 +16,7 @@ public class AnalysisSpecificationDV implements AnalysisSpecification {
     private HashSet<String> identifiers;
 
     public AnalysisSpecificationDV(ProgramGraph programGraph) {
-        identifiers = programGraph.getUsedObjects();
+        identifiers = programGraph.getUsedIdentifiers();
     }
 
     @Override
@@ -113,5 +111,10 @@ public class AnalysisSpecificationDV implements AnalysisSpecification {
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
             System.out.println(programGraphNode.toString() + " = " + programGraphNode.getAnalysisAssignmentDV().toString());
         }
+    }
+
+    @Override
+    public boolean isForwardAnalysis() {
+        return true;
     }
 }

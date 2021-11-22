@@ -4,6 +4,7 @@ import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
+import microC.MonotoneAnalyses.LiveVariables.AnalysisAssignmentLV;
 import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisAssignmentRD;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 
@@ -19,6 +20,7 @@ public class ProgramGraphNode {
     private AnalysisAssignmentRD analysisAssignmentRD;
     private AnalysisAssignmentDV analysisAssignmentDV;
     private AnalysisAssignmentDoS analysisAssignmentDoS;
+    private AnalysisAssignmentLV analysisAssignmentLV;
     private HashMap<String, HashSet<Character>> DSMemory = new HashMap<>();
 
     public HashMap<String, HashSet<Character>> getDSMemory() {
@@ -170,6 +172,9 @@ public class ProgramGraphNode {
         else if(analysisAssignment instanceof AnalysisAssignmentDV){
             this.analysisAssignmentDV = (AnalysisAssignmentDV) analysisAssignment;
         }
+        else if(analysisAssignment instanceof AnalysisAssignmentLV){
+            this.analysisAssignmentLV = (AnalysisAssignmentLV) analysisAssignment;
+        }
     }
 
     public AnalysisAssignmentRD getAnalysisAssignmentRD() {
@@ -180,11 +185,16 @@ public class ProgramGraphNode {
         return analysisAssignmentDV;
     }
 
+
     public AnalysisAssignmentDoS getAnalysisAssignmentDoS() {
         return analysisAssignmentDoS;
     }
 
     public void setAnalysisAssignmentDoS(AnalysisAssignmentDoS analysisAssignmentDoS) {
         this.analysisAssignmentDoS = analysisAssignmentDoS;
+    }
+
+    public AnalysisAssignmentLV getAnalysisAssignmentLV() {
+        return analysisAssignmentLV;
     }
 }

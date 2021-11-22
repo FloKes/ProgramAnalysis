@@ -117,7 +117,7 @@ public class AnalysisAssignmentGeneratorRD {
         var programGraphNodes = programGraph.getProgramGraphNodes();
         var initialNode = programGraphNodes.get(0);
         var initialNodeSolution = new ConstraintSolutionRD(initialNode);
-        for (String usedObject: programGraph.getUsedObjects()){
+        for (String usedObject: programGraph.getUsedIdentifiers()){
             var intialTriple = new ConstraintTriple(initialNode);
             intialTriple.setOriginNode(null);
             intialTriple.setValue(usedObject);

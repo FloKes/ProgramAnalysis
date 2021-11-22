@@ -28,16 +28,26 @@ public class ChaoticAlgorithm {
 
 
     public void initialize(){
-        for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes())
-        {
-            if (!programGraphNode.isOriginNode())
-            {
-                var aa = analysisSpecification.getBottom();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+        if(analysisSpecification.isForwardAnalysis()) {
+            for (ProgramGraphNode programGraphNode : programGraph.getProgramGraphNodes()) {
+                if (!programGraphNode.isOriginNode()) {
+                    var aa = analysisSpecification.getBottom();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                } else {
+                    var aa = analysisSpecification.getInitialElement();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                }
             }
-            else {
-                var aa = analysisSpecification.getInitialElement();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+        }
+        else {
+            for (ProgramGraphNode programGraphNode : programGraph.getProgramGraphNodes()) {
+                if (!programGraphNode.isFinalNode()) {
+                    var aa = analysisSpecification.getBottom();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                } else {
+                    var aa = analysisSpecification.getInitialElement();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                }
             }
         }
     }
@@ -48,46 +58,62 @@ public class ChaoticAlgorithm {
         int counter = 0;
         Random rnd = new Random();
         HashSet<Integer> usedIndexes = new HashSet<>();
-        while (true) {
-            counter = 0;
-            usedIndexes.clear();
-            var numberOfEdges = programGraph.getProgramGraphEdges().size();
+        if (analysisSpecification.isForwardAnalysis()) {
+            while (true) {
+                counter = 0;
+                usedIndexes.clear();
+                var numberOfEdges = programGraph.getProgramGraphEdges().size();
 
-            for (int i = 0; i< numberOfEdges; i++){
-                numberOfSteps ++;
-                var randomIndex = rnd.nextInt(numberOfEdges);
-                while (usedIndexes.contains(randomIndex))
-                {
-                    randomIndex = rnd.nextInt(numberOfEdges);
+                for (int i = 0; i < numberOfEdges; i++) {
+                    numberOfSteps++;
+                    var randomIndex = rnd.nextInt(numberOfEdges);
+                    while (usedIndexes.contains(randomIndex)) {
+                        randomIndex = rnd.nextInt(numberOfEdges);
+                    }
+                    usedIndexes.add(randomIndex);
+                    var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
+                    var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
+                    var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
+
+                    if (!analysisSpecification.isSubset(aqs, aqe)) {
+                        aqe = analysisSpecification.join(aqe, aqs);
+                        analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
+                        counter++;
+                    }
                 }
-                usedIndexes.add(randomIndex);
-                var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
-                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
-                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-                if (!analysisSpecification.isSubset(aqs, aqe))
-                {
-                    aqe = analysisSpecification.join(aqe, aqs);
-                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-                    counter ++;
+                if (counter == 0) {
+                    break;
                 }
             }
+        }
+        else {
+            while (true) {
+                counter = 0;
+                usedIndexes.clear();
+                var numberOfEdges = programGraph.getProgramGraphEdges().size();
 
-//            for (ProgramGraphEdge programGraphEdge : programGraph.getProgramGraphEdges()) {
-//                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
-//                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
-//
-//                if (!analysisSpecification.isSubset(aqs, aqe))
-//                {
-//                    aqe = analysisSpecification.join(aqe, aqs);
-//                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-//                    counter ++;
-//                }
-//
-//            }
-            if (counter == 0)
-            {
-                break;
+                for (int i = 0; i < numberOfEdges; i++) {
+                    numberOfSteps++;
+                    var randomIndex = rnd.nextInt(numberOfEdges);
+                    while (usedIndexes.contains(randomIndex)) {
+                        randomIndex = rnd.nextInt(numberOfEdges);
+                    }
+                    usedIndexes.add(randomIndex);
+                    var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
+                    var aqe = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode()));
+                    var aqs = analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode());
+
+                    if (!analysisSpecification.isSubset(aqe, aqs)) {
+                        aqs = analysisSpecification.join(aqs, aqe);
+                        analysisSpecification.setAnalysisAssignment(programGraphEdge.getOriginNode(), aqs);
+                        counter++;
+                    }
+                }
+
+                if (counter == 0) {
+                    break;
+                }
             }
         }
     }

@@ -408,4 +408,9 @@ public class DetectionOfSigns  implements AnalysisSpecification {
             System.out.print("\n");
         }
     }
+
+    @Override
+    public boolean isForwardAnalysis() {
+        return true;
+    }
 }

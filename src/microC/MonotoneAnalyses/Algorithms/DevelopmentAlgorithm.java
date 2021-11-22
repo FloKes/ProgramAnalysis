@@ -1,5 +1,7 @@
 package microC.MonotoneAnalyses.Algorithms;
 
+import microC.MonotoneAnalyses.Algorithms.Worklists.Worklist;
+import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
@@ -12,82 +14,110 @@ public class DevelopmentAlgorithm {
 
     private ProgramGraph programGraph;
     private AnalysisSpecification analysisSpecification;
+    private Worklist worklist;
     private int numberOfSteps = 0;
 
     public DevelopmentAlgorithm() {
     }
 
-    public void execute(ProgramGraph programGraph, AnalysisSpecification analysisSpecification){
+    public void execute(ProgramGraph programGraph, AnalysisSpecification analysisSpecification, Worklist worklistSpec){
         this.programGraph = programGraph;
         this.analysisSpecification = analysisSpecification;
+        //this.worklist = new ArrayList<>();
+        this.worklist = worklistSpec;
         initialize();
         doLoop();
         printSolution();
         System.out.println("Algorithm finished with " + numberOfSteps + " steps.");
+        clearCache();
     }
-
 
     public void initialize(){
-        for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes())
-        {
-            if (!programGraphNode.isOriginNode())
-            {
-                var aa = analysisSpecification.getBottom();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+        worklist.empty();
+        if (analysisSpecification.isForwardAnalysis()) {
+            for (ProgramGraphNode programGraphNode : programGraph.getProgramGraphNodes()) {
+                if (!programGraphNode.isOriginNode()) {
+                    var aa = analysisSpecification.getBottom();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                    ;
+                    worklist.insert(programGraphNode);
+                } else {
+                    var aa = analysisSpecification.getInitialElement();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                    ;
+                    worklist.insert(programGraphNode);
+                }
             }
-            else {
-                var aa = analysisSpecification.getInitialElement();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+        }
+        else {
+            for (ProgramGraphNode programGraphNode : programGraph.getProgramGraphNodes()) {
+                if (!programGraphNode.isFinalNode()) {
+                    var aa = analysisSpecification.getBottom();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                    ;
+                    worklist.insert(programGraphNode);
+                } else {
+                    var aa = analysisSpecification.getInitialElement();
+                    analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
+                    ;
+                    worklist.insert(programGraphNode);
+                }
             }
         }
     }
 
-    public void doLoop() {
-//        int counter = 0;
-//        Random rnd = new Random();
-//        HashSet<Integer> usedIndexes = new HashSet<>();
-//        while (true) {
-//            counter = 0;
-//            usedIndexes.clear();
-//            var numberOfEdges = programGraph.getProgramGraphEdges().size();
-//
-//            for (int i = 0; i < numberOfEdges; i++) {
-//                var randomIndex = rnd.nextInt(numberOfEdges);
-//                while (usedIndexes.contains(randomIndex)) {
-//                    randomIndex = rnd.nextInt(numberOfEdges);
-//                }
-//                usedIndexes.add(randomIndex);
-//                numberOfSteps++;
-//
-//                var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
-//                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
-//                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
-//
-//                if (!analysisSpecification.isSubset(aqs, aqe)) {
-//                    aqe = analysisSpecification.join(aqe, aqs);
-//                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-//                    counter++;
-//                }
-//            }
-//
-//            if (counter == 0) {
-//                break;
-//            }
+    public void doLoop(){
+        if (analysisSpecification.isForwardAnalysis()) {
+            while (!worklist.isEmpty()){
+                var node = worklist.extract();
+                if (node.isFinalNode()){
+                    numberOfSteps ++;
+                    continue;
+                }
+                for (ProgramGraphEdge programGraphEdge: node.getOutGoing()){
+                    numberOfSteps ++;
+                    var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
+                    var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-
-        for(ProgramGraphEdge programGraphEdge: programGraph.getProgramGraphEdges()){
-            var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
-            var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
-
-            aqe = analysisSpecification.join(aqe, aqs);
-            analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-            int i = 0;
+                    if (!analysisSpecification.isSubset(aqs, aqe))
+                    {
+                        aqe = analysisSpecification.join(aqe, aqs);
+                        analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
+                        worklist.insert(programGraphEdge.getEndNode());
+                    }
+                }
+            }
         }
+        else {
+            while (!worklist.isEmpty()) {
+                var node = worklist.extract();
+                if (node.isOriginNode()) {
+                    numberOfSteps++;
+                    continue;
+                }
+                for (ProgramGraphEdge programGraphEdge : node.getInGoing()) {
+                    numberOfSteps++;
+                    var aqe = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode()));
+                    var aqs = analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode());
 
+                    if (!analysisSpecification.isSubset(aqe, aqs)) {
+                        aqs = analysisSpecification.join(aqs, aqe);
+                        analysisSpecification.setAnalysisAssignment(programGraphEdge.getOriginNode(), aqs);
+                        worklist.insert(programGraphEdge.getOriginNode());
+                    }
+                }
+            }
+        }
     }
 
-    public void printSolution()
-    {
+    public void printSolution(){
         analysisSpecification.printSolution(programGraph);
+    }
+
+    public void clearCache(){
+        this.programGraph = null;
+        this.analysisSpecification = null;
+        this.worklist = null;
+        numberOfSteps = 0;
     }
 }
