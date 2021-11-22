@@ -28,25 +28,35 @@ public class DetectionOfSignsChaotic {
             }
         }
 
-        int i =0;
-        while(i < 3){
+        boolean shouldContinue = true;
+        while(shouldContinue){
+            shouldContinue = false;
             for (var node: pg.getProgramGraphNodes()) {
+                if(node.isFinalNode()){continue;}
                 for (var edge: node.getOutGoing()) {
-                    if(node.isFinalNode()){
-                        continue;
-                    }
                     var memory =  DS.generateConstraints(node.getDSMemory(), edge.getEdgeInformation());
                     var nextMem = edge.getEndNode().getDSMemory();
                     for (var s : memory.keySet()) {
                         if(!isContained(memory.get(s), nextMem.get(s))){
+                            shouldContinue = true;
                             nextMem.get(s).addAll(memory.get(s));
                         }
                     }
                 }
             }
-            i++;
         }
-        int a = 0;
+        //Print memory
+        for (var n : pg.getProgramGraphNodes()) {
+            System.out.println("Node: " + n.toString());
+            for (var s : n.getDSMemory().keySet()) {
+                System.out.print(s + ": ");
+                for (var k: n.getDSMemory().get(s)) {
+                    System.out.print(k + ",");
+                }
+                System.out.println("");
+            }
+        }
+
 
         // Initialize start node with input constraints for all vars
         // Generate the for all nodes/edges

@@ -54,18 +54,23 @@ public class DetectionOfSigns {
                         break;
                     case "-":
                         set.addAll(minus(c1, c2));
+                        break;
                     case "*":
                         set.addAll(mult(c1, c2));
+                        break;
                     case "/":
                         set.addAll(div(c1, c2));
+                        break;
                     case ">":
                         set.addAll(gt(c1, c2));
+                        break;
                     case "<":
                         set.addAll(lt(c1, c2));
+                        break;
                 }
             }
         }
-        return null;
+        return set;
     }
 
 
@@ -222,11 +227,21 @@ public class DetectionOfSigns {
         return set;
     }
 
+    private HashMap<String, HashSet<Character>> cloneMem(HashMap<String, HashSet<Character>> mem){
+        var newMem = new HashMap<String, HashSet<Character>>();
+        for (var key: mem.keySet()) {
+            var set = new HashSet<>(mem.get(key));
+            newMem.put(key, set);
+        }
+        return newMem;
+    }
     public HashMap<String, HashSet<Character>> generateConstraints(HashMap<String, HashSet<Character>> initMem, EdgeInformation info) {
-        this.initMem = initMem;
-        var newMem = initMem;
-        var newSet = new HashSet<Character>();
+        //Shouldn't need to clone twice but worried about loose references in the code
+        this.initMem = cloneMem(initMem);
+        var newMem = cloneMem(this.initMem);
+
         if (info.getDeclarationNode() != null) {
+            var newSet = new HashSet<Character>();
             //Declaration
             var declNode = info.getDeclarationNode();
             if (declNode instanceof VariableDeclaration) {
@@ -252,6 +267,7 @@ public class DetectionOfSigns {
             var exprNode = info.getExpressionNode();
             var identifier = info.getVariableModified();
             var set = this.getMemory(exprNode);
+            newMem.put(identifier.getIdentifier(), set);
 
             // var := var op var or var:= expr
         } else if (info.getBooleanExpressionNode() != null) {
@@ -263,23 +279,35 @@ public class DetectionOfSigns {
                 var set = this.applyOp(leftMem, cast.getOperator(), rightMem);
                 var id1 = this.getId(cast.getLeft());
                 var id2 = this.getId(cast.getRight());
+                String id;
                 if(id1.equals("") && id2.equals("")){
                     return initMem;
                 }
                 else if(!id1.equals("") && id2.equals("")){
-                    newMem.put(id1.split("-")[0], set);
+                    id = id1.split("-")[0];
                 }
                 else if(id1.equals("")){
-                    newMem.put(id2.split("-")[0], set);
+                    id = id2.split("-")[0];
                 }
                 else{
                     //id1&2  != null
-                    newMem.put(id1.split("-")[0], set);
+                    id = id1.split("-")[0];
                 }
-                newMem.put("x",set);
-
+                if(info.isNot()){
+                    // set = initMem - set
+                    var invertedSet = new HashSet<Character>();
+                    for (var c : initMem.get(id)) {
+                        if(!set.contains(c)){
+                            invertedSet.add(c);
+                        }
+                    }
+                    set = invertedSet;
+                }
+                newMem.put(id, set);
             }
-            if(boolNode instanceof BooleanOpBBooleanNode){}
+            if(boolNode instanceof BooleanOpBBooleanNode){
+                int a = 0;
+            }
         }
         return newMem;
     }
