@@ -83,37 +83,37 @@ public class Launch {
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
 
             // REACHING DEFINITIONS
-//            System.out.println("\n\n--------------\n Reaching definition \n---------------");
-//            AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
-//
-//            System.out.println("\n\n--------------\n CHAOTIC ALG for Reaching definitions \n---------------\n");
-//            chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
-//
-//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-  //          worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
+            System.out.println("\n\n--------------\n Reaching definition \n---------------");
+            AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
 
-//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
-//
-//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
+            System.out.println("\n\n--------------\n CHAOTIC ALG for Reaching definitions \n---------------\n");
+            chaoticAlgorithm.execute(programGraph, analysisSpecificationRD);
+
+            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
+
+            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
+
+            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 
 
             // DANGEROUS VARIABLES
             System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
             AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
-//
-//            System.out.println("\n\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
-//            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
+
+            System.out.println("\n\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
+            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
 
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
 
-//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
-//
-//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
+            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
+
+            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
 
 
             int i = 0;

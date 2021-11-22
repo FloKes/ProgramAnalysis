@@ -1,23 +1,8 @@
 {
-int i := 5;
-int b;
-b := 9;
-
-if ( b > i ) {
-    i := 0;
-    if ( b > i ) {
-            i := 0;
-        }
-        else {
-            b := 19;
-        }
-}
-else {
-    if ( b > i ) {
-        i := 0;
-    }
-    else {
-        b := 19;
-    }
-}
+   int y;
+   y := 1;
+   while (x > 0){
+        y := x * y;
+        x := x - 1;
+   }
 }
