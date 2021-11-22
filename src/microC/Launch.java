@@ -3,6 +3,8 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
+import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
+import microC.AnalysisAlgorithms.DetectionOfSigns;
 import microC.MonotoneAnalyses.Algorithms.*;
 import microC.MonotoneAnalyses.Algorithms.Worklists.ChaoticWorklist;
 import microC.MonotoneAnalyses.Algorithms.Worklists.FIFOWorklist;
@@ -20,6 +22,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 
 //based on tutorial: https://www.youtube.com/watch?v=dPWWcH5uM0g
@@ -50,17 +54,21 @@ public class Launch {
             ProgramGraph programGraph = programGraphGenerator.generateProgramGraph(prog);
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
-//            DetectionOfSignsChaotic dsc = new DetectionOfSignsChaotic();
-//            var initMem = new HashMap<String, HashSet<Character>>();
-//            var xMem = new HashSet<Character>();
-//            var yMem = new HashSet<Character>();
-//            xMem.add('-');
-//            xMem.add('0');
-//            xMem.add('+');
-//            yMem.add('0');
-//            //x = {-,0,+}, y = {-,0,+}
-//            initMem.put("x",xMem);
-//            initMem.put("y", yMem);
+            //Detection of Signs
+            var initMem = new HashMap<String, HashSet<Character>>();
+            var xMem = new HashSet<Character>();
+            var yMem = new HashSet<Character>();
+            xMem.add('-');
+            xMem.add('0');
+            xMem.add('+');
+            yMem.add('0');
+            //x = {-,0,+}, y = {0}
+            initMem.put("x",xMem);
+            initMem.put("y", yMem);
+//
+            AnalysisAssignmentDoS analysisAssignmentDoS = new AnalysisAssignmentDoS(initMem);
+            DetectionOfSigns dosSpec = new DetectionOfSigns(initMem);
+
 //            dsc.run(programGraph, initMem);
 
             // Output program graph to .dot file
@@ -82,7 +90,7 @@ public class Launch {
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
 
-            // REACHING DEFINITIONS
+            /* REACHING DEFINITIONS
             System.out.println("\n\n--------------\n Reaching definition \n---------------");
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
 
@@ -115,6 +123,8 @@ public class Launch {
             System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
 
+            */System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
+            worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
 
             int i = 0;
         } catch (IOException e) {

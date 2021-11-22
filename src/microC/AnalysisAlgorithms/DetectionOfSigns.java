@@ -4,14 +4,23 @@ import microC.Declaration.ArrayDeclaration;
 import microC.Declaration.RecordDeclaration;
 import microC.Declaration.VariableDeclaration;
 import microC.Expressions.*;
+import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
+import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.EdgeInformation;
+import microC.ProgramGraph.ProgramGraph;
+import microC.ProgramGraph.ProgramGraphEdge;
+import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class DetectionOfSigns {
+public class DetectionOfSigns  implements AnalysisSpecification {
 
     private HashMap<String, HashSet<Character>> initMem;
+
+    public DetectionOfSigns(HashMap<String, HashSet<Character>> initMem){
+        this.initMem = cloneMem(initMem);
+    }
 
     private HashSet<Character> getMemory(ExpressionNode n) {
         //Handle each kind of expression
@@ -326,5 +335,76 @@ public class DetectionOfSigns {
         }
 
         return "";
+    }
+
+    @Override
+    public AnalysisAssignment getInitialElement() {
+        var aa = new AnalysisAssignmentDoS(this.cloneMem(this.initMem));
+        return aa;
+    }
+
+    @Override
+    public AnalysisAssignment getBottom() {
+        var memory = new HashMap<String, HashSet<Character>>();
+
+        for (var s: this.initMem.keySet()) {
+            memory.put(s, new HashSet<>());
+        }
+        return new AnalysisAssignmentDoS(memory);
+    }
+
+    @Override
+    public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment) {
+        var aa = (AnalysisAssignmentDoS) analysisAssignment;
+        var mem = this.generateConstraints(aa.getMemory(), programGraphEdge.getEdgeInformation());
+        return new AnalysisAssignmentDoS(this.cloneMem(mem));
+    }
+
+    @Override
+    public void setAnalysisAssignment(ProgramGraphNode programGraphNode, AnalysisAssignment analysisAssignment) {
+        programGraphNode.setAnalysisAssignmentDoS((AnalysisAssignmentDoS) analysisAssignment);
+    }
+
+    @Override
+    public AnalysisAssignment getAnalysisAssignment(ProgramGraphNode programGraphNode) {
+        return programGraphNode.getAnalysisAssignmentDoS();
+    }
+
+    @Override
+    public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+        var small = ((AnalysisAssignmentDoS)analysisAssignment1).getMemory();
+        var big = ((AnalysisAssignmentDoS)analysisAssignment2).getMemory();
+
+        for(var key : small.keySet()){
+            if(big == null || big.isEmpty() || !big.get(key).containsAll(small.get(key))){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    @Override
+    public AnalysisAssignment join(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+        var newMem = this.cloneMem(((AnalysisAssignmentDoS)analysisAssignment1).getMemory());
+        var goalMem = this.cloneMem(((AnalysisAssignmentDoS)analysisAssignment2).getMemory());
+        for (var key : newMem.keySet()) {
+            goalMem.get(key).addAll(newMem.get(key));
+        }
+        return new AnalysisAssignmentDoS(goalMem);
+    }
+
+    @Override
+    public void printSolution(ProgramGraph programGraph) {
+        for (var n : programGraph.getProgramGraphNodes()) {
+            System.out.println("Node: " + n.toString());
+            for (var s : n.getAnalysisAssignmentDoS().getMemory().keySet()) {
+                System.out.print(s + ": ");
+                for (var k: n.getAnalysisAssignmentDoS().getMemory().get(s)) {
+                    System.out.print(k + ",");
+                }
+                System.out.println("");
+            }
+        }
     }
 }

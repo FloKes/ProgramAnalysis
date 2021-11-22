@@ -11,4 +11,8 @@ public abstract class IdentifierExpressionNode extends ExpressionNode {
     public IdentifierExpressionNode(String identifier) {
         this.identifier = identifier;
     }
+
+    public String getIdentifier() {
+        return identifier;
+    }
 }

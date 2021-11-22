@@ -38,12 +38,12 @@ public class WorklistAlgorithm {
             if (!programGraphNode.isOriginNode())
             {
                 var aa = analysisSpecification.getBottom();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
                 worklist.insert(programGraphNode);
             }
             else {
                 var aa = analysisSpecification.getInitialElement();
-                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+                analysisSpecification.setAnalysisAssignment(programGraphNode, aa);
                 worklist.insert(programGraphNode);
             }
         }
