@@ -1,66 +1,57 @@
 package microC.MonotoneAnalyses.Algorithms;
 
+import com.kitfox.svg.A;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
+import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
-public class ChaoticAlgorithm {
-
+public class ChaoticWorklistAlgorithm{
     private ProgramGraph programGraph;
     private AnalysisSpecification analysisSpecification;
+    private ArrayList<ProgramGraphNode> worklist;
     private int numberOfSteps = 0;
 
-    public ChaoticAlgorithm() {
+    public ChaoticWorklistAlgorithm() {
     }
 
     public void execute(ProgramGraph programGraph, AnalysisSpecification analysisSpecification){
         this.programGraph = programGraph;
         this.analysisSpecification = analysisSpecification;
+        this.worklist = new ArrayList<>();
         initialize();
         doLoop();
         printSolution();
         System.out.println("Algorithm finished with " + numberOfSteps + " steps.");
     }
 
-
     public void initialize(){
+        empty();
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes())
         {
             if (!programGraphNode.isOriginNode())
             {
                 var aa = analysisSpecification.getBottom();
                 analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+                insert(programGraphNode);
             }
             else {
                 var aa = analysisSpecification.getInitialElement();
                 analysisSpecification.setAnalysisAssignment(programGraphNode, aa);;
+                insert(programGraphNode);
             }
         }
     }
 
     public void doLoop(){
-
-        //TODO generalise to cover forward analyses
-        int counter = 0;
-        Random rnd = new Random();
-        HashSet<Integer> usedIndexes = new HashSet<>();
-        while (true) {
-            counter = 0;
-            usedIndexes.clear();
-            var numberOfEdges = programGraph.getProgramGraphEdges().size();
-
-            for (int i = 0; i< numberOfEdges; i++){
+        while (!worklist.isEmpty()){
+            var node = extract(worklist);
+            for (ProgramGraphEdge programGraphEdge: node.getOutGoing()){
                 numberOfSteps ++;
-                var randomIndex = rnd.nextInt(numberOfEdges);
-                while (usedIndexes.contains(randomIndex))
-                {
-                    randomIndex = rnd.nextInt(numberOfEdges);
-                }
-                usedIndexes.add(randomIndex);
-                var programGraphEdge = programGraph.getProgramGraphEdges().get(randomIndex);
                 var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                 var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
@@ -68,31 +59,29 @@ public class ChaoticAlgorithm {
                 {
                     aqe = analysisSpecification.join(aqe, aqs);
                     analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-                    counter ++;
+                    insert(programGraphEdge.getEndNode());
                 }
-            }
-
-//            for (ProgramGraphEdge programGraphEdge : programGraph.getProgramGraphEdges()) {
-//                var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
-//                var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
-//
-//                if (!analysisSpecification.isSubset(aqs, aqe))
-//                {
-//                    aqe = analysisSpecification.join(aqe, aqs);
-//                    analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
-//                    counter ++;
-//                }
-//
-//            }
-            if (counter == 0)
-            {
-                break;
             }
         }
     }
 
-    public void printSolution()
-    {
+    public void printSolution(){
         analysisSpecification.printSolution(programGraph);
+    }
+
+    public ArrayList<ProgramGraphNode> empty(){
+        worklist.clear();
+        return worklist;
+    }
+
+    public ArrayList<ProgramGraphNode> insert(ProgramGraphNode programGraphNode){
+        worklist.add(programGraphNode);
+        return worklist;
+    }
+
+    public ProgramGraphNode extract (ArrayList<ProgramGraphNode> worklist){
+        Random random = new Random();
+        var node = worklist.remove(random.nextInt(worklist.size()));
+        return node;
     }
 }
