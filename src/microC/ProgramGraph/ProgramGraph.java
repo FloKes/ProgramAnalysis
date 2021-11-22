@@ -95,4 +95,27 @@ public class ProgramGraph {
         }
         return identifiers;
     }
+
+    public void sort(){
+        var endNode = getEndNode();
+        var endNodeIndex = programGraphNodes.indexOf(endNode);
+        var correctIndex = programGraphNodes.size() - 1;
+
+        programGraphNodes.remove(endNode);
+        for(int i = endNodeIndex; i < programGraphNodes.size(); i++){
+            programGraphNodes.get(i).setNumber(i);
+        }
+
+        endNode.setNumber(correctIndex);
+        programGraphNodes.add(endNode);
+    }
+
+    public ProgramGraphNode getEndNode(){
+        for (ProgramGraphNode programGraphNode: this.getProgramGraphNodes()){
+            if (programGraphNode.isFinalNode()){
+                return programGraphNode;
+            }
+        }
+        return null;
+    }
 }

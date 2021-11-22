@@ -18,6 +18,7 @@ public class ProgramGraphGenerator {
         ProgramNode programNodeAST = (ProgramNode) node;
         programGraphBuilderVisitor.visit(programNodeAST);
 
+        programGraph.sort();
         return programGraph;
     }
 }
