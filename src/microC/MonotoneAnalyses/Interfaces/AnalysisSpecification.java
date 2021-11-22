@@ -7,9 +7,10 @@ import microC.ProgramGraph.ProgramGraphNode;
 public interface AnalysisSpecification {
     public AnalysisAssignment getInitialElement();
     public AnalysisAssignment getBottom();
+    public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment);
+
     public void setAnalysisAssignment(ProgramGraphNode programGraphNode, AnalysisAssignment analysisAssignment);
     public AnalysisAssignment getAnalysisAssignment(ProgramGraphNode programGraphNode);
-    public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment);
     public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2);
     public AnalysisAssignment join(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2);
     public void printSolution(ProgramGraph programGraph);
