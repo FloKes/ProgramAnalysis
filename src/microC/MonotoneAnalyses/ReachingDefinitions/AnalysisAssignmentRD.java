@@ -67,20 +67,35 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
     @Override
     public String toString()
     {
-        String s = "";
+        String s = "{";
         for (String identifer: mappings.keySet()) {
-            s += "| " + identifer + " " + UniOp.function + " ";
-            s += "{";
             for (EdgeSetRD edgeSet : mappings.get(identifer)) {
-                s += edgeSet.toString() + ", ";
+                s += "(" + identifer + ", " + edgeSet.getOriginNode() + ", " + edgeSet.getEndNode() + ")";
             }
-            if (!mappings.get(identifer).isEmpty()){
-                s = s.substring(0, s.length() - 2);
-            }
-            s += "}| \n";
+            s += ", ";
         }
+        s += "}";
         return s;
     }
+
+
+//    @Override
+//    public String toString()
+//    {
+//        String s = "";
+//        for (String identifer: mappings.keySet()) {
+//            s += "| " + identifer + " " + UniOp.function + " ";
+//            s += "{";
+//            for (EdgeSetRD edgeSet : mappings.get(identifer)) {
+//                s += edgeSet.toString() + ", ";
+//            }
+//            if (!mappings.get(identifer).isEmpty()){
+//                s = s.substring(0, s.length() - 2);
+//            }
+//            s += "}| \n";
+//        }
+//        return s;
+//    }
 
     @Override
     public AnalysisAssignment clone() {

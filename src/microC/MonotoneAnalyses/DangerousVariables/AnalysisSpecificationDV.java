@@ -109,7 +109,7 @@ public class AnalysisSpecificationDV implements AnalysisSpecification {
     @Override
     public void printSolution(ProgramGraph programGraph) {
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
-            System.out.println(programGraphNode.toString() + " = " + programGraphNode.getAnalysisAssignmentDV().toString());
+            System.out.println("DV(" + programGraphNode.toString() + ") = " + programGraphNode.getAnalysisAssignmentDV().toString());
         }
     }
 

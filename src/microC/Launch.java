@@ -119,40 +119,40 @@ public class Launch {
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 
 
-            // DANGEROUS VARIABLES
-            System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
-            AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
-
-            System.out.println("\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
-            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
-
-            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
-
-            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
-
-            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
-
-
-            // LIVE VARIABLES
-            System.out.println("\n\n\n--------------\n Live variables \n---------------");
-            AnalysisSpecificationLV analysisSpecificationLV = new AnalysisSpecificationLV(programGraph);
-
-
-            System.out.println("\n--------------\n CHAOTIC ALG for Live variables  \n---------------\n");
-            chaoticAlgorithm.execute(programGraph, analysisSpecificationLV);
-
-
-            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new ChaoticWorklist());
-
-            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new LIFOWorklist());
-
-            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
-            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new FIFOWorklist());
+//            // DANGEROUS VARIABLES
+//            System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
+//            AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
+//
+//            System.out.println("\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
+//            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
+//
+//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
+//
+//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
+//
+//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
+//
+//
+//            // LIVE VARIABLES
+//            System.out.println("\n\n\n--------------\n Live variables \n---------------");
+//            AnalysisSpecificationLV analysisSpecificationLV = new AnalysisSpecificationLV(programGraph);
+//
+//
+//            System.out.println("\n--------------\n CHAOTIC ALG for Live variables  \n---------------\n");
+//            chaoticAlgorithm.execute(programGraph, analysisSpecificationLV);
+//
+//
+//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new ChaoticWorklist());
+//
+//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new LIFOWorklist());
+//
+//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
+//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new FIFOWorklist());
 
             int i = 0;
         } catch (IOException e) {

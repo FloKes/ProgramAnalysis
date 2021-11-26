@@ -107,9 +107,16 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
     @Override
     public void printSolution(ProgramGraph programGraph) {
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
-            System.out.println(programGraphNode.toString() + "\n" + programGraphNode.getAnalysisAssignmentRD().toString());
+            System.out.println("RD(" + programGraphNode.toString() + ") = " + programGraphNode.getAnalysisAssignmentRD().toString());
         }
     }
+
+//    @Override
+//    public void printSolution(ProgramGraph programGraph) {
+//        for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
+//            System.out.println("RD(" + programGraphNode.toString() + ") = " + "\n" + programGraphNode.getAnalysisAssignmentRD().toString());
+//        }
+//    }
 
     @Override
     public boolean isForwardAnalysis() {

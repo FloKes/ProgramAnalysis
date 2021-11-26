@@ -83,7 +83,7 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
     @Override
     public void printSolution(ProgramGraph programGraph) {
         for (ProgramGraphNode programGraphNode: programGraph.getProgramGraphNodes()){
-            System.out.println(programGraphNode.toString() + " = " + programGraphNode.getAnalysisAssignmentLV().toString());
+            System.out.println("LV(" + programGraphNode.toString() + ") = " + programGraphNode.getAnalysisAssignmentLV().toString());
         }
     }
 
