@@ -4,16 +4,14 @@ import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
-import microC.AnalysisAlgorithms.DetectionOfSigns;
 import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
-import microC.MonotoneAnalyses.Algorithms.*;
-import microC.MonotoneAnalyses.Algorithms.Worklists.ChaoticWorklist;
-import microC.MonotoneAnalyses.Algorithms.Worklists.FIFOWorklist;
-import microC.MonotoneAnalyses.Algorithms.Worklists.LIFOWorklist;
+import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
+import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
+import microC.MonotoneAnalyses.Algorithms.WorklistAlgorithm;
+import microC.MonotoneAnalyses.Algorithms.Worklists.*;
 import microC.MonotoneAnalyses.DangerousVariables.AnalysisSpecificationDV;
 import microC.MonotoneAnalyses.LiveVariables.AnalysisSpecificationLV;
 import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisSpecificationRD;
-import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphGenerator;
 import microC.ProgramGraph.ProgramGraphNode;
@@ -118,6 +116,12 @@ public class Launch {
             System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 
+            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new rPWorklist());
+
+            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Reaching definitions \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new RRWorklist());
+
 
             // DANGEROUS VARIABLES
             System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
@@ -129,11 +133,17 @@ public class Launch {
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
 
-            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
 
-            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
+
+            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Dangerous variables \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new rPWorklist());
+
+            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Dangerous variables \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new RRWorklist());
 
 
             // LIVE VARIABLES
@@ -153,6 +163,12 @@ public class Launch {
 
             System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new FIFOWorklist());
+
+            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Live variables \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new rPWorklist());
+
+            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Live variables \n---------------\n");
+            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new RRWorklist());
 
             int i = 0;
         } catch (IOException e) {
