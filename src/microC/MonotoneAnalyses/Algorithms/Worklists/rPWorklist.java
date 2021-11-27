@@ -32,7 +32,7 @@ public class rPWorklist implements Worklist {
     public ProgramGraphNode extract (){
         if(CurrentNodes.isEmpty()){
             SortingAlgo();
-            CurrentNodes = PendingNodes;
+            CurrentNodes = new ArrayList<ProgramGraphNode>(PendingNodes);
             PendingNodes.clear();
         }
 
