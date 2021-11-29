@@ -2,6 +2,7 @@ package microC.ProgramGraph;
 
 import microC.Expressions.ExpressionNode;
 import microC.Expressions.IdentifierExpressionNode;
+import microC.Expressions.RecordIdentifierExpressionNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -84,7 +85,22 @@ public class ProgramGraph {
         HashSet<String> identifiers = new HashSet<>();
         for (ProgramGraphEdge edge: this.getProgramGraphEdges()){
             if (edge.getEdgeInformation().getDefined() != null) {
-                identifiers.add(edge.getEdgeInformation().getDefined().toString());
+                if(!(edge.getEdgeInformation().getDefined() instanceof RecordIdentifierExpressionNode)) {
+                    identifiers.add(edge.getEdgeInformation().getDefined().toString());
+                }
+                else {
+                    var defined = (RecordIdentifierExpressionNode) edge.getEdgeInformation().getDefined();
+                    if (defined.getFst() == null && defined.getSnd() == null){
+                        identifiers.add(defined.toString() + ".fst");
+                        identifiers.add(defined.toString() + ".snd");
+                    }
+                    else if(defined.getFst()!= null){
+                        identifiers.add(defined.toString() + ".fst");
+                    }
+                    else if(defined.getSnd()!= null){
+                        identifiers.add(defined.toString() + ".fst");
+                    }
+                }
             }
             var expression = edge.getEdgeInformation().getEdgeExpression().getVariablesUsed();
             for (ExpressionNode expressionNode: expression){

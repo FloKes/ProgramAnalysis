@@ -461,10 +461,34 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     @Override
     public Boolean visit(WriteStatement n) {
         String s = n.accept(printVisitor);
-        // TODO
-        node = node.addEdgeOut(new ProgramGraphEdge(s, null));
-        programGraph.addNode(node);
 
+        EdgeInformation edgeInformation = new EdgeInformation();
+        var right = n.getExpressionNode();
+        var rightText = right.accept(printVisitor);
+        if(right instanceof ValueExpressionNode){
+            right.accept(this);
+        }
+        else if(right instanceof IdentifierExpressionNode){
+            identifierVisitFlag = true;
+            right.accept(this);
+        }
+        else if(right instanceof NumberExpressionNode){
+            numberVisitFlag = true;
+            right.accept(this);
+        }
+        ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        String expressionElementsString = "";
+        for (ExpressionNode expressionNode: expressionElementsList){
+            expressionElementsListClone.add(expressionNode);
+            expressionElementsString += expressionNode.accept(printVisitor) + "; ";
+        }
+        edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
+        edgeInformation.setExpressionNode(n.getExpressionNode());
+        System.out.println(expressionElementsString +"\n");
+        node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
+        programGraph.addNode(node);
+        expressionElementsList.clear();
+        expressionOperators.clear();
         return true;
     }
 }

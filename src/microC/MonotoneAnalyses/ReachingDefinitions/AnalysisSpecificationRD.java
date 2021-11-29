@@ -1,5 +1,7 @@
 package microC.MonotoneAnalyses.ReachingDefinitions;
 
+import microC.Expressions.ArrayIdentifierExpressionNode;
+import microC.Expressions.RecordIdentifierExpressionNode;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.Expressions.VariableIdentifierExpressionNode;
@@ -39,12 +41,42 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
         var mappings = newaa.getMappings();
 
         var defined = programGraphEdge.getEdgeInformation().getDefined();
+        var declared = programGraphEdge.getEdgeInformation().getDeclared();
 
         if(defined instanceof VariableIdentifierExpressionNode){
-            defined = (VariableIdentifierExpressionNode) defined;
             var edgesets = mappings.get(defined.toString());
             edgesets.clear();
             edgesets.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+        }
+        if(defined instanceof ArrayIdentifierExpressionNode){
+            var edgesets = mappings.get(defined.toString());
+            if (declared instanceof ArrayIdentifierExpressionNode){
+                edgesets.clear();
+            }
+            edgesets.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+        }
+        if(defined instanceof RecordIdentifierExpressionNode){;
+            var recordIdentifier = (RecordIdentifierExpressionNode) defined;
+
+            if ((recordIdentifier.getFst() == null && recordIdentifier.getSnd() == null) || declared instanceof RecordIdentifierExpressionNode){
+                var edgesetsFst = mappings.get(defined.toString() + ".fst");
+                edgesetsFst.clear();
+                edgesetsFst.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+
+                var edgesetsSnd = mappings.get(defined.toString() + ".snd");
+                edgesetsSnd.clear();
+                edgesetsSnd.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+            }
+            else if(recordIdentifier.getFst() != null){
+                var edgesets = mappings.get(recordIdentifier.getIdentifier() +  ".fst");
+                edgesets.clear();
+                edgesets.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+            }
+            else if (recordIdentifier.getSnd() != null){
+                var edgesets = mappings.get(recordIdentifier.getIdentifier() +  ".snd");
+                edgesets.clear();
+                edgesets.add(new EdgeSetRD(programGraphEdge.getOriginNode().toString(), programGraphEdge.getEndNode().toString()));
+            }
         }
 
         return newaa;

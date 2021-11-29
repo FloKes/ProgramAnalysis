@@ -73,7 +73,7 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
                 s += "(" + identifer + ", " + edgeSet.getOriginNode() + ", " + edgeSet.getEndNode() + "), ";
             }
         }
-        if(!mappings.isEmpty()){
+        if(!mappings.isEmpty() && s.length() > 3){
             s = s.substring(0, s.length()-2);
         }
         s += "}";
