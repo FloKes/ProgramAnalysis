@@ -4,4 +4,10 @@
    f := n + u;
    A[a + 1 + b + B[c + d + C [ f + e]]] := x + y * 2 + p;
    A[a + B[b + 2]]} := C[c + d + 1 + D[e + F[f + g]]] + h + 1 + i + G[j + k + J[l + 2]];
+
+   A[R.fst + B[b + 2]] := 2;
+      b := 5;
+      b := z;
+      R.fst = 5;
+
 }
