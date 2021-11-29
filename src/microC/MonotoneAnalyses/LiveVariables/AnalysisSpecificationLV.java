@@ -10,23 +10,25 @@ import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class AnalysisSpecificationLV implements AnalysisSpecification {
 
-    private HashSet<String> identifiers;
+    private TreeSet<String> identifiers;
 
     public AnalysisSpecificationLV(ProgramGraph programGraph) {
-        identifiers = programGraph.getUsedIdentifiers();
+        identifiers = new TreeSet<>();
+        identifiers.addAll(programGraph.getUsedIdentifiers());
     }
 
     @Override
     public AnalysisAssignment getInitialElement() {
-        return new AnalysisAssignmentLV(new HashSet<>());
+        return new AnalysisAssignmentLV(new TreeSet<>());
     }
 
     @Override
     public AnalysisAssignment getBottom() {
-        return new AnalysisAssignmentLV(new HashSet<>());
+        return new AnalysisAssignmentLV(new TreeSet<>());
     }
 
     @Override
@@ -56,9 +58,15 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
                 var variable = (VariableIdentifierExpressionNode) expressionNode;
                 aa.getIdentifiers().add(variable.toString());
             }
-            if (expressionNode instanceof ArrayIdentifierExpressionNode) {
+            if (expressionNode instanceof ArrayIdentifierExpressionNode){
                 var array = (ArrayIdentifierExpressionNode) expressionNode;
-                aa.getIdentifiers().add(array.toString());
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode arrayExpressionNode: indexExpression){
+                    if(arrayExpressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(arrayExpressionNode.toString());
+                    }
+                }
+                int i = 0;
             }
         }
 
