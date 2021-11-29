@@ -1,6 +1,7 @@
 package microC.ProgramGraph;
 
 import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
+import microC.AnalysisAlgorithms.IntervalAnalysisAssignment;
 import microC.BitVectorAnalysis.LiveVariables.Constraints.ConstraintLV;
 import microC.BitVectorAnalysis.ReachingDefinitions.Constraints.ConstraintRD;
 import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
@@ -21,6 +22,7 @@ public class ProgramGraphNode {
     private AnalysisAssignmentDV analysisAssignmentDV;
     private AnalysisAssignmentDoS analysisAssignmentDoS;
     private AnalysisAssignmentLV analysisAssignmentLV;
+    private IntervalAnalysisAssignment analysisAssignmentInt;
     private HashMap<String, HashSet<Character>> DSMemory = new HashMap<>();
 
     public HashMap<String, HashSet<Character>> getDSMemory() {
@@ -203,5 +205,13 @@ public class ProgramGraphNode {
 
     public AnalysisAssignmentLV getAnalysisAssignmentLV() {
         return analysisAssignmentLV;
+    }
+
+    public IntervalAnalysisAssignment getAnalysisAssignmentInt() {
+        return analysisAssignmentInt;
+    }
+
+    public void setAnalysisAssignmentInt(IntervalAnalysisAssignment analysisAssignmentInt) {
+        this.analysisAssignmentInt = analysisAssignmentInt;
     }
 }

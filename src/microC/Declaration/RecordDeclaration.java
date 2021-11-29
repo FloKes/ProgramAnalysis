@@ -5,16 +5,11 @@ import microC.ASTBaseVisitor;
 public class RecordDeclaration extends Declaration {
 
     private VariableDeclaration first, second;
-    private String identifier;
 
     public RecordDeclaration(VariableDeclaration first, VariableDeclaration second, String identifier) {
+        super(identifier);
         this.first = first;
         this.second = second;
-        this.identifier = identifier;
-    }
-
-    public String getIdentifier() {
-        return identifier;
     }
 
     public VariableDeclaration getFirst() {
