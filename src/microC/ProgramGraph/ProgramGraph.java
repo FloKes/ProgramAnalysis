@@ -98,18 +98,57 @@ public class ProgramGraph {
                         identifiers.add(defined.toString() + ".fst");
                     }
                     else if(defined.getSnd()!= null){
-                        identifiers.add(defined.toString() + ".fst");
+                        identifiers.add(defined.toString() + ".snd");
                     }
                 }
             }
             var expression = edge.getEdgeInformation().getEdgeExpression().getVariablesUsed();
             for (ExpressionNode expressionNode: expression){
                 if (expressionNode instanceof IdentifierExpressionNode){
-                    identifiers.add(((IdentifierExpressionNode) expressionNode).toString());
+                    if(expressionNode instanceof RecordIdentifierExpressionNode){
+                        var record = (RecordIdentifierExpressionNode)expressionNode;
+                        if(record.getFst()!= null){
+                            identifiers.add(record.toString() + ".fst");
+                        }
+                        else if(record.getSnd()!= null){
+                            identifiers.add(record.toString() + ".snd");
+                        }
+                    }
+                    else {
+                        identifiers.add(((IdentifierExpressionNode) expressionNode).toString());
+                    }
                 }
             }
         }
         return identifiers;
+    }
+
+    public HashSet<String> getUsedIndexIdentifiers()
+    {
+        HashSet<String> indexIdentifiers = new HashSet<>();
+        for (ProgramGraphEdge edge: this.getProgramGraphEdges()){
+            var arrayIndexObjectsUsed = edge.getEdgeInformation().getEdgeExpression().getArrayIndexObjectsUsed();
+            if (arrayIndexObjectsUsed == null){
+                return indexIdentifiers;
+            }
+            for (ExpressionNode expressionNode: arrayIndexObjectsUsed){
+                if (expressionNode instanceof IdentifierExpressionNode){
+                    if(expressionNode instanceof RecordIdentifierExpressionNode){
+                        var record = (RecordIdentifierExpressionNode)expressionNode;
+                        if(record.getFst()!= null){
+                            indexIdentifiers.add(record.toString() + ".fst");
+                        }
+                        else if(record.getSnd()!= null){
+                            indexIdentifiers.add(record.toString() + ".snd");
+                        }
+                    }
+                    else {
+                        indexIdentifiers.add(((IdentifierExpressionNode) expressionNode).toString());
+                    }
+                }
+            }
+        }
+        return indexIdentifiers;
     }
 
     public void sort(){

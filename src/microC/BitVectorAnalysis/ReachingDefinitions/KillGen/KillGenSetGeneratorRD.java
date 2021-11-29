@@ -48,7 +48,7 @@ public class KillGenSetGeneratorRD {
                 //object is of type ArrayIdentifier
                 if (modified instanceof ArrayIdentifierExpressionNode){
                     var arrayModified = (ArrayIdentifierExpressionNode) modified;
-                    if (arrayModified.getIndex() == null && arrayModified.getIndexIdentifier() == null){
+                    if (arrayModified.getIndex() == null && arrayModified.getIndexExpression() == null){
                         KillSetRD killSetRD = new KillSetRD(arrayModified.toString());
                         killSetRD.setText(killGenSetPrinter.printKillSet(killSetRD));
                         return killSetRD;

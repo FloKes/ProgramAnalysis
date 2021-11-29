@@ -5,6 +5,7 @@ package microC.ProgramGraph;
 // And therefore won't be able to create outgoing edges and nodes as it can't check if the new number of the node
 // is already in the program graph
 
+import com.kitfox.svg.A;
 import microC.ASTBaseVisitor;
 import microC.Declaration.ArrayDeclaration;
 import microC.Declaration.Declaration;
@@ -22,13 +23,21 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     ProgramGraph programGraph;
     ProgramGraphNode node;
     private ArrayList<ExpressionNode> expressionElementsList;
+    private ArrayList<ExpressionNode> arrayIdentifierElementListTotal;
+    private ArrayList<ExpressionNode> arrayIdentifierElementList;
     private ArrayList<String> expressionOperators;
+    private ArrayList<String> arrayIndexExpressionElements;
     boolean identifierVisitFlag = false;
+    boolean arrayIndexVisitFlag = false;
+    boolean nestedArrayIndexFlag = false;
+    boolean arrayIdentifierVisitFlag = false;
     boolean numberVisitFlag = false;
 
     public ProgramGraphBuilderVisitor(ProgramGraph programGraph) {
         printVisitor = new PrintVisitor();
         expressionElementsList = new ArrayList<>();
+        arrayIdentifierElementListTotal = new ArrayList<>();
+        arrayIdentifierElementList = new ArrayList<>();
         expressionOperators = new ArrayList<>();
         this.programGraph = programGraph;
     }
@@ -116,16 +125,51 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(VariableIdentifierExpressionNode n) {
-        if(identifierVisitFlag){
+        if(identifierVisitFlag && !arrayIndexVisitFlag){
             expressionElementsList.add(n);
+            identifierVisitFlag = false;
         }
-        identifierVisitFlag = false;
+        else if (arrayIndexVisitFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean visit(ArrayIdentifierExpressionNode n) {
+        if (arrayIndexVisitFlag && nestedArrayIndexFlag)
+        {
+            var indexExpression = n.getIndexExpression();
+            arrayIndexVisitFlag = true;
+            nestedArrayIndexFlag = true;
+            indexExpression.accept(this);
+            arrayIndexVisitFlag = false;
+            arrayIdentifierVisitFlag = false;
+        }
+        else if(arrayIdentifierVisitFlag){
+            var indexExpression = n.getIndexExpression();
+            arrayIndexVisitFlag = true;
+            nestedArrayIndexFlag = true;
+            indexExpression.accept(this);
+            nestedArrayIndexFlag = false;
+            arrayIndexVisitFlag = false;
+            arrayIdentifierVisitFlag = false;
+        }
         return true;
     }
 
     @Override
     public Boolean visit(RecordIdentifierExpressionNode n) {
-        return null;
+        if(identifierVisitFlag && !arrayIndexVisitFlag){
+            expressionElementsList.add(n);
+            identifierVisitFlag = false;
+        }
+        else if (arrayIndexVisitFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
+        return true;
     }
 
     @Override
@@ -135,16 +179,15 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(NumberExpressionNode n) {
-        if(numberVisitFlag){
+        if(numberVisitFlag  && !arrayIndexVisitFlag){
             expressionElementsList.add(n);
+            numberVisitFlag = false;
         }
-        numberVisitFlag = false;
+        else if (arrayIndexVisitFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
         return true;
-    }
-
-    @Override
-    public Boolean visit(ArrayIdentifierExpressionNode n) {
-        return null;
     }
 
 
@@ -219,9 +262,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         }
 
         if(left instanceof IdentifierExpressionNode){
-            identifierVisitFlag = true;
-            left.accept(this);
-            //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
+            if (left instanceof ArrayIdentifierExpressionNode){
+                arrayIdentifierVisitFlag = true;
+                left.accept(this);
+                for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                    arrayIdentifierElementListTotal.add(expressionNode);
+                }
+                arrayIdentifierElementList.clear();
+            }
+            else {
+                identifierVisitFlag = true;
+                left.accept(this);
+            }
         }
         else if(left instanceof  NumberExpressionNode){
             numberVisitFlag = true;
@@ -230,8 +282,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         }
 
         if(right instanceof IdentifierExpressionNode){
-            identifierVisitFlag = true;
-            right.accept(this);
+            if (right instanceof ArrayIdentifierExpressionNode){
+                arrayIdentifierVisitFlag = true;
+                right.accept(this);
+                for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                    arrayIdentifierElementListTotal.add(expressionNode);
+                }
+                arrayIdentifierElementList.clear();
+            }
+            else {
+                identifierVisitFlag = true;
+                right.accept(this);
+            }
             //System.out.println("Is identifier expression node: " + ((IdentifierExpressionNode) right).getIdentifier());
         }
         else if(right instanceof  NumberExpressionNode){
@@ -253,7 +315,17 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = n.accept(printVisitor);
 
         EdgeInformation edgeInformation = new EdgeInformation();
-        edgeInformation.setDefined(n.getLeft());
+        var left = n.getLeft();
+        if (left instanceof ArrayIdentifierExpressionNode){
+            arrayIdentifierVisitFlag = true;
+            left.accept(this);
+            for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                ((ArrayIdentifierExpressionNode) left).addindexExpressionElements(expressionNode);
+                arrayIdentifierElementListTotal.add(expressionNode);
+            }
+            arrayIdentifierElementList.clear();
+        }
+        edgeInformation.setDefined(left);
 
         var right = n.getRight();
         var rightText = right.accept(printVisitor);
@@ -262,8 +334,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             right.accept(this);
         }
         else if(right instanceof IdentifierExpressionNode){
-            identifierVisitFlag = true;
-            right.accept(this);
+            if (right instanceof ArrayIdentifierExpressionNode){
+                arrayIdentifierVisitFlag = true;
+                right.accept(this);
+                for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                    arrayIdentifierElementListTotal.add(expressionNode);
+                }
+                arrayIdentifierElementList.clear();
+            }
+            else {
+                identifierVisitFlag = true;
+                right.accept(this);
+            }
         }
         else if(right instanceof NumberExpressionNode){
             numberVisitFlag = true;
@@ -276,11 +358,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             expressionElementsString += expressionNode.accept(printVisitor) + "; ";
         }
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
+
+        ArrayList<ExpressionNode> arrayIdentifierElementListTotalClone = new ArrayList<>();
+        for (ExpressionNode expressionNode: arrayIdentifierElementListTotal){
+            arrayIdentifierElementListTotalClone.add(expressionNode);
+        }
+        edgeInformation.getEdgeExpression().setArrayIndexObjectsUsed(arrayIdentifierElementListTotalClone);
         edgeInformation.setExpressionNode(n.getRight());
         System.out.println(expressionElementsString +"\n");
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         expressionElementsList.clear();
+        arrayIdentifierElementListTotal.clear();
         expressionOperators.clear();
         return true;
     }
@@ -292,8 +381,74 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         //EdgeExpression edgeExpression = new EdgeExpression();
         EdgeInformation edgeInformation = new EdgeInformation();
         edgeInformation.setDefined(n.getIdentifier());
+        var fst = n.getFst();
+        var snd = n.getSnd();
+
+        if(fst instanceof ValueExpressionNode){
+            fst.accept(this);
+        }
+        else if(fst instanceof IdentifierExpressionNode){
+            if (fst instanceof ArrayIdentifierExpressionNode){
+                arrayIdentifierVisitFlag = true;
+                fst.accept(this);
+                for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                    arrayIdentifierElementListTotal.add(expressionNode);
+                }
+                arrayIdentifierElementList.clear();
+            }
+            else {
+                identifierVisitFlag = true;
+                fst.accept(this);
+            }
+        }
+        else if(fst instanceof NumberExpressionNode){
+            numberVisitFlag = true;
+            fst.accept(this);
+        }
+
+        if(snd instanceof ValueExpressionNode){
+            snd.accept(this);
+        }
+        else if(snd instanceof IdentifierExpressionNode){
+            if (snd instanceof ArrayIdentifierExpressionNode){
+                arrayIdentifierVisitFlag = true;
+                snd.accept(this);
+                for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                    arrayIdentifierElementListTotal.add(expressionNode);
+                }
+                arrayIdentifierElementList.clear();
+            }
+            else {
+                identifierVisitFlag = true;
+                snd.accept(this);
+            }
+        }
+        else if(snd instanceof NumberExpressionNode){
+            numberVisitFlag = true;
+            snd.accept(this);
+        }
+
+        ArrayList<ExpressionNode> expressionElementsListClone = new ArrayList<>();
+        String expressionElementsString = "";
+        for (ExpressionNode expressionNode: expressionElementsList){
+            expressionElementsListClone.add(expressionNode);
+            expressionElementsString += expressionNode.accept(printVisitor) + "; ";
+        }
+
+        ArrayList<ExpressionNode> arrayIdentifierElementListTotalClone = new ArrayList<>();
+        for (ExpressionNode expressionNode: arrayIdentifierElementListTotal){
+            arrayIdentifierElementListTotalClone.add(expressionNode);
+        }
+
+        edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, "()"));
+        edgeInformation.getEdgeExpression().setArrayIndexObjectsUsed(arrayIdentifierElementListTotalClone);
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
+
+        expressionElementsList.clear();
+        arrayIdentifierElementListTotal.clear();
+        arrayIdentifierElementListTotal.clear();
+        expressionOperators.clear();
 
         return true;
     }

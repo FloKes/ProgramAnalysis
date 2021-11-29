@@ -61,10 +61,10 @@ public class PrintVisitor implements ASTBaseVisitor<String> {
 
     @Override
     public String visit(ArrayIdentifierExpressionNode n) {
-        if(n.getIndexIdentifier() == null){
+        if(n.getIndexExpression() == null){
             return n.toString() + "["+ n.getIndex() + "]";
         }
-        return n.toString() + "[" + n.getIndexIdentifier() + "]";
+        return n.toString() + "[" + n.getIndexExpression() + "]";
     }
 
     @Override

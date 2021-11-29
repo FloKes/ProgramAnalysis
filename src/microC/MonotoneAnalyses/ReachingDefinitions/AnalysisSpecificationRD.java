@@ -10,12 +10,15 @@ import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class AnalysisSpecificationRD implements AnalysisSpecification {
     private HashSet<String> identifiers;
 
     public AnalysisSpecificationRD(ProgramGraph programGraph) {
-        identifiers = programGraph.getUsedIdentifiers();
+        identifiers = new HashSet<>();
+        identifiers.addAll(programGraph.getUsedIdentifiers());
+        identifiers.addAll(programGraph.getUsedIndexIdentifiers());
     }
 
     @Override

@@ -5,16 +5,17 @@ import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class AnalysisAssignmentLV implements AnalysisAssignment {
 
-    private HashSet<String> identifiers;
+    private TreeSet<String> identifiers;
 
-    public AnalysisAssignmentLV(HashSet<String> identifiers) {
+    public AnalysisAssignmentLV(TreeSet<String> identifiers) {
         this.identifiers = identifiers;
     }
 
-    public HashSet<String> getIdentifiers() {
+    public TreeSet<String> getIdentifiers() {
         return identifiers;
     }
 
@@ -25,7 +26,7 @@ public class AnalysisAssignmentLV implements AnalysisAssignment {
 
     @Override
     public AnalysisAssignment clone() {
-        HashSet<String> newIdentifiers = new HashSet<>();
+        TreeSet<String> newIdentifiers = new TreeSet<>();
         for (String identifier: identifiers){
             newIdentifiers.add(identifier);
         }

@@ -1,9 +1,9 @@
 package microC.MonotoneAnalyses.LiveVariables;
 
+import microC.Expressions.ArrayIdentifierExpressionNode;
 import microC.Expressions.ExpressionNode;
-import microC.Expressions.NumberExpressionNode;
+import microC.Expressions.RecordIdentifierExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
-import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
@@ -11,29 +11,34 @@ import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class AnalysisSpecificationLV implements AnalysisSpecification {
 
-    private HashSet<String> identifiers;
+    private TreeSet<String> identifiers;
 
     public AnalysisSpecificationLV(ProgramGraph programGraph) {
-        identifiers = programGraph.getUsedIdentifiers();
+        identifiers = new TreeSet<>();
+        identifiers.addAll(programGraph.getUsedIdentifiers());
+        identifiers.addAll(programGraph.getUsedIndexIdentifiers());
     }
 
     @Override
     public AnalysisAssignment getInitialElement() {
-        return new AnalysisAssignmentLV(new HashSet<>());
+        return new AnalysisAssignmentLV(new TreeSet<>());
     }
 
     @Override
     public AnalysisAssignment getBottom() {
-        return new AnalysisAssignmentLV(new HashSet<>());
+        return new AnalysisAssignmentLV(new TreeSet<>());
     }
 
     @Override
     public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment) {
         var aa = (AnalysisAssignmentLV) analysisAssignment.clone();
-        var expressionNodes = programGraphEdge.getEdgeInformation().getEdgeExpression().getObjectsUsed();
+        var objectsUsed = programGraphEdge.getEdgeInformation().getEdgeExpression().getObjectsUsed();
+        var arrayIndexObjectsUsed = programGraphEdge.getEdgeInformation().getEdgeExpression().getArrayIndexObjectsUsed();
+        var recordObjectsUsed = programGraphEdge.getEdgeInformation().getEdgeExpression().getArrayIndexObjectsUsed();
         var defined = programGraphEdge.getEdgeInformation().getDefined();
         var declared = programGraphEdge.getEdgeInformation().getDeclared();
 
@@ -41,17 +46,134 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
             if (defined instanceof VariableIdentifierExpressionNode){
                 aa.getIdentifiers().remove(defined.toString());
             }
+            if (defined instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) defined;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode expressionNode: indexExpression){
+                    if(expressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(expressionNode.toString());
+                    }
+                }
+            }
+            if (defined instanceof RecordIdentifierExpressionNode){
+                var record = (RecordIdentifierExpressionNode) defined;
+                if (declared instanceof RecordIdentifierExpressionNode){
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
+                }
+                if (record.getFst() == null && record.getSnd() == null){
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
+                }
+                if(record.getFst() != null && record.getSnd() == null){
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
+                }
+                else if(record.getSnd() != null && record.getFst() == null){
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
+                }
+                else if(record.getSnd() != null && record.getFst() != null){
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
+                }
+            }
         }
-        for (ExpressionNode expressionNode : expressionNodes) {
+
+        //Expression Objects used
+        for (ExpressionNode expressionNode : objectsUsed) {
             if (expressionNode instanceof VariableIdentifierExpressionNode) {
                 var variable = (VariableIdentifierExpressionNode) expressionNode;
                 aa.getIdentifiers().add(variable.toString());
+            }
+            if (expressionNode instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) expressionNode;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode arrayExpressionNode: indexExpression){
+                    if(arrayExpressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(arrayExpressionNode.toString());
+                    }
+                }
+                int i = 0;
+            }
+            if (expressionNode instanceof RecordIdentifierExpressionNode){
+                var record = (RecordIdentifierExpressionNode) expressionNode;
+
+                if(record.getFst() != null && record.getSnd() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                }
+                else if(record.getSnd() != null && record.getFst() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
+                else if(record.getSnd() != null && record.getFst() != null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
+            }
+        }
+
+        //Array index objects
+        for (ExpressionNode expressionNode : arrayIndexObjectsUsed) {
+            if (expressionNode instanceof VariableIdentifierExpressionNode) {
+                var variable = (VariableIdentifierExpressionNode) expressionNode;
+                aa.getIdentifiers().add(variable.toString());
+            }
+            if (expressionNode instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) expressionNode;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode arrayExpressionNode: indexExpression){
+                    if(arrayExpressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(arrayExpressionNode.toString());
+                    }
+                }
+                int i = 0;
+            }
+            if (expressionNode instanceof RecordIdentifierExpressionNode){
+                var record = (RecordIdentifierExpressionNode) expressionNode;
+                if(record.getFst() != null && record.getSnd() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                }
+                else if(record.getSnd() != null && record.getFst() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
+                else if(record.getSnd() != null && record.getFst() != null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
+            }
+        }
+
+        // Record index objects
+        for (ExpressionNode expressionNode : recordObjectsUsed) {
+            if (expressionNode instanceof VariableIdentifierExpressionNode) {
+                var variable = (VariableIdentifierExpressionNode) expressionNode;
+                aa.getIdentifiers().add(variable.toString());
+            }
+            if (expressionNode instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) expressionNode;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode arrayExpressionNode: indexExpression){
+                    if(arrayExpressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(arrayExpressionNode.toString());
+                    }
+                }
+                int i = 0;
+            }
+            if (expressionNode instanceof RecordIdentifierExpressionNode){
+                var record = (RecordIdentifierExpressionNode) expressionNode;
+                if(record.getFst() != null && record.getSnd() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                }
+                else if(record.getSnd() != null && record.getFst() == null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
+                else if(record.getSnd() != null && record.getFst() != null){
+                    aa.getIdentifiers().add(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().add(record.getIdentifier() + ".snd");
+                }
             }
         }
 
         return aa;
     }
-
 
 
     @Override
