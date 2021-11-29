@@ -23,6 +23,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     ProgramGraph programGraph;
     ProgramGraphNode node;
     private ArrayList<ExpressionNode> expressionElementsList;
+    private ArrayList<ExpressionNode> arrayIdentifierElementListTotal;
     private ArrayList<ExpressionNode> arrayIdentifierElementList;
     private ArrayList<String> expressionOperators;
     private ArrayList<String> arrayIndexExpressionElements;
@@ -35,6 +36,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     public ProgramGraphBuilderVisitor(ProgramGraph programGraph) {
         printVisitor = new PrintVisitor();
         expressionElementsList = new ArrayList<>();
+        arrayIdentifierElementListTotal = new ArrayList<>();
         arrayIdentifierElementList = new ArrayList<>();
         expressionOperators = new ArrayList<>();
         this.programGraph = programGraph;
@@ -256,7 +258,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
                 arrayIdentifierVisitFlag = true;
                 left.accept(this);
                 for (ExpressionNode expressionNode: arrayIdentifierElementList){
-                    expressionElementsList.add(expressionNode);
+                    arrayIdentifierElementListTotal.add(expressionNode);
                 }
                 arrayIdentifierElementList.clear();
             }
@@ -276,7 +278,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
                 arrayIdentifierVisitFlag = true;
                 right.accept(this);
                 for (ExpressionNode expressionNode: arrayIdentifierElementList){
-                    expressionElementsList.add(expressionNode);
+                    arrayIdentifierElementListTotal.add(expressionNode);
                 }
                 arrayIdentifierElementList.clear();
             }
@@ -327,7 +329,7 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
                 arrayIdentifierVisitFlag = true;
                 right.accept(this);
                 for (ExpressionNode expressionNode: arrayIdentifierElementList){
-                    expressionElementsList.add(expressionNode);
+                    arrayIdentifierElementListTotal.add(expressionNode);
                 }
                 arrayIdentifierElementList.clear();
             }
@@ -347,11 +349,18 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             expressionElementsString += expressionNode.accept(printVisitor) + "; ";
         }
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
+
+        ArrayList<ExpressionNode> arrayIdentifierElementListTotalClone = new ArrayList<>();
+        for (ExpressionNode expressionNode: arrayIdentifierElementListTotal){
+            arrayIdentifierElementListTotalClone.add(expressionNode);
+        }
+        edgeInformation.getEdgeExpression().setArrayIndexObjectsUsed(arrayIdentifierElementListTotalClone);
         edgeInformation.setExpressionNode(n.getRight());
         System.out.println(expressionElementsString +"\n");
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);
         expressionElementsList.clear();
+        arrayIdentifierElementListTotal.clear();
         expressionOperators.clear();
         return true;
     }

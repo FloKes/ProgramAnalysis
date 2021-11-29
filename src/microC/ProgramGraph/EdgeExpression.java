@@ -8,15 +8,26 @@ import java.util.ArrayList;
 
 public class EdgeExpression {
     private ArrayList<ExpressionNode> objectsUsed;
+    private ArrayList<ExpressionNode> arrayIndexObjectsUsed;
     private String expression;
 
     public EdgeExpression() {
         objectsUsed = new ArrayList<>();
+        arrayIndexObjectsUsed = new ArrayList<>();
     }
 
     public EdgeExpression(ArrayList<ExpressionNode> objectsUsed, String expression) {
         this.objectsUsed = objectsUsed;
         this.expression = expression;
+    }
+
+    public void setArrayIndexObjectsUsed(ArrayList<ExpressionNode> arrayIndexObjectsUsed)
+    {
+        this.arrayIndexObjectsUsed = arrayIndexObjectsUsed;
+    }
+
+    public ArrayList<ExpressionNode> getArrayIndexObjectsUsed() {
+        return arrayIndexObjectsUsed;
     }
 
     public ArrayList<ExpressionNode> getObjectsUsed() {

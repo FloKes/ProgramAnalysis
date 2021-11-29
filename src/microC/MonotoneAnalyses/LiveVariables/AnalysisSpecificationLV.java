@@ -19,6 +19,7 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
     public AnalysisSpecificationLV(ProgramGraph programGraph) {
         identifiers = new TreeSet<>();
         identifiers.addAll(programGraph.getUsedIdentifiers());
+        identifiers.addAll(programGraph.getUsedIndexIdentifiers());
     }
 
     @Override
@@ -34,7 +35,8 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
     @Override
     public AnalysisAssignment function(ProgramGraphEdge programGraphEdge, AnalysisAssignment analysisAssignment) {
         var aa = (AnalysisAssignmentLV) analysisAssignment.clone();
-        var expressionNodes = programGraphEdge.getEdgeInformation().getEdgeExpression().getObjectsUsed();
+        var objectsUsed = programGraphEdge.getEdgeInformation().getEdgeExpression().getObjectsUsed();
+        var arrayIndexObjectsUsed = programGraphEdge.getEdgeInformation().getEdgeExpression().getArrayIndexObjectsUsed();
         var defined = programGraphEdge.getEdgeInformation().getDefined();
         var declared = programGraphEdge.getEdgeInformation().getDeclared();
 
@@ -53,7 +55,24 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
                 int i = 0;
             }
         }
-        for (ExpressionNode expressionNode : expressionNodes) {
+        for (ExpressionNode expressionNode : objectsUsed) {
+            if (expressionNode instanceof VariableIdentifierExpressionNode) {
+                var variable = (VariableIdentifierExpressionNode) expressionNode;
+                aa.getIdentifiers().add(variable.toString());
+            }
+            if (expressionNode instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) expressionNode;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode arrayExpressionNode: indexExpression){
+                    if(arrayExpressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(arrayExpressionNode.toString());
+                    }
+                }
+                int i = 0;
+            }
+        }
+
+        for (ExpressionNode expressionNode : arrayIndexObjectsUsed) {
             if (expressionNode instanceof VariableIdentifierExpressionNode) {
                 var variable = (VariableIdentifierExpressionNode) expressionNode;
                 aa.getIdentifiers().add(variable.toString());

@@ -112,6 +112,20 @@ public class ProgramGraph {
         return identifiers;
     }
 
+    public HashSet<String> getUsedIndexIdentifiers()
+    {
+        HashSet<String> indexIdentifiers = new HashSet<>();
+        for (ProgramGraphEdge edge: this.getProgramGraphEdges()){
+            var expression = edge.getEdgeInformation().getEdgeExpression().getArrayIndexObjectsUsed();
+            for (ExpressionNode expressionNode: expression){
+                if (expressionNode instanceof IdentifierExpressionNode){
+                    indexIdentifiers.add(((IdentifierExpressionNode) expressionNode).toString());
+                }
+            }
+        }
+        return indexIdentifiers;
+    }
+
     public void sort(){
         var endNode = getEndNode();
         var endNodeIndex = programGraphNodes.indexOf(endNode);

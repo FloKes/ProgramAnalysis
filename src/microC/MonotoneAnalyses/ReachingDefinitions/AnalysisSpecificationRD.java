@@ -16,6 +16,7 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
 
     public AnalysisSpecificationRD(ProgramGraph programGraph) {
         identifiers = programGraph.getUsedIdentifiers();
+        identifiers.addAll(programGraph.getUsedIndexIdentifiers());
     }
 
     @Override

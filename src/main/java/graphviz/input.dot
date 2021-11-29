@@ -1,5 +1,5 @@
 digraph ProgramGraph{
-"qs" -> "q1" [label="  b := 0   "] 
-"q1" -> "q2" [label="  A[microC.Expressions.ValueExpressionNode@63d4e2ba] := C[microC.Expressions.ValueExpressionNode@7bb11784] + h + 1 + i + G[microC.Expressions.ValueExpressionNode@7907ec20]   "] 
+"qs" -> "q1" [label="  A[microC.Expressions.ValueExpressionNode@591f989e] := 2   "] 
+"q1" -> "q2" [label="  b := 5   "] 
 "q2" -> "qe" [label="  b := z   "] 
 }
