@@ -1,0 +1,10 @@
+{
+   {int fst; int snd} R;
+   if (x >= 0 ) {
+        R.fst := 5;
+        R.snd := 5;
+        R := (1,2);
+        x := 5;
+        write x;
+   }
+}

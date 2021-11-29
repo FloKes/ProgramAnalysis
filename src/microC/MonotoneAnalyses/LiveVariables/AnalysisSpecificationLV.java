@@ -1,9 +1,8 @@
 package microC.MonotoneAnalyses.LiveVariables;
 
+import microC.Expressions.ArrayIdentifierExpressionNode;
 import microC.Expressions.ExpressionNode;
-import microC.Expressions.NumberExpressionNode;
 import microC.Expressions.VariableIdentifierExpressionNode;
-import microC.MonotoneAnalyses.DangerousVariables.AnalysisAssignmentDV;
 import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
@@ -41,11 +40,25 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
             if (defined instanceof VariableIdentifierExpressionNode){
                 aa.getIdentifiers().remove(defined.toString());
             }
+            if (defined instanceof ArrayIdentifierExpressionNode){
+                var array = (ArrayIdentifierExpressionNode) defined;
+                var indexExpression = array.getIndexExpressionElements();
+                for (ExpressionNode expressionNode: indexExpression){
+                    if(expressionNode instanceof VariableIdentifierExpressionNode){
+                        aa.getIdentifiers().add(expressionNode.toString());
+                    }
+                }
+                int i = 0;
+            }
         }
         for (ExpressionNode expressionNode : expressionNodes) {
             if (expressionNode instanceof VariableIdentifierExpressionNode) {
                 var variable = (VariableIdentifierExpressionNode) expressionNode;
                 aa.getIdentifiers().add(variable.toString());
+            }
+            if (expressionNode instanceof ArrayIdentifierExpressionNode) {
+                var array = (ArrayIdentifierExpressionNode) expressionNode;
+                aa.getIdentifiers().add(array.toString());
             }
         }
 

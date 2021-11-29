@@ -5,6 +5,7 @@ package microC.ProgramGraph;
 // And therefore won't be able to create outgoing edges and nodes as it can't check if the new number of the node
 // is already in the program graph
 
+import com.kitfox.svg.A;
 import microC.ASTBaseVisitor;
 import microC.Declaration.ArrayDeclaration;
 import microC.Declaration.Declaration;
@@ -22,13 +23,19 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
     ProgramGraph programGraph;
     ProgramGraphNode node;
     private ArrayList<ExpressionNode> expressionElementsList;
+    private ArrayList<ExpressionNode> arrayIdentifierElementList;
     private ArrayList<String> expressionOperators;
+    private ArrayList<String> arrayIndexExpressionElements;
     boolean identifierVisitFlag = false;
+    boolean arrayIndexVisitFlag = false;
+    boolean nestedArrayIndexFlag = false;
+    boolean arrayIdentifierVisitFlag = false;
     boolean numberVisitFlag = false;
 
     public ProgramGraphBuilderVisitor(ProgramGraph programGraph) {
         printVisitor = new PrintVisitor();
         expressionElementsList = new ArrayList<>();
+        arrayIdentifierElementList = new ArrayList<>();
         expressionOperators = new ArrayList<>();
         this.programGraph = programGraph;
     }
@@ -116,10 +123,45 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(VariableIdentifierExpressionNode n) {
-        if(identifierVisitFlag){
+        if(identifierVisitFlag && !arrayIndexVisitFlag){
             expressionElementsList.add(n);
+            identifierVisitFlag = false;
         }
-        identifierVisitFlag = false;
+        else if (arrayIndexVisitFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean visit(ArrayIdentifierExpressionNode n) {
+        if(identifierVisitFlag  && !arrayIndexVisitFlag){
+            expressionElementsList.add(n);
+            identifierVisitFlag = false;
+        }
+        else if (arrayIndexVisitFlag && !nestedArrayIndexFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
+        else if (arrayIndexVisitFlag && nestedArrayIndexFlag)
+        {
+            var indexExpression = n.getIndexExpression();
+            arrayIndexVisitFlag = true;
+            nestedArrayIndexFlag = true;
+            indexExpression.accept(this);
+            arrayIndexVisitFlag = false;
+            arrayIdentifierVisitFlag = false;
+        }
+        else if(arrayIdentifierVisitFlag){
+            var indexExpression = n.getIndexExpression();
+            arrayIndexVisitFlag = true;
+            nestedArrayIndexFlag = true;
+            indexExpression.accept(this);
+            nestedArrayIndexFlag = false;
+            arrayIndexVisitFlag = false;
+            arrayIdentifierVisitFlag = false;
+        }
         return true;
     }
 
@@ -135,16 +177,15 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
 
     @Override
     public Boolean visit(NumberExpressionNode n) {
-        if(numberVisitFlag){
+        if(numberVisitFlag  && !arrayIndexVisitFlag){
             expressionElementsList.add(n);
+            numberVisitFlag = false;
         }
-        numberVisitFlag = false;
+        else if (arrayIndexVisitFlag)
+        {
+            arrayIdentifierElementList.add(n);
+        }
         return true;
-    }
-
-    @Override
-    public Boolean visit(ArrayIdentifierExpressionNode n) {
-        return null;
     }
 
 
@@ -253,7 +294,15 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
         String s = n.accept(printVisitor);
 
         EdgeInformation edgeInformation = new EdgeInformation();
-        edgeInformation.setDefined(n.getLeft());
+        var left = n.getLeft();
+        if (left instanceof ArrayIdentifierExpressionNode){
+            arrayIdentifierVisitFlag = true;
+            left.accept(this);
+            for (ExpressionNode expressionNode: arrayIdentifierElementList){
+                ((ArrayIdentifierExpressionNode) left).addindexExpressionElements(expressionNode);
+            }
+        }
+        edgeInformation.setDefined(left);
 
         var right = n.getRight();
         var rightText = right.accept(printVisitor);

@@ -200,14 +200,16 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
 
     @Override
     public AbstractNode visitArrayIndexId(MicroCParser.ArrayIndexIdContext ctx) {
-        if (ctx.INTEGER() != null) {
-            return new ArrayIdentifierExpressionNode(
-                    ctx.IDENTIFIER().get(0).getText(),
-                    Integer.parseInt(ctx.INTEGER().getText()));
-        }
-        return new ArrayIdentifierExpressionNode(
-                ctx.IDENTIFIER().get(0).getText(),
-                ctx.IDENTIFIER().get(1).getText());
+
+//        if (ctx.INTEGER() != null) {
+//            return new ArrayIdentifierExpressionNode(
+//                    ctx.IDENTIFIER().get(0).getText(),
+//                    Integer.parseInt(ctx.INTEGER().getText()));
+//        }
+//        return new ArrayIdentifierExpressionNode(
+//                ctx.IDENTIFIER().get(0).getText(),
+//                ctx.IDENTIFIER().get(1).getText());
+        return new ArrayIdentifierExpressionNode(ctx.IDENTIFIER().getText(), (ExpressionNode) visit(ctx.valueExpr()));
 
     }
 

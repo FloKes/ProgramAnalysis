@@ -68,7 +68,7 @@ valueExpr: identifierExpr #valueIdentifier
 recFst: (IDENTIFIER)FST ;
 recSnd: (IDENTIFIER)SND ;
 varIdentifier: IDENTIFIER;
-arrayIndexId: IDENTIFIER LBRACKET (INTEGER|IDENTIFIER) RBRACKET;
+arrayIndexId: IDENTIFIER LBRACKET (valueExpr) RBRACKET;
 number: INTEGER;
 
 

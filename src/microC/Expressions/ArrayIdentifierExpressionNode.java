@@ -2,18 +2,24 @@ package microC.Expressions;
 
 import microC.ASTBaseVisitor;
 
+import java.awt.desktop.AboutEvent;
+import java.util.HashSet;
+
 public class ArrayIdentifierExpressionNode extends IdentifierExpressionNode {
     private Integer index;
-    private String indexIdentifier;
+    private ExpressionNode indexExpression;
+    private HashSet<ExpressionNode> indexExpressionElements;
 
     public ArrayIdentifierExpressionNode(String identifier, int index) {
         super(identifier);
         this.index = index;
+        indexExpressionElements = new HashSet<>();
     }
 
-    public ArrayIdentifierExpressionNode(String identifier, String indexIdentifier) {
+    public ArrayIdentifierExpressionNode(String identifier, ExpressionNode indexIdentifier) {
         super(identifier);
-        this.indexIdentifier = indexIdentifier;
+        this.indexExpression = indexIdentifier;
+        indexExpressionElements = new HashSet<>();
     }
 
     public ArrayIdentifierExpressionNode(String identifier){
@@ -24,8 +30,16 @@ public class ArrayIdentifierExpressionNode extends IdentifierExpressionNode {
         return index;
     }
 
-    public String getIndexIdentifier() {
-        return indexIdentifier;
+    public ExpressionNode getIndexExpression() {
+        return indexExpression;
+    }
+
+    public void addindexExpressionElements(ExpressionNode s){
+        indexExpressionElements.add(s);
+    }
+
+    public HashSet<ExpressionNode> getIndexExpressionElements() {
+        return indexExpressionElements;
     }
 
     @Override

@@ -1,16 +1,13 @@
 // Generated from C:/Users/flori/Desktop/Autumn 21/Program Analysis/Parser/Program-Analysis-DTU-Fall-21/src/antlr\MicroC.g4 by ANTLR 4.9.1
 package antlr;
-
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class MicroCParser extends Parser {
@@ -980,13 +977,12 @@ public class MicroCParser extends Parser {
 	}
 
 	public static class ArrayIndexIdContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(MicroCParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(MicroCParser.IDENTIFIER, i);
-		}
+		public TerminalNode IDENTIFIER() { return getToken(MicroCParser.IDENTIFIER, 0); }
 		public TerminalNode LBRACKET() { return getToken(MicroCParser.LBRACKET, 0); }
 		public TerminalNode RBRACKET() { return getToken(MicroCParser.RBRACKET, 0); }
-		public TerminalNode INTEGER() { return getToken(MicroCParser.INTEGER, 0); }
+		public ValueExprContext valueExpr() {
+			return getRuleContext(ValueExprContext.class,0);
+		}
 		public ArrayIndexIdContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1001,7 +997,6 @@ public class MicroCParser extends Parser {
 	public final ArrayIndexIdContext arrayIndexId() throws RecognitionException {
 		ArrayIndexIdContext _localctx = new ArrayIndexIdContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_arrayIndexId);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -1009,15 +1004,9 @@ public class MicroCParser extends Parser {
 			match(IDENTIFIER);
 			setState(138);
 			match(LBRACKET);
+			{
 			setState(139);
-			_la = _input.LA(1);
-			if ( !(_la==INTEGER || _la==IDENTIFIER) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
+			valueExpr(0);
 			}
 			setState(140);
 			match(RBRACKET);
@@ -1673,22 +1662,22 @@ public class MicroCParser extends Parser {
 		"\7\24\u00aa\n\24\f\24\16\24\u00ad\13\24\3\25\3\25\3\25\3\25\5\25\u00b3"+
 		"\n\25\3\25\5\25\u00b6\n\25\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\27\3\27"+
 		"\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32\3\32\2\4\30$\33"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\6\3\2$%\3\2\n"+
-		"\16\3\2\17\24\3\2\26\27\2\u00c7\2\64\3\2\2\2\4:\3\2\2\2\6D\3\2\2\2\bH"+
-		"\3\2\2\2\nP\3\2\2\2\fS\3\2\2\2\16X\3\2\2\2\20a\3\2\2\2\22g\3\2\2\2\24"+
-		"k\3\2\2\2\26s\3\2\2\2\30x\3\2\2\2\32\u0083\3\2\2\2\34\u0086\3\2\2\2\36"+
-		"\u0089\3\2\2\2 \u008b\3\2\2\2\"\u0090\3\2\2\2$\u009b\3\2\2\2&\u00ab\3"+
-		"\2\2\2(\u00ae\3\2\2\2*\u00b7\3\2\2\2,\u00be\3\2\2\2.\u00c5\3\2\2\2\60"+
-		"\u00c7\3\2\2\2\62\u00c9\3\2\2\2\64\65\7\5\2\2\65\66\5&\24\2\66\67\5\6"+
-		"\4\2\678\7\6\2\289\7\2\2\39\3\3\2\2\2:;\7\5\2\2;<\5\6\4\2<=\7\6\2\2=\5"+
-		"\3\2\2\2>E\5\b\5\2?E\5\f\7\2@E\5\16\b\2AE\5\20\t\2BE\5\22\n\2CE\5\24\13"+
-		"\2D>\3\2\2\2D?\3\2\2\2D@\3\2\2\2DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2EF\3\2\2"+
-		"\2FD\3\2\2\2FG\3\2\2\2G\7\3\2\2\2HI\7 \2\2IJ\7\3\2\2JK\5$\23\2KL\7\4\2"+
-		"\2LN\5\4\3\2MO\5\n\6\2NM\3\2\2\2NO\3\2\2\2O\t\3\2\2\2PQ\7\31\2\2QR\5\4"+
-		"\3\2R\13\3\2\2\2ST\5\26\f\2TU\7\35\2\2UV\5\30\r\2VW\7\7\2\2W\r\3\2\2\2"+
-		"XY\7%\2\2YZ\7\35\2\2Z[\7\3\2\2[\\\5\30\r\2\\]\7\30\2\2]^\5\30\r\2^_\7"+
-		"\4\2\2_`\7\7\2\2`\17\3\2\2\2ab\7!\2\2bc\7\3\2\2cd\5$\23\2de\7\4\2\2ef"+
-		"\5\4\3\2f\21\3\2\2\2gh\7\36\2\2hi\5\26\f\2ij\7\7\2\2j\23\3\2\2\2kl\7\37"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\5\3\2\n\16\3"+
+		"\2\17\24\3\2\26\27\2\u00c7\2\64\3\2\2\2\4:\3\2\2\2\6D\3\2\2\2\bH\3\2\2"+
+		"\2\nP\3\2\2\2\fS\3\2\2\2\16X\3\2\2\2\20a\3\2\2\2\22g\3\2\2\2\24k\3\2\2"+
+		"\2\26s\3\2\2\2\30x\3\2\2\2\32\u0083\3\2\2\2\34\u0086\3\2\2\2\36\u0089"+
+		"\3\2\2\2 \u008b\3\2\2\2\"\u0090\3\2\2\2$\u009b\3\2\2\2&\u00ab\3\2\2\2"+
+		"(\u00ae\3\2\2\2*\u00b7\3\2\2\2,\u00be\3\2\2\2.\u00c5\3\2\2\2\60\u00c7"+
+		"\3\2\2\2\62\u00c9\3\2\2\2\64\65\7\5\2\2\65\66\5&\24\2\66\67\5\6\4\2\67"+
+		"8\7\6\2\289\7\2\2\39\3\3\2\2\2:;\7\5\2\2;<\5\6\4\2<=\7\6\2\2=\5\3\2\2"+
+		"\2>E\5\b\5\2?E\5\f\7\2@E\5\16\b\2AE\5\20\t\2BE\5\22\n\2CE\5\24\13\2D>"+
+		"\3\2\2\2D?\3\2\2\2D@\3\2\2\2DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2EF\3\2\2\2F"+
+		"D\3\2\2\2FG\3\2\2\2G\7\3\2\2\2HI\7 \2\2IJ\7\3\2\2JK\5$\23\2KL\7\4\2\2"+
+		"LN\5\4\3\2MO\5\n\6\2NM\3\2\2\2NO\3\2\2\2O\t\3\2\2\2PQ\7\31\2\2QR\5\4\3"+
+		"\2R\13\3\2\2\2ST\5\26\f\2TU\7\35\2\2UV\5\30\r\2VW\7\7\2\2W\r\3\2\2\2X"+
+		"Y\7%\2\2YZ\7\35\2\2Z[\7\3\2\2[\\\5\30\r\2\\]\7\30\2\2]^\5\30\r\2^_\7\4"+
+		"\2\2_`\7\7\2\2`\17\3\2\2\2ab\7!\2\2bc\7\3\2\2cd\5$\23\2de\7\4\2\2ef\5"+
+		"\4\3\2f\21\3\2\2\2gh\7\36\2\2hi\5\26\f\2ij\7\7\2\2j\23\3\2\2\2kl\7\37"+
 		"\2\2lm\5\30\r\2mn\7\7\2\2n\25\3\2\2\2ot\5 \21\2pt\5\36\20\2qt\5\32\16"+
 		"\2rt\5\34\17\2so\3\2\2\2sp\3\2\2\2sq\3\2\2\2sr\3\2\2\2t\27\3\2\2\2uv\b"+
 		"\r\1\2vy\5\26\f\2wy\5\"\22\2xu\3\2\2\2xw\3\2\2\2y\u0080\3\2\2\2z{\f\3"+
@@ -1696,7 +1685,7 @@ public class MicroCParser extends Parser {
 		"~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\31\3\2\2\2\u0082\u0080\3\2\2\2\u0083"+
 		"\u0084\7%\2\2\u0084\u0085\7\32\2\2\u0085\33\3\2\2\2\u0086\u0087\7%\2\2"+
 		"\u0087\u0088\7\33\2\2\u0088\35\3\2\2\2\u0089\u008a\7%\2\2\u008a\37\3\2"+
-		"\2\2\u008b\u008c\7%\2\2\u008c\u008d\7\b\2\2\u008d\u008e\t\2\2\2\u008e"+
+		"\2\2\u008b\u008c\7%\2\2\u008c\u008d\7\b\2\2\u008d\u008e\5\30\r\2\u008e"+
 		"\u008f\7\t\2\2\u008f!\3\2\2\2\u0090\u0091\7$\2\2\u0091#\3\2\2\2\u0092"+
 		"\u0093\b\23\1\2\u0093\u0094\5\30\r\2\u0094\u0095\5\60\31\2\u0095\u0096"+
 		"\5\30\r\2\u0096\u009c\3\2\2\2\u0097\u009c\7\"\2\2\u0098\u009c\7#\2\2\u0099"+
@@ -1714,8 +1703,8 @@ public class MicroCParser extends Parser {
 		"\u00b8\u00b9\7\b\2\2\u00b9\u00ba\7$\2\2\u00ba\u00bb\7\t\2\2\u00bb\u00bc"+
 		"\7%\2\2\u00bc\u00bd\7\7\2\2\u00bd+\3\2\2\2\u00be\u00bf\7\5\2\2\u00bf\u00c0"+
 		"\5(\25\2\u00c0\u00c1\5(\25\2\u00c1\u00c2\7\6\2\2\u00c2\u00c3\7%\2\2\u00c3"+
-		"\u00c4\7\7\2\2\u00c4-\3\2\2\2\u00c5\u00c6\t\3\2\2\u00c6/\3\2\2\2\u00c7"+
-		"\u00c8\t\4\2\2\u00c8\61\3\2\2\2\u00c9\u00ca\t\5\2\2\u00ca\63\3\2\2\2\16"+
+		"\u00c4\7\7\2\2\u00c4-\3\2\2\2\u00c5\u00c6\t\2\2\2\u00c6/\3\2\2\2\u00c7"+
+		"\u00c8\t\3\2\2\u00c8\61\3\2\2\2\u00c9\u00ca\t\4\2\2\u00ca\63\3\2\2\2\16"+
 		"DFNsx\u0080\u009b\u00a3\u00a9\u00ab\u00b2\u00b5";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
