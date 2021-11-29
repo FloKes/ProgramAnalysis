@@ -1,4 +1,6 @@
 {
+   {int fst; int snd;} R;
    R := (a + B[b + C[d + e]], f + g);
    b := 5;
+   z := R.fst
 }

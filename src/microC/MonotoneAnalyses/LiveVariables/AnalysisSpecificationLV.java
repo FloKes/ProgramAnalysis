@@ -62,7 +62,8 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
                     aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
                 }
                 if (record.getFst() == null && record.getSnd() == null){
-
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
+                    aa.getIdentifiers().remove(record.getIdentifier() + ".snd");
                 }
                 if(record.getFst() != null && record.getSnd() == null){
                     aa.getIdentifiers().remove(record.getIdentifier() + ".fst");
