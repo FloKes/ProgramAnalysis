@@ -1,0 +1,7 @@
+{
+   {int fst; int snd;} R;
+   z := R.fst;
+   R := (B[b + C[d + e]], Y.snd);
+   b := 5;
+   z := R.fst;
+}

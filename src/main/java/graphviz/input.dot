@@ -1,6 +1,10 @@
 digraph ProgramGraph{
 "qs" -> "q1" [label="  {int fst := 0; int snd := 0}R   "] 
-"q1" -> "q2" [label="  R := (a + B[microC.Expressions.ValueExpressionNode@6debcae2], f + g)   "] 
-"q2" -> "q3" [label="  b := 5   "] 
-"q3" -> "qe" [label="  z := R.fst   "] 
+"q1" -> "q2" [label="  x>=0   "] 
+"q1" -> "qe" [label="  !(x>=0)   "] 
+"q2" -> "q3" [label="  R.fst := 5   "] 
+"q3" -> "q4" [label="  R.snd := 5   "] 
+"q4" -> "q5" [label="  R := (1, 2)   "] 
+"q5" -> "q6" [label="  x := 5   "] 
+"q6" -> "qe" [label="  write x   "] 
 }
