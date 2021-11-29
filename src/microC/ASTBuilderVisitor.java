@@ -35,9 +35,12 @@ public class ASTBuilderVisitor extends MicroCBaseVisitor<AbstractNode> {
     public AbstractNode visitDecl(MicroCParser.DeclContext ctx) {
         var decls = new Declarations();
 
-        for (var a : ctx.children) {
-            decls.addDecl((Declaration) visit(a));
+        if (ctx.children != null){
+            for (var a : ctx.children) {
+                decls.addDecl((Declaration) visit(a));
+            }
         }
+
         return decls;
     }
 

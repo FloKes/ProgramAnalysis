@@ -34,6 +34,7 @@ public class ProgramGraphNode {
     public ProgramGraphNode(){
         //initial node
         this.number = 0;
+        this.ingoingEdges = new LinkedList<ProgramGraphEdge>();
         this.outgoingEdges = new LinkedList<ProgramGraphEdge>();
         this.constraintRDS = new ArrayList<>();
         this.constraintLVS = new ArrayList<>();
@@ -125,7 +126,13 @@ public class ProgramGraphNode {
         return this.outgoingEdges.isEmpty();
     }
 
-    public boolean isOriginNode() {return this.ingoingEdges == null || this.ingoingEdges.isEmpty();}
+    public boolean isOriginNode(){
+        if (this.getNumber() == 0){
+            return true;
+        }
+        return false;
+    }
+//    public boolean isOriginNode() {return this.ingoingEdges == null || this.ingoingEdges.isEmpty();}
 
     public int getNumber(){
         return this.number;

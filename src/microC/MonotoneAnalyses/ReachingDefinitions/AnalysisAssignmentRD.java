@@ -70,9 +70,11 @@ public class AnalysisAssignmentRD implements AnalysisAssignment {
         String s = "{";
         for (String identifer: mappings.keySet()) {
             for (EdgeSetRD edgeSet : mappings.get(identifer)) {
-                s += "(" + identifer + ", " + edgeSet.getOriginNode() + ", " + edgeSet.getEndNode() + ")";
+                s += "(" + identifer + ", " + edgeSet.getOriginNode() + ", " + edgeSet.getEndNode() + "), ";
             }
-            s += ", ";
+        }
+        if(!mappings.isEmpty()){
+            s = s.substring(0, s.length()-2);
         }
         s += "}";
         return s;

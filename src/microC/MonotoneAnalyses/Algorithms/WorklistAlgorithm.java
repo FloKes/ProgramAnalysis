@@ -90,7 +90,7 @@ public class WorklistAlgorithm {
         else { // For backward analyses
             while (!worklist.isEmpty()) {
                 var node = worklist.extract();
-                if (node.isOriginNode()) {
+                if (node.isOriginNode() && node.getInGoing().isEmpty()) {
                     numberOfSteps++;
                     continue;
                 }
