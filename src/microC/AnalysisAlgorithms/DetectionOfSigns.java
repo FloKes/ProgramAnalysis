@@ -10,6 +10,7 @@ import microC.ProgramGraph.EdgeInformation;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
+import microC.Statement.WriteStatement;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -232,6 +233,19 @@ public class DetectionOfSigns  implements AnalysisSpecification {
         return set;
     }
 
+    private HashSet<Character> getVDMem(VariableDeclaration vd){
+        var newSet = new HashSet<Character>();
+        var val = vd.getInitVal();
+        if (val < 0) {
+            newSet.add('-');
+        } else if (val == 0) {
+            newSet.add('0');
+        } else {
+            newSet.add('+');
+        }
+        return newSet;
+    }
+
     private HashMap<String, HashSet<Character>> cloneMem(HashMap<String, HashSet<Character>> mem){
         var newMem = new HashMap<String, HashSet<Character>>();
         for (var key: mem.keySet()) {
@@ -250,19 +264,21 @@ public class DetectionOfSigns  implements AnalysisSpecification {
             //Declaration
             var declNode = info.getDeclarationNode();
             if (declNode instanceof VariableDeclaration) {
-                var val = ((VariableDeclaration) declNode).getInitVal();
-                if (val < 0) {
-                    newSet.add('-');
-                } else if (val == 0) {
-                    newSet.add('0');
-                } else {
-                    newSet.add('+');
-                }
+                var vd = ((VariableDeclaration) declNode);
+                newSet.addAll(this.getVDMem(vd));
                 newMem.put(((VariableDeclaration) declNode).getIdentifier(), newSet);
 
             } else if (declNode instanceof RecordDeclaration) {
+                var val = ((RecordDeclaration) declNode);
+                var mem1 = this.getVDMem(val.getFirst());
+                var mem2 = this.getVDMem(val.getSecond());
+                newSet.addAll(mem1);
+                newSet.addAll(mem2);
+                newMem.put(((RecordDeclaration) declNode).getIdentifier(), newSet);
             } else if (declNode instanceof ArrayDeclaration) {
+
             }
+
 
         } else if (info.getExpressionNode() != null) {
             if (info.getDefined() == null) {

@@ -483,7 +483,6 @@ public class ProgramGraphBuilderVisitor implements ASTBaseVisitor<Boolean> {
             expressionElementsString += expressionNode.accept(printVisitor) + "; ";
         }
         edgeInformation.setEdgeExpression(new EdgeExpression(expressionElementsListClone, rightText));
-        edgeInformation.setExpressionNode(n.getExpressionNode());
         System.out.println(expressionElementsString +"\n");
         node = node.addEdgeOut(new ProgramGraphEdge(s, edgeInformation));
         programGraph.addNode(node);

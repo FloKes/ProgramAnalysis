@@ -4,6 +4,7 @@ import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
+import microC.AnalysisAlgorithms.DetectionOfSigns;
 import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
 import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
 import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
@@ -64,10 +65,7 @@ public class Launch {
             yMem.add('0');
             //x = {-,0,+}, y = {0}
             initMem.put("x",xMem);
-            initMem.put("y", yMem);
-//
-            AnalysisAssignmentDoS analysisAssignmentDoS = new AnalysisAssignmentDoS(initMem);
-
+            initMem.put("R", yMem);
 
 //            dsc.run(programGraph, initMem);
 
@@ -93,15 +91,15 @@ public class Launch {
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
 
 //            // DETECTION OF SIGNS
-//            System.out.println("\n\n--------------\n Detection of signs \n---------------");
-//            DetectionOfSigns dosSpec = new DetectionOfSigns(initMem);
-//
-//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
-//            worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
+            System.out.println("\n\n--------------\n Detection of signs \n---------------");
+            DetectionOfSigns dosSpec = new DetectionOfSigns(initMem);
+
+            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
+            worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
             
 
             // REACHING DEFINITIONS
-            System.out.println("\n\n--------------\n Reaching definition \n---------------");
+            /*System.out.println("\n\n--------------\n Reaching definition \n---------------");
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
 
 //            System.out.println("--------------\n CHAOTIC ALG for Reaching definitions \n---------------\n");
@@ -109,7 +107,7 @@ public class Launch {
 
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
-
+*/
 //            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
 //            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
 //
