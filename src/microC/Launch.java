@@ -103,8 +103,8 @@ public class Launch {
             System.out.println("\n\n--------------\n Interval Analysis \n---------------");
             IntervalAnalysisSpecification intSpec = new IntervalAnalysisSpecification(initIntMem, intervalSet);
 
-            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Interval Analysis\n---------------\n");
-            worklistAlgorithm.execute(programGraph, intSpec, new ChaoticWorklist());
+            System.out.println("\n\n--------------\n rP GENERALISED WORKLIST ALG for Interval Analysis\n---------------\n");
+            worklistAlgorithm.execute(programGraph, intSpec, new rPWorklist());
 
 
 //            // DETECTION OF SIGNS
@@ -116,7 +116,7 @@ public class Launch {
             
 
             // REACHING DEFINITIONS
-            /*System.out.println("\n\n--------------\n Reaching definition \n---------------");
+            System.out.println("\n\n--------------\n Reaching definition \n---------------");
             AnalysisSpecificationRD analysisSpecificationRD = new AnalysisSpecificationRD(programGraph);
 
             System.out.println("--------------\n CHAOTIC ALG for Reaching definitions \n---------------\n");
@@ -124,7 +124,7 @@ public class Launch {
 
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
-*/
+
 //            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
 //            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
 //

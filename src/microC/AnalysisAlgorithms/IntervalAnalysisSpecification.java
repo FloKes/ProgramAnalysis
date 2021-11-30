@@ -47,8 +47,12 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         var big = ((IntervalAnalysisAssignment) analysisAssignment2).getMemory();
 
         for(var key : small.keySet()){
+            try{
             if (big == null || big.isEmpty() || !(small.get(key).isIn(big.get(key)))){
                 return false;
+            }}
+            catch (NullPointerException e){
+                int a = 0;
             }
         }
         return true;
@@ -113,7 +117,14 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
 
     @Override
     public void printSolution(ProgramGraph programGraph) {
-
+        for (var n : programGraph.getProgramGraphNodes()) {
+            System.out.print(n.toString() +" = ");
+            var mem = n.getAnalysisAssignmentInt().getMemory();
+            for (var s : mem.keySet()) {
+                System.out.print(s + " -> [" + mem.get(s).getMin() + "," + mem.get(s).getMax() + "] ");
+            }
+            System.out.print("\n");
+        }
     }
 
     @Override
@@ -210,25 +221,35 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         if(i1.isBottom() || i2.isBottom()){
             return new Interval(true);
         }
+
         String min, max;
-        //calc
-        if(i1.isMinInf() || i2.isMinInf()){
-            if(i1.isMaxInf() || i2.isMaxInf()){
-                //both inf
-                return new Interval("-inf", "inf");
+
+        if(!i1.isMinInf()){
+            //k1min not -inf
+            if(!i2.isMaxInf()){
+                min = K.sup(Integer.parseInt(i1.getMin()) - Integer.parseInt(i2.getMax()));
             }
-            //min inf, max possibly value
-            var maxResult = Integer.parseInt(i1.getMax()) - Integer.parseInt(i2.getMax());
-            return new Interval("-inf", K.inf(maxResult));
+            else{
+                // min = k1min - inf
+                min = "-inf";
+            }
+        }else{
+            // min = -inf
+            min = "-inf";
         }
-        //min possibly value
-        var minResult = Integer.parseInt(i1.getMin()) - Integer.parseInt(i2.getMin());
-        min = K.sup(minResult);
-        if(i1.isMaxInf() || i2.isMaxInf()) {
-            return new Interval(min, "inf");
+        if(!i1.isMaxInf()){
+            if(!i2.isMinInf()){
+                // max = k1max - k2min
+                max = K.inf(Integer.parseInt(i1.getMax()) - Integer.parseInt(i2.getMin()));
+            }else{
+                // max = k1max - -inf
+                max = "inf";
+            }
+        }else{
+            // max = inf
+            max = "inf";
         }
-        var maxResult = Integer.parseInt(i1.getMax()) - Integer.parseInt(i2.getMax());
-        max = K.inf(maxResult);
+
         return new Interval(min, max);
     }
     private Interval mult (Interval i1, Interval i2){
@@ -251,6 +272,9 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         }
         //min possibly value
         min = multMin(i1.getMin(), i2.getMin(),i1.getMax(), i2.getMax());
+        if(min.equals("inf")){
+            int a = 0;
+        }
         if(!min.equals("-inf")){
             min = K.sup(Integer.parseInt(min));
         }
@@ -272,8 +296,9 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         var list = Arrays.asList(r1,r2,r3,r4);
         String min = null;
         for(var r : list){
-            if(r.equals("inf")){
-                return "inf";
+            if(r.equals("inf"))continue;
+            if(r.equals("-inf")){
+                return "-inf";
             }
             var rInt = Integer.parseInt(r);
             if(min == null || Integer.parseInt(min) > rInt){
@@ -292,6 +317,7 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         var list = Arrays.asList(r1,r2,r3,r4);
         String max = null;
         for(var r : list){
+            if(r.equals("-inf"))continue;
             if(r.equals("inf")){
                 return "inf";
             }
@@ -441,17 +467,24 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
         inList.add(mem);
         for (var i: inList){
             if(bNode.getOperator().equals(">")){
-                if(isNegated && gt(i, rightInt).equals("ff")){
+                var res = gt(i, rightInt);
+                if(isNegated && res.equals("ff")){
                     trueList.add(i);
-                }else if(gt(i, rightInt).equals("tt")){
+                }else if(!isNegated && res.equals("tt")){
+                    trueList.add(i);
+
+                //I have no clue how to deal with ttff
+                // Sometimes it should be applied, other times it shouldn't...
+                }else if(isNegated && res.equals("ttff")){
                     trueList.add(i);
                 }
 
             }
             else if(bNode.getOperator().equals("<")){
-                if(isNegated && lt(i, rightInt).equals("ff")){
+                var res = lt(i, rightInt);
+                if(isNegated && res.equals("ff")){
                     trueList.add(i);
-                }else if(lt(i, rightInt).equals("tt")){
+                }else if(res.equals("tt")){
                     trueList.add(i);
                 }
             }
