@@ -40,6 +40,11 @@ public class Interval {
             return true;
         }
 
+        //
+        if(interval.isBottom){
+            return false;
+        }
+
         // Check if this interval has inf bounds
         if(this.isMinInf){
             if(!interval.isMinInf){
@@ -130,5 +135,11 @@ public class Interval {
         );
     }
 
+    public boolean isMinInf() {
+        return isMinInf;
+    }
 
+    public boolean isMaxInf() {
+        return isMaxInf;
+    }
 }

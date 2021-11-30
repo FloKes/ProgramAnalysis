@@ -3,8 +3,7 @@ package microC;
 import antlr.MicroCLexer;
 import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
-import microC.AnalysisAlgorithms.AnalysisAssignmentDoS;
-import microC.AnalysisAlgorithms.DetectionOfSigns;
+import microC.AnalysisAlgorithms.*;
 import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
 import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
 import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
@@ -23,6 +22,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -35,7 +35,7 @@ public class Launch {
     public static void main(String[] arg) throws IOException {
         try {
             //String source = "micro_c.txt";
-            String source = "tests/test.txt";
+            String source = "tests/test_factorial.txt";
             CharStream cs = CharStreams.fromFileName(source);
             MicroCLexer lexer = new MicroCLexer(cs);
             CommonTokenStream token = new CommonTokenStream(lexer);
@@ -89,6 +89,23 @@ public class Launch {
             DevelopmentAlgorithm dev = new DevelopmentAlgorithm();
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
+
+
+
+            var initIntMem = new HashMap<String, Interval>();
+            var intSet = new HashSet<>(Arrays.asList(-1, 0, 10));
+            var intervalSet = new IntervalSet(intSet);
+            var xIntMem = new Interval("-1","10");
+            var yIntMem = new Interval("-1","10");
+            initIntMem.put("x", xIntMem);
+            initIntMem.put("y", yIntMem);
+            // INTERVAL ANALYSIS
+            System.out.println("\n\n--------------\n Interval Analysis \n---------------");
+            IntervalAnalysisSpecification intSpec = new IntervalAnalysisSpecification(initIntMem, intervalSet);
+
+            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Interval Analysis\n---------------\n");
+            worklistAlgorithm.execute(programGraph, intSpec, new ChaoticWorklist());
+
 
 //            // DETECTION OF SIGNS
             System.out.println("\n\n--------------\n Detection of signs \n---------------");

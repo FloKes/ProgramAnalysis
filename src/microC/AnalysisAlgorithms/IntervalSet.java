@@ -1,5 +1,6 @@
 package microC.AnalysisAlgorithms;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class IntervalSet {
@@ -80,5 +81,31 @@ public class IntervalSet {
         }
 
         return max;
+    }
+
+    private boolean cond(int min, int max){
+        for (int i : set){
+            if(min < i && i < max){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Interval> base(){
+        var list = new ArrayList<Interval>();
+        //Find all intervals that fulfill the
+        //Base constraints, i.e. min <= max, min + 1 neq max,
+        // and min < k <  must not hold for any k in K
+        for (int i : set){
+            for (int j : set){
+                if(i <= j && i + 1 != j && cond(i,j)){
+                    list.add(new Interval(
+                            String.valueOf(i),
+                            String.valueOf(j)));
+                }
+            }
+        }
+        return list;
     }
 }
