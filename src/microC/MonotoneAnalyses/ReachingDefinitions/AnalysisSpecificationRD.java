@@ -86,7 +86,7 @@ public class AnalysisSpecificationRD implements AnalysisSpecification {
     }
 
     @Override
-    public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+    public boolean isUnder(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
         var rd1 = (AnalysisAssignmentRD) analysisAssignment1;
         var rd2 = (AnalysisAssignmentRD) analysisAssignment2;
 

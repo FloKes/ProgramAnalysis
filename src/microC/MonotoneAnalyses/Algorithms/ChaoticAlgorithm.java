@@ -75,7 +75,7 @@ public class ChaoticAlgorithm {
                     var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                     var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-                    if (!analysisSpecification.isSubset(aqs, aqe)) {
+                    if (!analysisSpecification.isUnder(aqs, aqe)) {
                         aqe = analysisSpecification.join(aqe, aqs);
                         analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
                         counter++;
@@ -104,7 +104,7 @@ public class ChaoticAlgorithm {
                     var aqe = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode()));
                     var aqs = analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode());
 
-                    if (!analysisSpecification.isSubset(aqe, aqs)) {
+                    if (!analysisSpecification.isUnder(aqe, aqs)) {
                         aqs = analysisSpecification.join(aqs, aqe);
                         analysisSpecification.setAnalysisAssignment(programGraphEdge.getOriginNode(), aqs);
                         counter++;

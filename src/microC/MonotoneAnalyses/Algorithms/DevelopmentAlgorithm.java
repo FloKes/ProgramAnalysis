@@ -1,14 +1,10 @@
 package microC.MonotoneAnalyses.Algorithms;
 
 import microC.MonotoneAnalyses.Algorithms.Worklists.Worklist;
-import microC.MonotoneAnalyses.Interfaces.AnalysisAssignment;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
-
-import java.util.HashSet;
-import java.util.Random;
 
 public class DevelopmentAlgorithm {
 
@@ -79,7 +75,7 @@ public class DevelopmentAlgorithm {
                     var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                     var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-                    if (!analysisSpecification.isSubset(aqs, aqe))
+                    if (!analysisSpecification.isUnder(aqs, aqe))
                     {
                         aqe = analysisSpecification.join(aqe, aqs);
                         analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
@@ -100,7 +96,7 @@ public class DevelopmentAlgorithm {
                     var aqe = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode()));
                     var aqs = analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode());
 
-                    if (!analysisSpecification.isSubset(aqe, aqs)) {
+                    if (!analysisSpecification.isUnder(aqe, aqs)) {
                         aqs = analysisSpecification.join(aqs, aqe);
                         analysisSpecification.setAnalysisAssignment(programGraphEdge.getOriginNode(), aqs);
                         worklist.insert(programGraphEdge.getOriginNode());
