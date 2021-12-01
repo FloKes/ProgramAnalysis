@@ -15,7 +15,7 @@ import microC.Statement.WriteStatement;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class DetectionOfSigns  implements AnalysisSpecification {
+public class DetectionOfSigns implements AnalysisSpecification {
 
     private HashMap<String, HashSet<Character>> initMem;
 

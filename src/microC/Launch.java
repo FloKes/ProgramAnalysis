@@ -5,6 +5,7 @@ import antlr.MicroCParser;
 import graphviz.DOTFileGenerator;
 import microC.AnalysisAlgorithms.*;
 import microC.BitVectorAnalysis.LiveVariables.LiveVariablesAnalysis;
+import microC.BitVectorAnalysis.ReachingDefinitions.ReachingDefinitionsAnalysis;
 import microC.MonotoneAnalyses.Algorithms.ChaoticAlgorithm;
 import microC.MonotoneAnalyses.Algorithms.DevelopmentAlgorithm;
 import microC.MonotoneAnalyses.Algorithms.WorklistAlgorithm;
@@ -13,6 +14,7 @@ import microC.MonotoneAnalyses.DangerousVariables.AnalysisSpecificationDV;
 import microC.MonotoneAnalyses.LiveVariables.AnalysisSpecificationLV;
 import microC.MonotoneAnalyses.ReachingDefinitions.AnalysisSpecificationRD;
 import microC.ProgramGraph.ProgramGraph;
+import microC.ProgramGraph.ProgramGraphBuilderVisitor;
 import microC.ProgramGraph.ProgramGraphGenerator;
 import microC.ProgramGraph.ProgramGraphNode;
 import org.antlr.v4.runtime.CharStream;
@@ -56,18 +58,18 @@ public class Launch {
             ArrayList<ProgramGraphNode> programGraphNodes = programGraph.getProgramGraphNodes();
 
             //Detection of Signs
-            var initMem = new HashMap<String, HashSet<Character>>();
-            var xMem = new HashSet<Character>();
-            var yMem = new HashSet<Character>();
-            xMem.add('-');
-            xMem.add('0');
-            xMem.add('+');
-            yMem.add('0');
-            //x = {-,0,+}, y = {0}
-            initMem.put("x",xMem);
-            initMem.put("R", yMem);
+//            var initMem = new HashMap<String, HashSet<Character>>();
+//            var xMem = new HashSet<Character>();
+//            var yMem = new HashSet<Character>();
+//            xMem.add('-');
+//            xMem.add('0');
+//            xMem.add('+');
+//            yMem.add('0');
+//            //x = {-,0,+}, y = {0}
+//            initMem.put("x",xMem);
+//            initMem.put("R", yMem);
 
-//            dsc.run(programGraph, initMem);
+            //dsc.run(programGraph, initMem);
 
             // Output program graph to .dot file
             DOTFileGenerator dotFileGenerator = new DOTFileGenerator();
@@ -75,21 +77,18 @@ public class Launch {
 
 
 //            // Reach definitions analysis
-//            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
-//            reachingDefinitionsAnalysis.doAnalysis(programGraph);
-//
-//
+            ReachingDefinitionsAnalysis reachingDefinitionsAnalysis = new ReachingDefinitionsAnalysis();
+            reachingDefinitionsAnalysis.doAnalysis(programGraph);
+
             // Live variable analysis
             LiveVariablesAnalysis liveVariablesAnalysis = new LiveVariablesAnalysis();
             liveVariablesAnalysis.doAnalysis(programGraph);
-
 
 
             // New generalised algorithms
             DevelopmentAlgorithm dev = new DevelopmentAlgorithm();
             ChaoticAlgorithm chaoticAlgorithm = new ChaoticAlgorithm();
             WorklistAlgorithm worklistAlgorithm = new WorklistAlgorithm();
-
 
 
             var initIntMem = new HashMap<String, Interval>();
@@ -107,12 +106,12 @@ public class Launch {
             worklistAlgorithm.execute(programGraph, intSpec, new rPWorklist());
 
 
-//            // DETECTION OF SIGNS
-            System.out.println("\n\n--------------\n Detection of signs \n---------------");
-            DetectionOfSigns dosSpec = new DetectionOfSigns(initMem);
+            // DETECTION OF SIGNS
+//          System.out.println("\n\n--------------\n Detection of signs \n---------------");
+//          DetectionOfSigns dosSpec = new DetectionOfSigns(initMem);
 
-            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
-            worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
+            //System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Detection of Signs\n---------------\n");
+            //worklistAlgorithm.execute(programGraph, dosSpec, new ChaoticWorklist());
             
 
             // REACHING DEFINITIONS
@@ -125,71 +124,67 @@ public class Launch {
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new ChaoticWorklist());
 
-//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
+//          System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
 //
-//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
+//          System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 //
-//            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new rPWorklist());
+//          System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Reaching definitions \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new rPWorklist());
 //
-//            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new RRWorklist());
+//          System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Reaching definitions \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new RRWorklist());
 
 //
-//            // DANGEROUS VARIABLES
-//            System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
-//            AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
+//          // DANGEROUS VARIABLES
+//          System.out.println("\n\n\n--------------\n Dangerous variables \n---------------");
+//          AnalysisSpecificationDV analysisSpecificationDV = new AnalysisSpecificationDV(programGraph);
 //
-//            System.out.println("\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
-//            chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
+//          System.out.println("\n--------------\n CHAOTIC ALG for Dangerous variables  \n---------------\n");
+//          chaoticAlgorithm.execute(programGraph, analysisSpecificationDV);
 //
-//            System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
+//          System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new ChaoticWorklist());
 //
-//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
+//          System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new LIFOWorklist());
 //
-//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
+//          System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Dangerous variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new FIFOWorklist());
 //
-//            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Dangerous variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new rPWorklist());
+//          System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Dangerous variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new rPWorklist());
 //
-//            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Dangerous variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new RRWorklist());
-//
-//
+//          System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Dangerous variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationDV, new RRWorklist());
+
             // LIVE VARIABLES
             System.out.println("\n\n\n--------------\n Live variables \n---------------");
             AnalysisSpecificationLV analysisSpecificationLV = new AnalysisSpecificationLV(programGraph);
-//
-//
-//            System.out.println("\n--------------\n CHAOTIC ALG for Live variables  \n---------------\n");
-//            chaoticAlgorithm.execute(programGraph, analysisSpecificationLV);
-//
-//
+
+//          System.out.println("\n--------------\n CHAOTIC ALG for Live variables  \n---------------\n");
+//          chaoticAlgorithm.execute(programGraph, analysisSpecificationLV);
+
             System.out.println("\n\n--------------\n CHAOTIC SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
             worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new ChaoticWorklist());
 
-//            System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new LIFOWorklist());
+//          System.out.println("\n\n--------------\n LIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new LIFOWorklist());
 //
-//            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new FIFOWorklist());
+//          System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Live variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new FIFOWorklist());
 //
 //
-//            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Live variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new rPWorklist());
+//          System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Live variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new rPWorklist());
 //
-//            System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Live variables \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new RRWorklist());
+//          System.out.println("\n\n--------------\n ROUND ROBIN WORKLIST for Live variables \n---------------\n");
+//          worklistAlgorithm.execute(programGraph, analysisSpecificationLV, new RRWorklist());
 
-            int i = 0;
+
         } catch (IOException e) {
-            throw e;
-
+            throw new Error(e);
         }
     }
 }

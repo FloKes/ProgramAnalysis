@@ -28,8 +28,7 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
 
     @Override
     public AnalysisAssignment getInitialElement() {
-        var aa = new IntervalAnalysisAssignment(initMemory);
-        return aa;
+        return new IntervalAnalysisAssignment(initMemory);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class IntervalAnalysisSpecification implements AnalysisSpecification {
     }
 
     @Override
-    public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+    public boolean isUnder(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
         var small = ((IntervalAnalysisAssignment) analysisAssignment1).getMemory();
         var big = ((IntervalAnalysisAssignment) analysisAssignment2).getMemory();
 
