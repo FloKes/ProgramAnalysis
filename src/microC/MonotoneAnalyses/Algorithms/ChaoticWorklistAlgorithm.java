@@ -1,14 +1,11 @@
 package microC.MonotoneAnalyses.Algorithms;
 
-import com.kitfox.svg.A;
-import microC.MonotoneAnalyses.Algorithms.Worklists.Worklist;
 import microC.MonotoneAnalyses.Interfaces.AnalysisSpecification;
 import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ChaoticWorklistAlgorithm{
@@ -56,7 +53,7 @@ public class ChaoticWorklistAlgorithm{
                 var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                 var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-                if (!analysisSpecification.isSubset(aqs, aqe))
+                if (!analysisSpecification.isUnder(aqs, aqe))
                 {
                     aqe = analysisSpecification.join(aqe, aqs);
                     analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);

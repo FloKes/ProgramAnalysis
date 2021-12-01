@@ -114,7 +114,7 @@ public class Launch {
 //            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new LIFOWorklist());
 //
 //            System.out.println("\n\n--------------\n FIFO SPEC GENERALISED WORKLIST ALG for Reaching definitions \n---------------\n");
-//            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
+            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new FIFOWorklist());
 //
 //            System.out.println("\n\n--------------\n ITERATIVE REVERSE POST ORDER WORKLIST for Reaching definitions \n---------------\n");
 //            worklistAlgorithm.execute(programGraph, analysisSpecificationRD, new rPWorklist());

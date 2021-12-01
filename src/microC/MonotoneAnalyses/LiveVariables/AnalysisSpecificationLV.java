@@ -177,7 +177,7 @@ public class AnalysisSpecificationLV implements AnalysisSpecification {
 
 
     @Override
-    public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+    public boolean isUnder(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
         var dv1 = (AnalysisAssignmentLV) analysisAssignment1;
         var dv2 = (AnalysisAssignmentLV) analysisAssignment2;
         var identifiers1 = dv1.getIdentifiers();

@@ -81,7 +81,7 @@ public class AnalysisSpecificationDV implements AnalysisSpecification {
     }
 
     @Override
-    public boolean isSubset(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
+    public boolean isUnder(AnalysisAssignment analysisAssignment1, AnalysisAssignment analysisAssignment2) {
         var dv1 = (AnalysisAssignmentDV) analysisAssignment1;
         var dv2 = (AnalysisAssignmentDV) analysisAssignment2;
         var identifiers1 = dv1.getIdentifiers();

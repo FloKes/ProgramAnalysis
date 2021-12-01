@@ -5,8 +5,6 @@ import microC.ProgramGraph.ProgramGraph;
 import microC.ProgramGraph.ProgramGraphEdge;
 import microC.ProgramGraph.ProgramGraphNode;
 
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Stack;
 
 public class LIFOWorklistAlgorithm{
@@ -54,7 +52,7 @@ public class LIFOWorklistAlgorithm{
                 var aqs = analysisSpecification.function(programGraphEdge, analysisSpecification.getAnalysisAssignment(programGraphEdge.getOriginNode()));
                 var aqe = analysisSpecification.getAnalysisAssignment(programGraphEdge.getEndNode());
 
-                if (!analysisSpecification.isSubset(aqs, aqe))
+                if (!analysisSpecification.isUnder(aqs, aqe))
                 {
                     aqe = analysisSpecification.join(aqe, aqs);
                     analysisSpecification.setAnalysisAssignment(programGraphEdge.getEndNode(), aqe);
